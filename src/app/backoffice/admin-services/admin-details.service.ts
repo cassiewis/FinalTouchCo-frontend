@@ -4,12 +4,13 @@ import { Observable, map, forkJoin } from 'rxjs';
 import { Review } from '../../models/review.model';
 import { AuthService } from '../auth.service';
 import { HttpHeaders } from '@angular/common/http';
+import { BACKEND_URL } from '../../shared/constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminDetailsService {
-  private apiUrl = 'http://192.168.0.145:8080/api/admin/details';
+  private apiUrl = BACKEND_URL+'/api/admin/details';
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 

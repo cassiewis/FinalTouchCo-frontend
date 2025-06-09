@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators'; 
 import { ApiResponse } from '../models/ApiResponse.interface'; 
+import { BACKEND_URL } from '../shared/constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReservedDatesService {
 
-  private apiUrl = 'http://192.168.0.145:8080/api/reservedDates'; // Replace with your backend API URL if different
+  private apiUrl = BACKEND_URL+'/api/reservedDates'; // Replace with your backend API URL if different
 
   constructor(private http: HttpClient) { }
 

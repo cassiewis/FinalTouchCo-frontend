@@ -4,13 +4,14 @@ import { HttpClient } from '@angular/common/http';
 import { Product } from '../models/product.model';
 import { tap } from 'rxjs/operators';
 import { ApiResponse } from '../models/ApiResponse.interface';
+import { BACKEND_URL } from '../shared/constants';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class ProductService {
-  private apiUrl = 'http://192.168.0.145:8080/api/products';
+  private apiUrl = BACKEND_URL+'/api/products';
   private productsCache: Product[] | null = null; // Initialize as null
   private productsSubject = new BehaviorSubject<Product[]>([]);
   products$ = this.productsSubject.asObservable();

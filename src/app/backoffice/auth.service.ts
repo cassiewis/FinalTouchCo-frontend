@@ -3,12 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { BACKEND_URL } from '../shared/constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://192.168.0.145:8080/api/auth/login';
+  private apiUrl = BACKEND_URL+'/api/auth/login';
   private tokenKey = 'authToken';
 
   constructor(private http: HttpClient, private router: Router) {}

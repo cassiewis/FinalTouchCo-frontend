@@ -6,11 +6,13 @@ import { Reservation } from '../../models/reservation.model';
 import { AuthService } from '../auth.service';
 import { ReservationService } from '../../services/reservation.service';
 import { ApiResponse } from '../../models/ApiResponse.interface';
+import { BACKEND_URL } from '../../shared/constants';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AdminReservationsService {
-    private apiUrl = 'http://192.168.0.145:8080/api/admin/reservations'; // Admin API endpoint
+    private apiUrl = BACKEND_URL+'/api/admin/reservations'; // Admin API endpoint
 
     private autoRefreshInterval = 86400000; // Auto-refresh every 24 hours (in milliseconds)
 

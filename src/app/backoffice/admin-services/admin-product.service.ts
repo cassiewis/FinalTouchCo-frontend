@@ -5,12 +5,13 @@ import { BehaviorSubject, Observable, map } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AuthService } from '../auth.service';
 import { ApiResponse } from '../../models/ApiResponse.interface';
+import { BACKEND_URL } from '../../shared/constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminProductService {
-  private apiUrl = 'http://192.168.0.145:8080/api/admin/products'; // Admin API endpoint
+  private apiUrl = BACKEND_URL+'/api/admin/products'; // Admin API endpoint
 
   // Admin-specific product cache (includes all products)
   private sessionStorageKey = 'adminProductsCache'; // Key to store cache in localStorage

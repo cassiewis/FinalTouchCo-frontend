@@ -3,12 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 import { ApiResponse } from '../models/ApiResponse.interface';
+import { BACKEND_URL } from '../shared/constants';
+
 @Injectable({
   providedIn: 'root'
 })
 export class ImageService {
 
-  private apiUrl = 'http://192.168.0.145:8080/api/images';
+  private apiUrl = BACKEND_URL+'/api/images';
 
   constructor(private http: HttpClient) { }
 

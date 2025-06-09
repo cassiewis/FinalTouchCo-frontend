@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, map, forkJoin } from 'rxjs';
 import { Review } from '../models/review.model';
 import { AddOnItem } from '../models/addOnItem.model';
+import { BACKEND_URL } from '../shared/constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DetailsService {
-  private apiUrl = 'http://192.168.0.145:8080/api/details';
+  private apiUrl = BACKEND_URL+'/api/details';
 
   constructor(private http: HttpClient) {}
 

@@ -4,12 +4,13 @@ import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { Observable, map } from 'rxjs';
 import { ApiResponse } from '../models/ApiResponse.interface';
+import { BACKEND_URL } from '../shared/constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReservationService {
-  private apiUrl = 'http://192.168.0.145:8080/api/reservations';
+  private apiUrl = BACKEND_URL+'/api/reservations';
 
   constructor(private http: HttpClient) {}
 
