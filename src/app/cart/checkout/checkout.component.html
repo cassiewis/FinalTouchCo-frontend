@@ -3,6 +3,8 @@
     <img src="/images/checkout.png" class="title">
   </div>
   <form [formGroup]="checkoutForm" (ngSubmit)="submitForm()" class="checkout-container">
+    <input type="hidden" formControlName="recaptchaToken" /> <!-- Used for bot prevention -->
+
     <div class="checkout-sides">
       <div class="checkout-form">
         <div class="form-field">
@@ -49,8 +51,6 @@
       </div>
     </div>
 
-    <!-- <div *ngIf="partialSuccessMessage" class="success-message">{{ partialSuccessMessage }}</div> -->
-    <!-- <div *ngIf="errorMessage" class="error-message" [innerHTML]="errorMessage"></div> -->
     <div *ngIf="partialSuccessMessage" class="error-message">
       <span>&#9888;&#65039;</span>
       <span [innerHTML]="partialSuccessMessage"></span>

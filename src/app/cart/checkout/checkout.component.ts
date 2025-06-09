@@ -12,6 +12,9 @@ import { BUFFER_DAYS } from '../../shared/constants';
 import { EventEmitter } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
+
+declare var grecaptcha: any;
+
 @Component({
   selector: 'app-checkout',
   standalone: true,
@@ -63,6 +66,7 @@ export class CheckoutComponent implements OnInit {
       phone: ['', Validators.required],
       notes: [''],
       agreedToTerms: [false, Validators.requiredTrue],
+      recaptchaToken: ['']
     });
     // Check if the cart is empty
     const cartItems = this.cartService.getItems();
@@ -78,50 +82,59 @@ export class CheckoutComponent implements OnInit {
     this.errorMessage = '';
     this.partialSuccessMessage = '';
 
-    // check if all items are still available
-    const unavaliableItems = await this.checkCartAvalibility();
-    if (unavaliableItems.size > 0) {
-      this.removeUnavaliableItems(unavaliableItems);
-      this.loading = false;
-      return;
-    }
+    // Get reCAPTCHA token before proceeding
+    grecaptcha.ready(() => {
+      grecaptcha.execute('your_site_key', {action: 'submit'}).then(async (token: string) => {
+        this.checkoutForm.patchValue({ recaptchaToken: token });
 
-    const reservations = this.createReservations();
-    let successfulSubmissions = 0;
-    let failedSubmissions = 0;
-
-    for (const single_reservation of reservations) {
-      this.reservationService.addReservation(single_reservation).subscribe(
-        (response: Reservation) => {
-          successfulSubmissions++;
-          if (successfulSubmissions + failedSubmissions === reservations.length) {
-            this.loading = false;
-            if (successfulSubmissions === reservations.length) {
-              this.cartService.clearCart();
-              this.successMessage = 'Your reservation has been successfully submitted! You will receive a confirmation email within 3-5 business days. Please check your spam folder if you do not see it in your inbox.\nThank you for choosing Final Touch !';
-              sessionStorage.setItem('reservationSuccess', 'true');
-              this.router.navigate(['/reservation-success']);
-            } else if (successfulSubmissions > 0) {
-              this.partialSuccessMessage = `${successfulSubmissions} out of ${reservations.length} reservations were successfully submitted, but some failed.`;
-              this.updateCart.emit('something');
-            }
-          }
-        },
-        (error: any) => {
-          failedSubmissions++;
-          console.error('Error adding reservation:', error);
-          if (successfulSubmissions + failedSubmissions === reservations.length) {
-            this.loading = false;
-            if (successfulSubmissions === 0) {
-              this.errorMessage = 'There was an error processing your reservation.<br>Try again, if it still fails, please email your reservation details to finaltouchco.info@gmail.com. Sorry for the inconvenience.';
-            } else {
-              this.partialSuccessMessage = `${successfulSubmissions} out of ${reservations.length} reservations were successfully submitted, but some failed.`;
-              this.updateCart.emit('something');
-            }
-          }
+        // Check if all items are available
+        const unavaliableItems = await this.checkCartAvalibility();
+        if (unavaliableItems.size > 0) {
+          this.removeUnavaliableItems(unavaliableItems);
+          this.loading = false;
+          // Do NOT submit any reservations if any item is unavailable
+          return;
         }
-      );
-    }
+
+        // Only submit if all items are available
+        const reservations = this.createReservations();
+        let successfulSubmissions = 0;
+        let failedSubmissions = 0;
+
+        for (const single_reservation of reservations) {
+          this.reservationService.addReservation(single_reservation).subscribe(
+            (response: Reservation) => {
+              successfulSubmissions++;
+              if (successfulSubmissions + failedSubmissions === reservations.length) {
+                this.loading = false;
+                if (successfulSubmissions === reservations.length) {
+                  this.cartService.clearCart();
+                  this.successMessage = 'Your reservation has been successfully submitted! You will receive a confirmation email within 3-5 business days. Please check your spam folder if you do not see it in your inbox.\nThank you for choosing Final Touch !';
+                  sessionStorage.setItem('reservationSuccess', 'true');
+                  this.router.navigate(['/reservation-success']);
+                } else if (successfulSubmissions > 0) {
+                  this.partialSuccessMessage = `${successfulSubmissions} out of ${reservations.length} reservations were successfully submitted, but some failed.`;
+                  this.updateCart.emit('something');
+                }
+              }
+            },
+            (error: any) => {
+              failedSubmissions++;
+              console.error('Error adding reservation:', error);
+              if (successfulSubmissions + failedSubmissions === reservations.length) {
+                this.loading = false;
+                if (successfulSubmissions === 0) {
+                  this.errorMessage = 'There was an error processing your reservation.<br>Try again, if it still fails, please email your reservation details to finaltouchco.info@gmail.com. Sorry for the inconvenience.';
+                } else {
+                  this.partialSuccessMessage = `${successfulSubmissions} out of ${reservations.length} reservations were successfully submitted, but some failed.`;
+                  this.updateCart.emit('something');
+                }
+              }
+            }
+          );
+        }
+      });
+    });
   }
 
     /**
@@ -168,9 +181,9 @@ export class CheckoutComponent implements OnInit {
           price: totalPrice,
           deposit: totalDeposit,
           reservedOn: new Date(),
-          invoiceStatus: "",
-          paymentStatus: "",
-          depositStatus: "",
+          invoiceStatus: "not sent",
+          paymentStatus: "not received",
+          depositStatus: "not returned",
           myNotes: ""
         };
 

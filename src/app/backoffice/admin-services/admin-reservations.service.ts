@@ -88,17 +88,22 @@ export class AdminReservationsService {
 
     // Add a new reservation, call into general reservation service
     addReservation(reservation: Reservation): Observable<Reservation> {
-      return this.reservationService.addReservation(reservation).pipe(
+      const headers = new HttpHeaders({
+        'Authorization': 'Bearer ' + this.getAdminToken() // Use a token or other method to authenticate as admin
+      });
+
+      const name = reservation.name.replace(/\s+/g, '');
+      const generatedstring = Math.random().toString(36).substring(2, 10);
+      reservation.reservationId = name + "-" + generatedstring;
+
+      console.log("ReservationService: adding reservation");
+      return this.http.post<ApiResponse<Reservation>>(this.apiUrl, reservation, { headers }).pipe(
+        map(response => {
+            if (response.success) return response.data; // Extract the Product array from the ApiResponse
+            else throw new Error(response.message || 'Failed to fetch products');
+          }),
         tap(newReservation => {
-          console.log('AdminReservationsService: New reservation added:', newReservation);
-    
-          // Update the cache if it exists, or initialize it if null
-          if (!this.adminReservationsCache) {
-            this.adminReservationsCache = this.loadCacheFromSessionStorage();
-          }
-          this.adminReservationsCache.push(newReservation);
-          // Save updated cache to sessionStorage
-          this.saveCacheToSessionStorage(this.adminReservationsCache);
+          console.log('Added reservation:', newReservation);
         })
       );
     }
