@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>Start a New Reservation?</h2>
+<mat-dialog-content>
+  <p>This product has different reservation dates than the other items in your cart.</p>
+  <p>Would you like to add this item to a new reservation?</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="dialogRef.close(false)">Cancel</button>
+  <button mat-raised-button color="primary" (click)="dialogRef.close(true)">Yes</button>
+</mat-dialog-actions>

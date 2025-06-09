@@ -1,0 +1,41 @@
+<footer class="red-background">
+    <div class="footer-container">
+        <div class="left-container">
+            <div class="links-container">
+                <p>COMPANY</p>
+                <a class="link" (click)="routeTo('/home')">Home</a>
+                <a class="link" (click)="routeTo('/inspo')">Testimonials</a>
+                <a class="link" (click)="routeToSection('/home', 'howItWorks')">How it Works</a>                
+            </div>
+            <div class="links-container">
+                <p>SHOP</p>
+                <a class="link" (click)="routeTo('/shop')">Shop All</a>
+                <a class="link" [routerLink]="['/shop']" [queryParams]="{ filters: 'Custom' }">Custom</a>
+                <a class="link" [routerLink]="['/shop']" [queryParams]="{ filters: 'Signage' }">Signage</a>
+                <a class="link" [routerLink]="['/shop']" [queryParams]="{ filters: 'Lighting' }">Lighting</a>
+                <a class="link" [routerLink]="['/shop']" [queryParams]="{ filters: 'Fabrics' }">Fabrics</a>
+            </div>
+            <div class="links-container">
+                <p>RESOURCES</p>
+                <a class="link" (click)="routeToSection('/home', 'faqs')">FAQs</a>
+                <a class="link" (click)="routeTo('/inspo')">Testimonials</a>
+                <a class="link" (click)="routeTo('/inspo')">Inspo</a>
+            </div>
+        </div>
+        <div class="right-container">
+            <div class="title-container">
+                <p class="title">final touch co.</p>
+                <p class="subtitle">event rentals</p>
+            </div>
+            <div class="icons">
+                <img class="logo" src="/images/instagram.png" alt="instagram icon">
+                <img class="logo" src="/images/email.png" alt="email icon">
+                <img class="logo" src="/images/facebook.png" alt="facebook icon">
+            </div>
+        </div>
+    </div>
+    <div class="bottom-section">
+        <p>Boise, Idaho</p>
+        <p>&copy; 2025 Finishing Touch Co. All Rights Reserved.</p>
+    </div>
+</footer>

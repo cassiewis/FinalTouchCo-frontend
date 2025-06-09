@@ -1,0 +1,30 @@
+[
+    {
+        "author": "John Doe",
+        "content": "This product is amazing! It exceeded my expectations.",
+        "rating": 5,
+        "event": "wedding",
+        "date": "09/15/24"
+    },
+    {
+        "author": "Jane Doe",
+        "content": "This product is amazing! It exceeded my expectations. is product is amazing! It exceeded my expectations",
+        "rating": 5,
+        "event": "wedding",
+        "date": "10/15/24"
+    },
+    {
+        "author": "John Doe",
+        "content": "This product is amazing! It exceeded my expectations.",
+        "rating": 5,
+        "event": "wedding",
+        "date": "01/15/23"
+    },
+    {
+        "author": "John Doe",
+        "content": "This product is amazing! It exceeded my expectations.",
+        "rating": 5,
+        "event": "wedding",
+        "date": "09/01/24"
+    },
+]

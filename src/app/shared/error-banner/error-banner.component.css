@@ -1,0 +1,25 @@
+.banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 1rem;
+    text-align: center;
+    font-weight: 600;
+    z-index: 1000;
+    color: white;
+    border-radius: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .banner.info {
+    background-color: #5b94d1;
+  }
+  
+  .banner.success {
+    background-color: #73ba83;
+  }
+  
+  .banner.error {
+    background-color: #c65964;
+  }
+  

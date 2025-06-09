@@ -1,0 +1,10 @@
+
+<body>  
+    <ng-container *ngIf="!loading">
+      <div class="products-grid">
+        <div *ngFor="let product of products" class="product-item">
+          <app-product-box [product]="product"></app-product-box>
+        </div>
+      </div>
+    </ng-container>
+  </body>

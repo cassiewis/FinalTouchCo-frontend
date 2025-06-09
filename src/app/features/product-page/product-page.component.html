@@ -1,0 +1,84 @@
+<body class="container white-background">
+  <div class="loading-section" *ngIf="loading">
+    <app-loading-icon></app-loading-icon>
+  </div>
+
+  <div class="tan-background body" *ngIf="!loading">
+    <div class="product-body">
+      <div class="product-image-box">
+        <!-- <img src="/images/stock_photo.png" alt="product-image" class="product-image" (load)="loading=false"> -->
+        <img [src]="product.imageUrl" alt="product-image" class="product-image" (load)="loading=false">
+      </div>
+      <div class="product-description-container">
+        <p class="path"><a (click)="goToShop()">INVENTORY</a> / {{ product.name }}</p>
+        <p class="product-name">{{ product.name }}</p>
+        <p class="product-price">${{ product.price }}</p>
+        
+        <div class="quantity-container">
+          <label for="quantity">Quantity:</label>
+          <select id="quantity" [(ngModel)]="quantity" class="quantity-dropdown" disabled>
+            <option *ngFor="let qty of quantities" [value]="qty">{{ qty }}</option>
+          </select>
+        </div>
+
+        <div class="reserve-container">
+          <p *ngIf="product.custom">⭐ This item is eligible for customization</p>
+          <app-reserve [product]="product"></app-reserve>
+        </div>
+        <div class="product-description-details">
+        
+          <div class="tabs">
+            <button 
+              [class.active]="isActiveTab('details')" 
+              (click)="setActiveTab('details')">Product Details</button>
+            <button 
+              [class.active]="isActiveTab('shipping')" 
+              (click)="setActiveTab('shipping')">Pickup & Return</button>
+          </div>
+          
+          <div class="tab-content" *ngIf="isActiveTab('details')">
+            {{ product.description }}
+          </div>
+          
+          <div class="tab-content" *ngIf="isActiveTab('shipping')">
+            All rentals must be picked up and returned by the renter in downtown Boise.
+            Delivery may be available upon request and is considered on a case-by-case basis, subject to availability.
+
+            <br><br>Late returns will incur a fee of $30 per day, unless prior arrangements have been made with Final Touch Co.
+
+            <br><br>The renter is liable for any damage or loss of items during the rental period. If an item is returned broken, 
+            missing, or significantly damaged, a replacement fee of ${{ product.deposit }} will be charged.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div *ngIf="product.addons && product.addons.length > 0" class="addons-body">
+    <h3 class="section-heading">Optional Add-Ons</h3>
+    <div class="addons-grid">
+      <app-addon-box
+        *ngFor="let addon of addons"
+        [addon]="addon"
+        [isSelected]="selectedAddons.includes(addon.itemId)"
+        [isAvailable]="isAddonAvailable(addon)"
+        (toggle)="onToggleAddon(addon)"
+      ></app-addon-box>
+    </div>
+  </div> -->
+  
+  <!-- <hr *ngIf="!loading" class="border-line"> border line -->
+
+  <div class="similar-products" *ngIf="similarProducts.length > 0">
+    <p>You Might Also Like:</p>
+    <div class="similar-scroll-wrapper">
+      <div class="similar-scroll-container">
+        <app-product-box
+          *ngFor="let product of similarProducts"
+          [product]="product"
+          class="similar-product-box"
+        ></app-product-box>
+      </div>
+    </div>
+  </div>
+</body>

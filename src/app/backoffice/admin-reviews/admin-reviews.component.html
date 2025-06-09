@@ -1,0 +1,36 @@
+<body>
+
+    <div class="header">
+      <div class="title">
+              <h1>Reviews</h1>
+      </div>
+      
+      <div class="reviews-stats-container">
+        <div class="total-orders-active stats">
+            <p class="stats-number">{{ reviews.length }}</p>
+            <p class="stats-title">Reviews</p>
+        </div>
+  
+        <div class="add-review-container">
+            <app-admin-add-review></app-admin-add-review>
+        </div>
+      </div>
+    </div>
+  
+    <div class="refresh-button-container">
+      <button (click)="fetchReviews()" class="refresh-button">refresh</button>
+    </div>
+  
+    <div class="review-list">
+        <div *ngFor="let review of reviews" class="list">
+            <div class="review-box tan-background">
+                <p class="stars">
+                    <span class ="star yellow-font" *ngFor="let star of [].constructor(review.rating)">★</span>
+                </p>
+                <p class="review-text">{{ review.content }}</p>
+                <p class="review-author green-font">- {{ review.author }}</p>
+                <button class="delete-button" (click)="deleteReview(review.id)">Delete</button>
+            </div>
+        </div>
+    </div>
+  </body>

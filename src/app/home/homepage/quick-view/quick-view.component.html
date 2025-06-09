@@ -1,0 +1,22 @@
+<body class="blue-background">
+    <p class="page-title">Shop our Essentials</p>
+    <div class="boxes">
+        <!-- <app-product-box [product]="product"></app-product-box> -->
+        <a [routerLink]="['/shop']" [queryParams]="{ filters: 'Fabrics' }" class="box-container">
+            <img class="box" src="images/fabrics.jpg">
+            <p class="cursive-font title">Fabrics</p>
+        </a>
+        <a [routerLink]="['/shop']" [queryParams]="{ filters: 'Signage' }" class="box-container">
+            <img class="box" src="images/signage-type.jpg">
+            <p class="cursive-font title">Signage</p>
+        </a>
+        <a [routerLink]="['/shop']" [queryParams]="{ filters: 'Lighting' }" class="box-container">
+            <img class="box" src="images/lighting-type.jpg">
+            <p class="cursive-font title">Lighting</p>
+        </a>
+        <a [routerLink]="['/shop']" [queryParams]="{ custom: 'Custom' }" class="box-container">
+            <img class="box" src="images/custom-type.jpg">
+            <p class="cursive-font title">Custom</p>
+        </a>
+    </div>
+</body>

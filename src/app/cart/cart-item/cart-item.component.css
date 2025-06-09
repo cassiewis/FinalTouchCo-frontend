@@ -1,0 +1,129 @@
+
+  .cart-item {
+    display: flex;
+    align-items: center;
+    height: 180px;
+    width: 100%;
+  }
+
+  .cart-item-image {
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: 3/4;
+  }
+
+  .cart-item-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .cart-item-box {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cart-item-box p {
+    margin: 10px 20px;
+  }
+
+  .product-title {
+    font-size: 1.15rem;
+    font-weight: bold;
+  }
+
+  .product-title:hover {
+    cursor: pointer;
+  }
+    
+  .cart-item-details h2 {
+    font-weight: 100px;
+  }
+  
+  .remove-button {
+    border: none;
+    font-family: "Philosopher", sans-serif;
+    font-size: 0.9rem;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
+  .remove-button:hover,
+  .remove-button:focus {
+    color: rgb(130, 130, 130);
+  }
+
+  .info-hover-container {
+    position: relative;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: normal;
+    padding: 5px;
+  }
+  
+  .info-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    background-color: #e06268;  /* Dark gray or any preferred color */
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 50%;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  .tooltip-text {
+    visibility: hidden;
+    width: 180px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 8px;
+    position: absolute;
+    bottom: 125%; /* Position the tooltip above the icon */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 1;
+  }
+  
+  .info-hover-container:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+  }
+
+
+
+@media (max-width: 550px) {
+
+  .cart-item-info {
+    flex-direction: column;
+    align-items: start;
+    position: relative;
+  }
+
+  .cart-item {
+    height: 125px;
+  }
+
+  .product-title {
+    font-size: 1rem;
+  }
+
+  .delete-button-container {
+    display: flex;
+    justify-content: flex-end;
+    bottom: 0;
+    z-index: 1;
+    position: absolute;
+    width: 100%;
+  }
+
+}

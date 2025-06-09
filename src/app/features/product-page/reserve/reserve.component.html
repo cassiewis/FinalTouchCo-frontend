@@ -1,0 +1,24 @@
+<div class="availability-checker"> 
+  <div class="input-box">
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label class="label">Select dates to reserve</mat-label>
+      <mat-date-range-input
+        [rangePicker]="picker"
+        [min]="minDate"
+        [max]="maxDate"
+        [formGroup]="range"
+        [dateFilter]="dateFilter">
+        <input class="input" matStartDate formControlName="start" placeholder="Pickup"/>
+        <input class="input" matEndDate formControlName="end" placeholder="Return"/>
+      </mat-date-range-input>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
+    
+  </div>
+  <button class="reserve-button button-theme green-background white-font"
+    (click)="onCartClick()">
+    ADD TO CART
+</button> 
+
+</div>

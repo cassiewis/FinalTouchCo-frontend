@@ -1,0 +1,32 @@
+
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 14px; 
+    overflow: hidden;
+    
+  }
+
+.products-grid a {
+  text-decoration: none;
+}
+  
+app-product-box {
+  height: auto; /* Let height adjust based on content */
+}
+
+/* Optional: Adjustments for responsiveness */
+@media (max-width: 900px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr); /* Two items per row on smaller screens */
+  }
+}
+
+
+@media (min-width: 1500px) {
+  .products-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+}

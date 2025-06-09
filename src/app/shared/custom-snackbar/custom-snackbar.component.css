@@ -1,0 +1,53 @@
+/* Basic styles for the snackbar container */
+:host {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px; /* Add padding for spacing */
+    border-radius: 8px; /* Rounded corners */
+    transition: opacity 0.3s ease-in-out; /* Smooth fade transition */
+    gap: 15px;
+
+  }
+
+  span {
+    font-size: 14px;
+  }
+  
+  button {
+    background-color: transparent;
+    border: none;
+    color: #a2aa8e;
+    cursor: pointer;
+    font-weight: bold;
+    outline: none;
+    font-size: 14px;
+    font-weight: normal;
+  }
+  
+  button:hover {
+    color: #c5cab9;
+}
+  
+  /* Keyframes for fade-in effect */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  /* Initial state for the snackbar */
+  :host {
+    opacity: 0; /* Start transparent */
+    animation: fadeIn 0.5s forwards; /* Fade in animation */
+  }
+  
+  /* Optional: responsive styles */
+  @media (max-width: 600px) {
+    :host {
+      padding: 12px; /* Adjust padding for smaller screens */
+    }
+  }
+  

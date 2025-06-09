@@ -1,0 +1,15 @@
+<div class="product-item" (click)="goToProductPage()">
+    <div class="image-placeholder">
+      <div class="image-container">
+          <p *ngIf="product.custom" class="custom-text white-font secondary-font" alt="Custom Icon">CUSTOM</p>
+        <!-- <img src="/images/stock_photo.png" alt="{{ product.name }}" class="product-image" (load)="onImageLoad($event)"> -->
+        <img [src]="product.imageUrl" alt="{{ product.name }}" class="product-image" (load)="onImageLoad($event)">
+      
+      </div>
+    </div>
+    <div class="item-info black-font">
+      <p class="product-name black-font">{{ product.name }}</p>
+      <!-- <p class="info-count">{{ product.count }} avaliable</p> -->
+      <p class="info-price black-font">${{ product.price }}</p>
+    </div>
+</div>

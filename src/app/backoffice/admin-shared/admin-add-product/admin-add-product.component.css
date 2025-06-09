@@ -1,0 +1,18 @@
+/* Overlay background */
+  
+  /* Form body spacing */
+  .form-section {
+    display: flex;
+    gap: 16px; /* Adds space between each form field */
+  }
+
+
+  .numbers-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+  }
+
+  input {
+    background-color: red;
+  }

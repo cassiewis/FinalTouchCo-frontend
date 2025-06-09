@@ -1,0 +1,14 @@
+<div 
+  class="addon-box" 
+  [class.selected]="isSelected" 
+  [class.unavailable]="!isAvailable"
+  (click)="onToggle()"
+>
+  <img [src]="addon.imageUrl" [alt]="addon.name" />
+  <div class="addon-info">
+    <h4>{{ addon.name }}</h4>
+    <p class="price">${{ addon.price.toFixed(2) }}</p>
+    <!-- <p class="deposit">Deposit: ${{ addon.deposit.toFixed(2) }}</p> -->
+    <p *ngIf="!isAvailable" class="unavailable-label">Unavailable</p>
+  </div>
+</div>

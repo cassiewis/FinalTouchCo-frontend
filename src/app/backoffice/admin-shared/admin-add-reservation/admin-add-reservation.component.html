@@ -1,0 +1,83 @@
+<body class="create-button-form">
+    <button class="create-button" (click)="openReservationCreator()">Create Reservation</button>
+
+    <!-- Popup Modal -->
+    <div *ngIf="popupOpen" class="popup-overlay">
+    <div class="popup-content">
+      <h1 class="title">Create Reservation</h1>
+      <button mat-button (click)="closeReservationCreator()" class="close-button">X</button>
+        <div class="form-body">
+
+        <!-- Reservation Form -->
+        <form (ngSubmit)="submitReservation()" #reservationForm="ngForm" class="form-body">
+            <!-- Form fields for reservation details -->
+            <div class="form-section">
+                <div class="info-side">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Name</mat-label>
+                        <input matInput placeholder="Enter your name" [(ngModel)]="reservation.name" name="name" required>
+                    </mat-form-field>
+                    <div class="name-container">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Email</mat-label>
+                            <input matInput type="email" placeholder="Enter your email" [(ngModel)]="reservation.email" name="email" required>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Phone Number</mat-label>
+                            <input matInput type="tel" placeholder="Enter your phone number" [(ngModel)]="reservation.phoneNumber" name="phoneNumber" required>
+                        </mat-form-field>
+                    </div>
+                    <!-- Pickup and Return Dates -->
+                    <mat-form-field appearance="outline">
+                        <mat-label>Select dates to reserve</mat-label>
+                        <mat-date-range-input [rangePicker]="picker">
+
+                        <input matStartDate [(ngModel)]="reservation.dates[0]" placeholder="Pickup date" name="startDate" required>
+                        <input matEndDate [(ngModel)]="reservation.dates[1]" placeholder="Dropoff date" name="endDate" required>
+                        </mat-date-range-input>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #picker></mat-date-range-picker>    
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Customer Notes</mat-label>
+                        <textarea matInput placeholder="Add any notes" [(ngModel)]="reservation.customerNotes" name="customerNotes"></textarea>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>My Notes</mat-label>
+                        <textarea matInput placeholder="Add personal notes" [(ngModel)]="reservation.myNotes" name="myNotes"></textarea>
+                    </mat-form-field>
+                    <div class="price-container">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Price</mat-label>
+                            <input matInput type="number" placeholder="Enter price" [(ngModel)]="reservation.price" name="price" required>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Deposit</mat-label>
+                            <input matInput type="number" placeholder="Enter deposit amount" [(ngModel)]="reservation.deposit" name="deposit" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <!-- Select items to reserve -->
+                <div class="items-container">
+                    <h3>Select items to reserve</h3>
+                    <div *ngFor="let product of products" class="checkbox-item">
+                        <mat-checkbox
+                        class="checkbox-item"
+                        [(ngModel)]="selectedItems[product.productId]"
+                        [name]="'product-' + product.productId">
+                        {{ product.productId }} - ${{ product.price }}
+                        </mat-checkbox>
+                    </div>
+                </div>
+            </div>
+            <!-- Submit button -->
+            <button mat-raised-button color="primary" type="submit" [disabled]="!reservationForm.form.valid">Submit Reservation</button>  
+        </form>
+        </div>
+    </div>
+    </div>
+</body>

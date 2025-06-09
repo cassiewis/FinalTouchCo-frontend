@@ -1,0 +1,204 @@
+/* You can add global styles to this file, and also import other style files */
+@import '../node_modules/@angular/material/prebuilt-themes/indigo-pink.css';
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevents horizontal scrolling caused by overflowing elements */
+  font-size: 16px;
+  font-weight: normal;
+  color: rgb(50, 50, 50);
+}
+
+
+body {
+    font-family: "Philosopher", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: "Philosopher", sans-serif; font-weight: normal; }
+
+/*
+ * Custom styles for the app 
+ */
+ .tan-background {
+  background-color: #faf3eb;
+}
+.red-background {
+  background-color: #c49386;
+}
+.green-background {
+  background-color: #bbbda3;
+}
+.light-pink-background {
+  background-color: #f1e1d5;
+}
+.pink-background {
+  background-color: #e9bca6;
+}
+.yellow-background {
+  background-color: #efe6b9;
+}
+
+/* font colors: */
+.tan-font {
+  color: #faf3eb;
+}
+.red-font {
+  color: #c49386;
+}
+.black-font {
+  color: #323232;
+}
+.green-font {
+  color: #bbbda3;
+}
+.light-pink-font {
+  color: #f1e1d5;
+}
+
+.pink-font {
+  color: #e9bca6;
+}
+
+.yellow-font {
+  color: #efe6b9;
+}
+.main-font {
+  /* philosopher */
+  font-family: 'Philosopher', sans-serif;
+}
+.secondary-font {
+  /* Chau Philomene One */
+  font-family: 'Chau Philomene One', sans-serif;
+}
+.cursive-font {
+  /* Petemoss */
+  font-family: 'Petemoss', cursive;
+  font-weight: normal;
+}
+
+.title-font {
+  font-family: 'Hello Paris', sans-serif;
+}
+
+
+.button-theme {
+  border: none;
+  padding: 8px 10px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 2px;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+  width: 110px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.button-theme:hover {
+  opacity: 0.9;  
+}
+
+.form-field {
+  width: 100% !important;
+}
+
+.form-field input.mat-input-element {
+  width: 100% !important;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.form-field mat-label {
+  font-size: 10px;
+}
+
+
+.create-button-form {
+
+  .create-button {
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    color: rgb(60, 66, 87);
+    background-color: none;
+    box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 12%) 0px 1px 1px 0px, rgb(60 66 87 / 16%) 0px 0px 0px 1px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(60 66 87 / 8%) 0px 2px 5px 0px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 16px 10px;
+    display: inline-block;
+    min-height: 28px;
+    transition: background-color .24s,box-shadow .24s;
+  }
+
+  .create-button:hover,
+  .create-button:focus {
+    box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 12%) 0px 1px 1px 0px, rgb(60 66 87 / 16%) 0px 0px 0px 1px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(60 66 87 / 8%) 0px 3px 9px 0px, rgb(60 66 87 / 8%) 0px 2px 5px 0px;
+  }
+
+  .popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  /* Popup content box */
+  .popup-content {
+    background-color: #F8F7F2;
+    position: relative;
+    max-width: 90%;
+    max-width: 900px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow-y: auto; /* Scrolls if content is too long */
+    max-height: 80vh; /* Limits the height */
+  }
+
+  .title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 25px 0 35px 0;
+    text-align: center;
+  }
+
+  .close-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 1.2rem;
+    text-decoration: none;
+    cursor: pointer;
+    background: none;
+    border: none;
+  }
+
+  button[mat-raised-button] {
+    width: 100%;
+    margin-top: 20px;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+}
+
+@media (max-width: 500px) {
+  .page-title {
+    font-size: 1.5rem;
+  }
+}

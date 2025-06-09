@@ -1,0 +1,19 @@
+<body class="white-background">
+    <div class="title-side">
+      <div class="title-container">
+        <p class="cursive-font red-font read-success-stories">Read our Success Stories</p>
+        <p class="title"><i class="green-font">Kind Words</i> From Our<br>Past Clients</p>
+        <p>Take a look at our past client's reviews and browse the images on our inspo page!</p>
+        <button (click)="routeToInspo()" class="button-theme light-pink-background">See More</button>
+        </div>
+    </div>
+    <div class="reviews-side">
+      <div class="review tan-background" *ngFor="let review of reviews">
+        <p class="stars">
+          <span class ="yellow-font" *ngFor="let star of [].constructor(review.rating)">★</span>
+        </p>
+        <p class="review-text">{{ review.content }}</p>
+        <p class="review-author green-font">- {{ review.author }}</p>
+      </div>
+    </div>
+</body>

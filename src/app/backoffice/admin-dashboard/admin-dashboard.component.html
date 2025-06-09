@@ -1,0 +1,145 @@
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="title-container sidebar-container">
+                <img class="favicon" src="favicon.ico">
+                <h2 class="title">Final Touch</h2>
+                <h3 class="subtitle">Backoffice</h3>
+            </div>
+            <div class="links-container sidebar-container">
+                <a routerLink="/admin" class="links">DASHBOARD</a>
+                <a routerLink="reservations" class="links">ORDERS</a>
+                <a routerLink="products" class="links">PRODUCTS</a>
+                <a routerLink="reviews" class="links">REVIEWS</a>
+            </div>
+            <div class="frontoffice-container sidebar-container">
+                <a routerLink="/" class="links">FRONT OFFICE</a>
+            </div>
+        </div>
+
+        <!-- Scrollable content area for routed views -->
+        <div class="content">
+            <div *ngIf="!isChildRouteActive()">
+                <div class="title">
+                    <div class="header">
+                        <h1>
+                            Dashboard
+                        </h1>
+                    </div>
+                </div>
+                <div class="full-container">
+                    <div class="top-container">
+                        <div class="numbers-container">
+                            <div class="active-products-container numbers-subcontainer centered">
+                                <p class="number">{{ activeProducts.length }}</p>
+                                <p class="number-title">Active<br>Products</p>
+                            </div>
+                            <div class="active-reservations-container numbers-subcontainer centered">
+                                <p class="number">{{ reservations.length }}</p>
+                                <p class="number-title">Active<br>Orders</p>
+                            </div>
+                            <div class="active-reservations-container numbers-subcontainer centered">
+                                <p class="number">{{ fulfilledReservations.length }}</p>
+                                <p class="number-title">Fulfilled<br>Orders</p>
+                            </div>
+                            <div class="revenue-container numbers-subcontainer">
+                                <p class="number-title">Total Revenue</p>
+                                <p class="number">{{ getTotalRevenue() }} $</p>
+                            </div>
+                        </div>
+                        <div class="buttons-container centered">
+                            <app-admin-add-product></app-admin-add-product>
+                            <app-admin-add-reservation></app-admin-add-reservation>
+                        </div>
+                    </div>
+
+                    <div class="reservations-info-container">
+
+                        <div class="reservations-info">
+                            <h1 class="subtitle">Upcoming Orders:</h1>
+                            <div class="upcoming-reservation-header">
+                                <p>name</p>
+                                <p>email</p>
+                                <p>pickup</p>
+                                <p>return</p>
+                                <p>items</p>
+                            </div>
+                            <hr class="upcoming-reservations-line">
+                            <div *ngFor="let reservation of reservations | slice:0:5" class="upcoming-reservations-list">
+                                <div class="upcoming-reservation-box">
+                                    <p>{{ reservation.name }}</p>
+                                    <p>{{ reservation.email }}</p>
+                                    <p>{{ displayDate(reservation.dates[0])  }}</p>
+                                    <p>{{ displayDate(reservation.dates[reservation.dates.length-1]) }}</p>
+                                    <div class="items-table-container">
+                                        <div class="info-hover-container">
+                                            <span class="info-icon">{{ reservation.items.length }}</span>
+                                            <div class="tooltip-text">
+                                                <p *ngFor="let item of reservation.items">{{ item.name }}</p>
+                                            </div>
+                                       </div>
+                                    </div>
+                                </div>
+                                <hr class="upcoming-reservations-line">
+                            </div>
+                        </div>  
+
+                        <div class="chart-container">
+                            <h1 class="subtitle">Upcoming Year's Stats:</h1>
+                            <canvas id="myChart"></canvas>
+                        </div>
+                    </div> 
+
+                    <div class="todo-container">
+
+                        <div class="tasks-container">
+                        <h1 class="tasks-title">Tasks ({{ tasks.size }})</h1>
+                        <hr class="tasks-line">
+                        <div class="tasks-list" *ngFor="let task of tasks | keyvalue">
+                            <div class="tasks-item">
+                                <p class="task-item-title">
+                                    {{ task.key.split(' ')[0] }}<br>{{ task.key.split(' ')[1] }}
+                                </p>
+
+                                <p class="task-item">{{ task.value.name }}</p>
+                                <ng-container *ngIf="task.key === 'Pending Order'; else checkAnotherKey">
+                                <p class="task-item">{{ displayDate(task.value.dates[0]) }} - {{ displayDate(task.value.dates[task.value.dates.length-1]) }}</p>
+                                <div class="task-item info-hover-container">
+                                    <span class="info-icon">Items: {{ task.value.items.length }}</span>
+                                    <div class="tooltip-text">
+                                        <p *ngFor="let item of task.value.items">{{ item.name }}</p>
+                                    </div>
+                                </div>
+                                <p class="task-item">Total:<br>${{ task.value.price }}</p>
+                                </ng-container>
+
+                                <ng-template #checkAnotherKey>
+                                    <ng-container *ngIf="task.key === 'Send Invoice'; else normalTask">
+                                    <p class="task-item">{{ displayDate(task.value.dates[0]) }}</p>
+                                    <p class="task-item">{{ task.value.email }}</p>
+                                    <p class="task-item">Invoice amount:<br>${{ task.value.price + task.value.deposit }}</p>
+                                    </ng-container>
+                                </ng-template>
+                    
+                                <ng-template #normalTask>
+                                    <p class="task-item">{{ displayDate(task.value.dates[task.value.dates.length-1]) }}</p>
+                                    <p class="task-item">{{ task.value.email }}</p>
+                                    <p class="task-item">Deposit amount:<br>${{ task.value.deposit }}</p>
+                                </ng-template>
+                                
+                            </div>
+                            <hr class="tasks-line">
+                        </div>
+                        </div>
+
+                        <div class="errors-container">
+                            <h1 class="subtitle">Errors</h1>
+                        </div>
+                    </div>
+                </div>
+                <!-- end dashboard display -->
+            </div>
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</body>

@@ -1,0 +1,67 @@
+<div class="cart-page tan-background">
+
+  <div class="cart-title-container">
+    <!-- <img class="corner-title" src="/favicon.ico"> -->
+    <a href="/shop" class="back-to-shop">Continue Shopping</a>
+    <img src="/images/shopping-cart.png" alt="Shopping Cart" class="title">
+  </div>
+
+  <div class="cart-empty" *ngIf="cartItems.length === 0">
+    <p>There are no items in you cart... yet!</p>
+  </div>
+
+  <div class="cart-full" *ngIf="cartItems.length > 0">
+    <div class="cart-body">
+      <div class="left-cart">
+
+        <div class="cart-reservation" *ngFor="let groupKey of getGroupedKeys()">
+          <h3>Reservation: {{ formatDateRangeFromItems(groupedItems.get(groupKey)!) }}</h3>
+          <div class="cart-item" *ngFor="let item of groupedItems.get(groupKey)">
+            <app-cart-item [item]="item" (updateCart)="updateCart()"></app-cart-item>
+          </div>
+        </div>
+      </div>
+      <div class="right-cart">
+        <div class="checkout-breakdown light-pink-background">
+          <p class="order-summary price-header">Order Summary</p>
+
+            <div class="cart-reservation-total" *ngFor="let groupKey of getGroupedKeys(); let i = index">
+              <div class="reservation-group">
+                <div class="bold-title">
+                  <p class="reservation-header reservation-header-item">RESERVATION {{ i + 1 }}</p>
+                  <p class="reservation-header-item">{{ formatDateRangeFromItems(groupedItems.get(groupKey)!) }}</p>
+                </div>
+                <div class="subtotal-container spanned">
+                  <p class="price subtotal">Subtotal:</p>
+                  <p class="price">{{ calculateGroupTotal(groupedItems.get(groupKey)!) | currency }}</p>
+                </div>
+                <div class="tax-container spanned">
+                  <p class="price tax">Idaho Sales Tax:</p>
+                  <p class="price">{{ calculateTax(groupedItems.get(groupKey)!) | currency }}</p>
+                </div>
+
+                <div class="total-container spanned">
+                  <p class="price total">Total:</p>
+                  <p class="price">{{ (calculateGroupTotal(groupedItems.get(groupKey)!) + calculateTax(groupedItems.get(groupKey)!)) | currency }}</p>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="checkout-total">
+          <p class="precursor"><b>Heads up: You won't be charged today.</b><br>Each rental will be charged 30 days before its start date.</p>
+          <button
+            class="checkout-button button-theme green-background"
+            (click)="scrollToCheckout()"
+            >Checkout
+          </button>
+          
+          <!-- <button [routerLink]="[]" fragment="contact">Go to Contact</button> -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div #sectionRef>
+      <app-checkout (updateCart)="refreshCart()"></app-checkout>
+    </div>
+</div>

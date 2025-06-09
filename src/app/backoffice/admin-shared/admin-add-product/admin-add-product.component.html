@@ -1,0 +1,68 @@
+<body class="create-button-form">
+    <button class="create-button" (click)="openProductCreator()">Create Product</button>
+
+    <!-- Popup Modal -->
+    <div *ngIf="popupOpen" class="popup-overlay">
+    <div class="popup-content">
+      <h1 class="title">Create Product</h1>
+      <button mat-button (click)="closeProductCreator()" class="close-button">X</button>
+      <div class="form-body">
+        <!-- Product Form -->
+        <form (ngSubmit)="createProduct()" #productForm="ngForm" class="form-body">
+            <!-- Form fields for product details -->
+            <div class="form-section">
+                <div class="info-side">
+
+                    <mat-form-field appearance="outline" class="input-item">
+                        <mat-label>Product Name</mat-label>
+                        <input matInput class="input-box" placeholder="Enter Product Name" [(ngModel)]="product.name" name="name" required>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="input-item">
+                        <mat-label>ProductId</mat-label>
+                        <input matInput class="input-box" placeholder="Enter product id" name="productId" [(ngModel)]="product.productId" required>
+                    </mat-form-field>
+
+                    <div class="numbers-container">
+                        <mat-form-field appearance="outline" class="input-item">
+                            <mat-label>Count</mat-label>
+                            <input matInput class="input-box" type="number" placeholder="Add Item Count" [(ngModel)]="product.count" name="count" required>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="input-item">
+                            <mat-label>Price</mat-label>
+                            <input matInput class="input-box" type="number" placeholder="Enter Price" [(ngModel)]="product.price" name="price" required>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="input-item">
+                            <mat-label>Deposit</mat-label>
+                            <input matInput class="input-box" type="number" placeholder="Enter Deposit" [(ngModel)]="product.deposit" name="customerNotes" required>
+                        </mat-form-field>
+                    </div>
+
+                    <mat-form-field appearance="outline" class="input-item">
+                        <mat-label>Description</mat-label>
+                        <textarea matInput class="input-box" placeholder="Enter Description" [(ngModel)]="product.description" name="description" required></textarea>
+                    </mat-form-field>
+
+                    <mat-checkbox [(ngModel)]="product.active" name="active">
+                        Active
+                    </mat-checkbox>
+                    <mat-checkbox [(ngModel)]="product.custom" name="custom">
+                        Custom
+                    </mat-checkbox>
+                    
+                    <mat-form-field appearance="outline" class="input-item">
+                        <mat-label>Image url</mat-label>
+                        <input matInput placeholder="Enter image url" name="imageUrl" [(ngModel)]="product.imageUrl" required>
+                    </mat-form-field>
+
+                </div>
+            </div>
+            <!-- Submit button -->
+            <button mat-raised-button color="primary" type="submit" [disabled]="!productForm.valid">Create Product</button>
+        </form>
+        </div>
+    </div>
+    </div>
+</body>

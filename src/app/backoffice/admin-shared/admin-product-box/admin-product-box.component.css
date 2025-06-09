@@ -1,0 +1,216 @@
+.product-item {
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 10px;
+    transition: transform 0.2s;
+    color: #454545;
+    background-color: #f1f0f0;
+    align-items: center;
+    position: relative;
+    min-height: 500px;
+}
+
+.button-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+}
+
+.status-container {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    z-index: 10;
+    background-color: #f1f0f0;
+    padding: 0px 10px 0px 10px;
+    border-radius: 10px;
+}
+
+.edit-button {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.edit-button:hover {
+    background-color: #c9302c;
+}
+
+.product-image {
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 4/5;
+    position: relative;
+    z-index: 1; /* Ensures it stays below the button */
+    object-fit: cover;
+}
+
+
+.title {
+    text-align: center;
+    margin: 10px;
+    margin-bottom: 10px;
+}
+
+.product-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0px;
+}
+
+.product-id {
+    font-size: 14px;
+    color: rgb(123, 123, 123);
+    margin: 0px;
+}
+
+.item-info-container {
+    display: grid;
+    grid-template-columns: 5fr 1fr 5fr 1fr 5fr;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: normal;
+    width: 100%;
+    margin: -5px;
+}
+
+.item-info-subcontainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.item-info {
+    margin: 0px;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.vertical-line {
+    width: 1px; /* Thin line */
+    height: 100%; /* Full height of the container */
+    background-color: rgb(224, 223, 223); /* Color of the line */
+    align-self: center; /* Vertically align it in flex or grid container */
+    justify-self: center; /* Horizontally center it in grid cells */
+}
+
+.info-count {
+    font-weight: normal;
+}
+
+.name {
+    font-weight: normal;
+    font-size: 12px;
+    color: rgb(123, 123, 123);
+}
+
+.value {
+    font-weight: bold;
+    font-size: 14px;
+    padding: 5px;
+}
+
+.description {
+    font-size: 12px;
+    max-height: 150px;
+    /* make it scrollable if it exeeds height */
+    overflow-y: auto;
+}
+
+.edit-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    border-radius: 8px;
+    z-index: 1000;
+    width: 65%;
+}
+
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.edit-button-container {
+    display: flex;
+    /* justify-content: space-between; */
+    margin-top: 10px;
+}
+
+.edit-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.edit-button:hover {
+    opacity: 0.9;
+}
+
+.prices-container {
+    display: flex;
+}
+
+.calendar-container {
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  
+.calendar-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+  
+mat-icon {
+    font-size: 24px;
+}
+
+.calendar-popup {
+    position: absolute;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    border-radius: 8px;
+    z-index: 10;
+}
+
+button.reserved-date {
+    background-color: rgb(120, 120, 120) !important;  /* Use !important to override any other styles */
+    border-radius: 50%;
+  }

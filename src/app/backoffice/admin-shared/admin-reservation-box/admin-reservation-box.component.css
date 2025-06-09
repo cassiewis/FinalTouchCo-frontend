@@ -1,0 +1,286 @@
+body { 
+    /* background-color: #eaeae9; */
+    /* border-radius: 8px;  */
+    border: 1px solid rgb(214, 214, 214);
+    font-size: 14px;
+}
+.subcontainer {
+    margin: 10px;
+    padding: 0px;
+    height: 50px;
+    display: flex;
+    font-display: center;
+}
+
+.reservation-box {
+    display: grid;
+    grid-template-columns: 0.35fr 0.7fr 0.5fr 0.4fr 0.9fr 0.35fr 0.45fr 0.45fr; /* Adjust ratios if needed */
+    align-items: center;
+}
+
+.close-button-container-displayed {
+    display: block;
+}
+
+button {
+    background: none;      /* Removes background */
+    border: none;          /* Removes border */
+    outline: none;         /* Removes focus outline */
+    padding: 0;            /* Optional: removes padding */
+    cursor: pointer;       /* Optional: shows pointer on hover */
+}
+
+button:hover {
+    color: rgb(93, 93, 93);
+}
+
+.status-box {
+    display: flex;
+    background-color: #c4d4a0;
+    text-transform: uppercase;
+    text-align: center;
+    border-radius: 20px;
+    justify-content: center;
+    margin: 0px;
+    padding: 0px;
+    height: 37px;
+    width: 70px;
+}
+
+.status-box-container {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Align title to the left and value to the right */
+}
+
+.product-id {
+    margin: -5px 0px 0px 10px;
+}
+
+.status {
+    font-weight: normal;
+    font-size: 12px;
+}
+
+.status-dropdown {
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.name-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.name {
+    font-weight: normal;
+}
+
+.updates-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.updates-container p {
+    padding: 6px;
+    font-size: 12px;
+    border-radius: 50px;
+}
+
+.updates-container::before {
+    content: '●'; /* Small circle character */
+    font-size: 22px; /* Adjust size of the circle */
+  }
+
+/* Green circle for 'sent' status */
+.green-circle::before {
+    color: rgb(104, 148, 104);
+}
+    
+    /* Red circle for 'not sent' status */
+.red-circle::before {
+    color: rgb(225, 74, 74);
+}
+
+.circle {
+    height: 1px;
+    width: 1px;
+    padding: 0px;
+    margin: 0px;
+}
+
+.updates-item {
+    border-radius: 10px;
+}
+
+.red-background {
+    background-color: #dda9aa;
+}
+
+.green-background {
+    background-color: #c4d4a0;
+}
+
+.yellow-background {
+    background-color: #efe6b9;
+}
+
+.pink-background {
+    background-color: pink;
+}
+
+.grey-background {
+    background-color: #d0cfce;
+    opacity: 0.9;
+}
+
+.canceled-background-box {
+    opacity: 0.8;
+}
+
+.buttons-not-edit {
+    display: flex;
+    justify-content: space-between;
+    margin: 0px 20px 10px 20px;
+}
+
+.expanded-product-box {
+    display: grid;
+    grid-template-columns:  0.75fr 1.75fr 1.25fr 0.75fr; /* Each item will take at least 200px and can stretch */
+    padding: 20px 30px 20px 30px;
+    gap: 30px;
+}
+
+.pickup-return-box,  .notes-box {
+    background-color: #dfa1a332;
+}
+
+.items-payment-box, .dates-box {
+    background-color: rgb(245, 245, 245);
+}
+
+.box-title {
+    align-items: center;
+    font-weight: bold;
+    margin-top: -27px;
+    text-align: center;
+}
+
+.box {
+    padding: 20px;
+}
+
+.light {
+    opacity: .5;
+}
+
+.content {
+    display: flex;
+}
+
+.product-side {
+    width: 60%;
+    min-height: 120px;
+}
+
+.price-side {
+    width: 40%;
+    text-align: right;
+    font-weight: bold;
+}
+
+.product-info {
+    margin-top: -15px;
+    opacity: .5;
+    /* font-size: 14px; */
+}
+
+.invoice-price {
+    font-weight: bold;
+    text-align: right;
+}
+
+.edit-button {
+    display: flex;
+    padding: 0px;
+    margin: 0px;
+}
+
+.high-line {
+    margin-top: -10px;
+}
+
+
+/* Prettier input box styles */
+input[type="text"], input[type="number"], input[type="date"], input[type="email"], input[type="tel"], textarea {
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    color: #333;
+    width: 100%;
+    /* max-width: 300px; */
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    height: 45px;
+  }
+
+  input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus, input[type="email"]:focus, input[type="tel"]:focus, textarea:focus {
+    border-color: #7fa4cd;
+    outline: none;
+    background-color: #e7f3ff; /* Light blue background on focus */
+  }
+  
+  input[type="text"]:hover, input[type="number"]:hover, input[type="date"]:hover, input[type="email"]:hover, input[type="tel"]:hover, textarea:hover {
+    border-color: #888;
+    background-color: #f1f1f1;
+  }
+
+  input[type="number"]{
+    width: 50px;
+  }
+  
+  textarea {
+    resize: vertical;
+    min-height: 100px; /* Ensure textarea has a minimum height */
+  }
+
+.date-range-row {
+    display: flex;
+    gap: 8px; /* Add space between elements */
+    border: 1px solid black;
+}
+
+
+  @media (max-width: 900px) {
+
+    .pickup-return-box {
+        order: 0;
+    }
+
+    .items-payment-box {
+        order: 1;
+    }
+
+    .notes-box {
+        order: 3;
+    }
+
+    .dates-box {
+        order: 2;
+    }
+
+    .edit-button {
+        order: 4;
+    }
+
+    .expanded-product-box {
+        display: grid;
+        grid-template-columns:  1fr 1.75fr; /* Each item will take at least 200px and can stretch */
+        padding: 20px 30px 20px 30px;
+        gap: 30px;
+    }
+    
+  }

@@ -1,0 +1,75 @@
+<body *ngIf="!cartEmpty" class="white-background">
+  <div class="title-container">
+    <img src="/images/checkout.png" class="title">
+  </div>
+  <form [formGroup]="checkoutForm" (ngSubmit)="submitForm()" class="checkout-container">
+    <div class="checkout-sides">
+      <div class="checkout-form">
+        <div class="form-field">
+          <label>Name</label>
+          <input type="text" formControlName="name" />
+        </div>
+
+        <div class="form-field">
+          <label>Email</label>
+          <input type="email" formControlName="email" />
+        </div>
+
+        <div class="form-field">
+          <label>Phone</label>
+          <input type="tel" formControlName="phone" />
+        </div>
+
+        <div class="form-field">
+          <label>Notes</label>
+          <textarea formControlName="notes"></textarea>
+        </div>
+      </div>
+      <div class="terms-of-service">
+        <h2 class="faq-category-title">Terms Summary</h2>
+        <div class="terms-container">
+            <div class="term" *ngFor="let term of terms; let i = index">
+              <div class="terms-question" (click)="toggleAnswer(terms, i)">
+                <div class="inside-term">
+                  <span [innerHTML]="term.question"></span>
+                  <span class="see-more-text">{{ term.open ? 'Close' : 'See more' }}</span>
+                </div>
+              </div>
+              <div class="term-answer" *ngIf="term.open" [innerHTML]="term.answer">
+                {{ term.answer }}
+              </div>
+            </div>
+        </div>
+        <div class="accept-terms-container">
+          <a [href]="'TermsAndConditions-v1.pdf'" target="_blank" class="terms-link main-font">View full Terms and Conditions (PDF)</a>
+          <label class="terms-accept-button" >
+            <input type="checkbox" formControlName="agreedToTerms" /> I have read and agree to the Terms and Conditions
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div *ngIf="partialSuccessMessage" class="success-message">{{ partialSuccessMessage }}</div> -->
+    <!-- <div *ngIf="errorMessage" class="error-message" [innerHTML]="errorMessage"></div> -->
+    <div *ngIf="partialSuccessMessage" class="error-message">
+      <span>&#9888;&#65039;</span>
+      <span [innerHTML]="partialSuccessMessage"></span>
+    </div>
+
+    <button type="submit" [disabled]="checkoutForm.invalid || loading || !checkoutForm.get('agreedToTerms')?.value">
+      {{ loading ? 'Processing...' : 'Submit Reservation' }}
+    </button>
+
+  </form>
+
+</body>
+
+ <!-- Error popup on reservation failure -->
+  <div class="error-popup" *ngIf="errorMessage">
+    <div class="error-popup-content tan-background">
+      <div class="error-icon">!</div>
+      <h3>Reservation Failed</h3>
+      <p [innerHTML]="errorMessage"></p>
+      <button (click)="closeErrorPopup()">Got it</button>
+    </div>
+  </div>

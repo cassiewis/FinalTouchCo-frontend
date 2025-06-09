@@ -1,0 +1,19 @@
+body {
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact-me {
+    margin: 0;
+    background-color: rgba(197, 199, 177, 0.75);
+    padding: 15px;
+    text-align: center;
+}
+
+.contact-me p {
+    margin: 0;
+    padding: 35px;
+    border: 1px solid white;
+}

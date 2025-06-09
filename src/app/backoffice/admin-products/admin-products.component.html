@@ -1,0 +1,49 @@
+<body>
+
+    <div class="header">
+      <div class="title">
+              <h1>Products</h1>
+      </div>
+      
+      <div class="order-stats-container">
+        <div class="total-orders-active stats">
+            <p class="stats-number">{{ activeProducts.length }}</p>
+            <p class="stats-title">Active</p>
+        </div>
+  
+        <div class="total-orders-pending stats">
+            <p class="stats-number">{{ inactiveProducts.length }}</p>
+            <p class="stats-title">Inactive</p>
+        </div>
+  
+        <div class="add-reservation-container">
+            <app-admin-add-product></app-admin-add-product>
+        </div>
+      </div>
+    </div>
+  
+    <div class="refresh-button-container">
+      <button (click)="refreshProducts()" class="refresh-button">refresh</button>
+    </div>
+  
+      <div class="product-list">
+          <div *ngIf="!loading" class="products-grid">
+            <div *ngFor="let product of activeProducts" class="list">
+              <div class="product-box">
+                <app-admin-product-box [product]="product" [numReservations]="5"></app-admin-product-box>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="product-list">
+        <div *ngIf="!loading" class="products-grid">
+          <div *ngFor="let product of inactiveProducts" class="list">
+            <div class="product-box">
+              <app-admin-product-box [product]="product" [numReservations]="5"></app-admin-product-box>
+            </div>
+          </div>
+        </div>
+    </div>
+        
+  
+  </body>

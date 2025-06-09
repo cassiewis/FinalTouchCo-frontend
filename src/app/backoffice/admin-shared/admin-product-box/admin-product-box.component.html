@@ -1,0 +1,109 @@
+<!-- Product-box -->
+<div class="product-item">
+    <div *ngIf="!product.active" class="status-container">
+        <p>Inactive</p>
+    </div>
+    <div class="button-container">
+        <button (click)="openProductEditor()" class="edit-button">Edit</button>
+    </div>
+
+    <img [src]="product.imageUrl" alt="{{ product.name }}" class="product-image" />
+    
+    <div class="title">
+        <h2 class="product-name">{{ product.name }}</h2>
+        <i class="product-id">{{ product.productId }}</i>
+    </div>
+
+    <div class="item-info-container">
+        <div class="price item-info-subcontainer"> 
+            <h3 class="item-info value">${{ product.price }}</h3>
+            <h3 class="item-info name">price</h3>
+        </div>
+        <div class="vertical-line"></div>
+        <div class="deposit item-info-subcontainer">
+            <h3 class="item-info value">${{ product.deposit }}</h3>
+            <h3 class="item-info name">deposit</h3>
+        </div>
+        <div class="vertical-line item-info"></div>
+        <div class="item-info-subcontainer">
+            <h3 class="item-info value">{{ this.numReservations }}</h3>
+            <h3 class="item-info name">reservations</h3>
+        </div>
+    </div>
+
+    <div class="description">
+        <p>{{ product.description }}</p>
+    </div>
+
+    <div class="calendar-container">
+        <button (click)="toggleCalendar()" class="calendar-button">
+          <mat-icon>calendar_today</mat-icon>
+        </button>
+      </div>
+    
+      <!-- Calendar popup when toggled on -->
+      <div *ngIf="showCalendar" class="calendar-popup">
+        <mat-calendar [dateClass]="dateClass"></mat-calendar>
+        <button class="close-calendar" (click)="toggleCalendar()">Close</button>
+    </div>
+</div>
+
+<!-- Edit Popup -->
+<div *ngIf="editMode" class="edit-popup form-class">
+    <div class="popup-content">
+        <h2>Edit Product</h2>
+        <div class="form-group">
+            <label>Name:</label>
+            <input [(ngModel)]="editableProduct.name" type="text" />
+        </div>
+        <div class="prices-container">
+            <div class="form-group">
+                <label>Price:</label>
+                <input [(ngModel)]="editableProduct.price" type="number" />
+            </div>
+            <div class="form-group">
+                <label>Deposit:</label>
+                <input [(ngModel)]="editableProduct.deposit" type="number" />
+            </div>
+            <div class="form-group">
+                <label>Count:</label>
+                <input [(ngModel)]="editableProduct.count" type="number" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Description:</label>
+            <textarea [(ngModel)]="editableProduct.description"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Status:</label>
+            <select [(ngModel)]="editableProduct.active">
+                <option value="true">Active</option>
+                <option value="false">Inactive</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Tags (comma-separated):</label>
+            <input [(ngModel)]="tagsInput" type="text" placeholder="e.g., signage, custom, rustic" />
+        </div>
+        <div class="form-group">
+            <label>Material:</label>
+            <input [(ngModel)]="editableProduct.material" type="text" />
+        </div>
+        <div class="form-group">
+            <label>Image URL:</label>
+            <input [(ngModel)]="editableProduct.imageUrl" type="text" />
+        </div>
+        <div class="form-group custom-checkbox-group">
+            <label class="custom-checkbox-label">
+                <input type="checkbox" [(ngModel)]="editableProduct.custom" name="isCustom" />
+                <span class="custom-checkbox-box"></span>
+                Custom Item
+            </label>
+        </div>
+        <div class="edit-button-container">
+            <button (click)="saveProduct()">Save</button>
+            <button (click)="closeProductEditor()">Cancel</button>
+            <button (click)="deleteProduct()">Delete</button>
+        </div>
+    </div>
+</div>

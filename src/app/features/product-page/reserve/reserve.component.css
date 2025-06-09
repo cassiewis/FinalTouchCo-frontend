@@ -1,0 +1,33 @@
+.input-box {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.availability-checker {
+    display: flex;
+    flex-direction: column;
+    gap: -10px;
+}
+
+mat-hint {
+    font-size: 0.6rem;
+    line-height: 1;
+}
+
+.label, .input {
+    font-size: 14px;
+    color: gray;
+}
+
+.reserve-button {
+    height: 40px;
+    width: 100%;
+    color: rgb(60, 60, 60);
+    font-size: 0.8rem;
+    margin: 0;
+ }
+
+ .reserve-button:hover {
+    cursor: pointer;
+ }

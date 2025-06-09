@@ -1,0 +1,4 @@
+<div class="snackbar-content" [innerHTML]="data.message"></div>
+<button (click)="data.action(); close()" class="snackbar-button">
+  {{ data.actionLabel }}
+</button>

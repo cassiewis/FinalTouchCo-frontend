@@ -1,0 +1,66 @@
+<body class="green-background">
+
+    <div class="container">
+        <div class="title-container">
+            <h1 class="title">FREQUENTLY ASKED QUESTIONS</h1>
+        </div>
+    
+        <div class="faq-grid">
+            <div class="faq-category">
+                <h2 class="cursive-font faq-category-title">General Questions</h2>
+            </div>
+            <div class="faqs-container">
+                <div class="faq" *ngFor="let faq of generalFaqs; let i = index">
+                  <div class="faq-question" (click)="toggleAnswer(generalFaqs, i)">
+                    <div class="inside-question">
+                      <span>{{ faq.question }}</span>
+                      <i class="arrow down"></i>
+                    </div>
+                  </div>
+                  <div class="faq-answer" *ngIf="faq.open">
+                    {{ faq.answer }}
+                  </div>
+                </div>
+            </div>
+              
+
+            <div class="faq-category">
+                <h2 class="cursive-font faq-category-title">Custom Items</h2>
+            </div>
+            <div class="faqs-container">
+                <div class="faq" *ngFor="let faq of customFaqs; let i = index">
+                  <div class="faq-question" (click)="toggleAnswer(customFaqs, i)">
+                    <div class="inside-question">
+                      <span>{{ faq.question }}</span>
+                      <i class="arrow down"></i>
+                    </div>
+                  </div>
+                  <div class="faq-answer" *ngIf="faq.open">
+                    {{ faq.answer }}
+                  </div>
+                </div>
+            </div>
+              
+
+            <div class="faq-category">
+                <h2 class="cursive-font faq-category-title">Policies & Payment</h2>
+            </div>
+            <div class="faqs-container">
+                <div class="faq" *ngFor="let faq of policyFaqs; let i = index">
+                  <div class="faq-question" (click)="toggleAnswer(policyFaqs, i)">
+                    <div class="inside-question">
+                      <span>{{ faq.question }}</span>
+                      <i class="arrow down"></i>
+                    </div>
+                  </div>
+                  <div class="faq-answer" *ngIf="faq.open">
+                    {{ faq.answer }}
+                  </div>
+                </div>
+              </div>
+              
+        </div>
+    </div>
+  </body>
+
+  <app-how-it-works></app-how-it-works>

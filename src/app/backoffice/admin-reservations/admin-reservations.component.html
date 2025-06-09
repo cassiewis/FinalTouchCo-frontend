@@ -1,0 +1,83 @@
+<body>
+
+    <div class="header">
+        <div class="title">
+                <h1>Orders</h1>
+        </div>
+            <!-- Filter controls -->
+        <div class="top-container">
+            <div class="filter-container">
+                <label>
+                    <input
+                        type="checkbox" 
+                        (change)="onFilterChange('pending', $event)"
+                        [checked]="selectedStatuses.includes('pending')" /> Pending
+                </label>
+                <label>
+                    <input 
+                        type="checkbox" 
+                        (change)="onFilterChange('active', $event)"
+                        [checked]="selectedStatuses.includes('active')" /> Active
+                </label>
+                <label>
+                    <input 
+                        type="checkbox" 
+                        (change)="onFilterChange('canceled', $event)"
+                        [checked]="selectedStatuses.includes('canceled')" /> Canceled
+                </label>
+                <label>
+                    <input 
+                        type="checkbox" 
+                        (change)="onFilterChange('fulfilled', $event)"
+                        [checked]="selectedStatuses.includes('fulfilled')" /> Fulfilled
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="order-stats-container">
+        <div class="total-orders-active stats">
+            <p class="stats-number">{{ reservations.length }}</p>
+            <p class="stats-title">Total Active</p>
+        </div>
+
+        <div class="total-orders-pending stats">
+            <p class="stats-number">{{ reservations.length }}</p>
+            <p class="stats-title">Total Pending</p>
+        </div>
+
+        <div class="total-orders-fulfilled stats">
+            <p class="stats-number">{{ reservations.length }}</p>
+            <p class="stats-title">Total Fulfilled</p>
+        </div>
+
+        <div class="add-reservation-container">
+            <app-admin-add-reservation></app-admin-add-reservation>
+        </div>
+    </div>
+    <div class="refresh-button-container">
+        <button (click)="refreshReservations()" class="refresh-button">refresh</button>
+    </div>
+    <div class="list-container">
+        <div class="table-title-container">
+            <p>Status</p>
+            <p>Name</p>
+            <p>Dates</p>
+            <p>Phone #</p>
+            <p>Email</p>
+            <p>Invoice</p>
+            <p>Payment</p>
+            <p>Refund</p>
+        </div>
+
+        <!-- Display the filtered reservation list -->
+        <div *ngIf="!loading" class="reservation-list">
+            <div *ngFor="let reservation of filteredReservations" class="list">
+                <div class="product-box">
+                    <app-admin-reservation-box [reservation]="reservation"></app-admin-reservation-box>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>

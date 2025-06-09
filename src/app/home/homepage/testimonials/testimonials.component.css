@@ -1,0 +1,114 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+    margin: 0px;
+    padding: 40px 0px;
+    display: flex;
+}
+
+.title-side {
+  width: 40%;
+  height: 100%; 
+  display: flex;
+  justify-content: right;
+}
+
+.title-container {
+  width: 80%;
+  align-items: right;
+  text-align: left;
+  padding: 30px;
+}
+
+.title-container p {
+  margin: 0;
+  padding: 10px;
+}
+
+.title {
+  font-size: 2rem;
+}
+
+.read-success-stories {
+  font-size: 2.75rem;
+}
+
+.reviews-side {
+  width: 60%;
+  display: flex; /* Aligns child elements in a row */
+  overflow-x: auto; /* Enables horizontal scrolling */
+  white-space: nowrap; /* Prevents wrapping of child elements */
+  align-items: center; /* Centers items vertically */
+  gap: 30px; /* Adds spacing between review boxes */
+  padding: 10px; /* Optional: Adds padding around the scrollable area */
+}
+
+.review {
+  flex: 0 0 auto; /* Prevents the review boxes from shrinking or growing */
+  /* background-color: white; */
+  border-radius: 4px;
+  width: 200px; /* Ensures each review box has a consistent width */
+  height: 290px; /* Sets a fixed height for the review box */
+  text-align: center;
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); Adds a subtle shadow for better visuals */
+  overflow: hidden; /* Ensures content stays within the box */
+  padding: 15px;
+}
+
+.review-text {
+  text-align: left; /* Aligns text to the left */
+  white-space: normal; /* Allows text to wrap inside the review box */
+  word-wrap: break-word; /* Breaks long words to prevent overflow */
+  font-size: 0.9rem;
+  overflow: hidden; /* Prevents horizontal overflow */
+}
+
+.review-author {
+  text-align: left; /* Aligns text to the left */
+  font-size: 1rem;
+  font-style: italic;
+}
+
+.stars {
+  font-size: 1.25rem; /* Increase the size of the stars */
+  display: flex; /* Use flexbox to control spacing between stars */
+  justify-content: center; /* Center the stars horizontally */
+  gap: 5px; /* Add space between the stars */
+}
+
+.star {
+  font-size: inherit;
+}
+
+@media (max-width: 915px) {
+  body {
+    flex-direction: column;
+  }
+
+  .reviews-side, .title-side {
+    width: 100%;
+    justify-content: left;
+    padding: 20px;
+  }  
+
+  .title-container {
+    padding: 0;
+    width: 100%;
+    align-items: left;
+  }
+
+}
+
+@media (max-width: 500px) {
+
+  .review {
+      font-size: 0.8rem;
+  }
+
+  .stars {
+    padding: 5px;
+    margin: 0;
+  }
+}

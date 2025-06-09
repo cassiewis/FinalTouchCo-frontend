@@ -1,0 +1,177 @@
+<body>
+    <div class="reservation-box" (click)="this.openExpandedBox()">
+        <div class="status-box-container subcontainer">
+            <div class="status-box"
+                [ngClass]="{
+                    'green-background': reservation.status === 'active',
+                    'grey-background': reservation.status == 'canceled',
+                    'red-background': reservation.status == 'fulfilled',
+                    'yellow-background': reservation.status == 'pending'
+                }"
+                (click)="toggleStatusDropdown($event)">
+                <p class="status">{{ reservation.status }}</p>
+            </div>
+            <div *ngIf="showStatusDropdown" class="status-dropdown">
+                <select [(ngModel)]="editableReservation.status" (change)="updateReservationStatus(editableReservation.status)">
+                    <option value="active">Active</option>
+                    <option value="canceled">Canceled</option>
+                    <option value="fulfilled">Fulfilled</option>
+                    <option value="pending">Pending</option>
+                </select>
+            </div>
+        </div>
+        <div class="name-container subcontainer">
+            <div *ngIf='!editMode else editName'>
+                <p class="name">{{ reservation.name }}</p>
+            </div>
+            <ng-template #editName class="name-container">
+                <input type="text" [(ngModel)]="editableReservation.name"/>
+            </ng-template>
+        </div>
+        <div class="dates-container subcontainer">
+            <p class="dates">{{ displayDates() }}</p>
+        </div>
+        <div class="contact-container-phone subcontainer">
+            <div *ngIf='!editMode else editContactInfo'>
+                <p class="phonenumber">{{ reservation.phoneNumber }}</p>
+            </div>
+            <ng-template #editContactInfo>
+                <input type="tel" [(ngModel)]="editableReservation.phoneNumber">
+            </ng-template>
+        </div>
+        <div class="contact-container-email subcontainer">
+            <div *ngIf='!editMode else editContactInfo'>
+                <p class="email">{{ reservation.email }}</p><br>
+            </div>
+            <ng-template #editContactInfo>
+                <input type="email" [(ngModel)]="editableReservation.email">
+            </ng-template>
+        </div>
+        <div class="invoice-container updates-container subcontainer" 
+        [ngClass]="{
+            'green-circle': reservation.invoiceStatus === 'sent',
+            'red-circle': reservation.invoiceStatus === 'not sent'
+            }">
+            <p class="updates-item">
+                {{ reservation.invoiceStatus }}
+            </p>
+        </div>
+        <div class="payment-container updates-container subcontainer"
+        [ngClass]="{
+            'green-circle': reservation.invoiceStatus === 'sent',
+            'red-circle': reservation.invoiceStatus === 'not sent'
+            }">
+            <p class="updates-item"
+                [ngClass]="{
+                    'green-circle': reservation.invoiceStatus === 'recieved',
+                    'red-circle': reservation.invoiceStatus == 'not recieved'
+                }">
+                {{ reservation.paymentStatus }}
+            </p>
+        </div>
+        <div class="deposit-container updates-container subcontainer"
+        [ngClass]="{
+            'green-circle': reservation.invoiceStatus === 'sent',
+            'red-circle': reservation.invoiceStatus === 'not sent'
+            }">
+            <p class="updates-item"
+                [ngClass]="{
+                    'green-circle': reservation.invoiceStatus === 'returned',
+                    'red-circle': reservation.invoiceStatus == 'not returned'
+                }">
+                {{ reservation.depositStatus }}
+            </p>
+        </div>
+    </div>
+
+    <div class="expanded-container" *ngIf="this.expandBox">
+        <p class="product-id">id: {{ reservation.reservationId }}</p>
+        <div class="expanded-product-box">
+            <div class="pickup-return-box box">
+                <p class="box-title">PICKUP \ RETURN</p>
+                <div *ngIf="!editMode; else editPickupReturn">
+                    <p class="light">Pickup Date: </p>
+                    <p class="high-line">{{ displayDate(reservation.dates[0]) }}</p>
+                    <p class="light">Return Date: </p>
+                    <p class="high-line">{{ displayDate(reservation.dates[reservation.dates.length-1]) }}</p>
+                    <p class="light">Pickup Notes:</p>
+                    <p class="high-line">{{ reservation.pickupNotes }}</p>
+                </div>
+                <ng-template #editPickupReturn>
+                    <mat-date-range-input [formGroup]="datesForm" [rangePicker]="picker">
+                        <input matStartDate formControlName="start" placeholder="{{ displayDate(reservation.dates[0]) }}">
+                        <input matEndDate formControlName="end" placeholder="{{ displayDate(reservation.dates[reservation.dates.length-1]) }}">
+                        </mat-date-range-input>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #picker></mat-date-range-picker>
+                            
+                    <p class="light">Pickup Notes:</p>
+                    <textarea [(ngModel)]="editableReservation.pickupNotes"></textarea>
+                </ng-template>
+            </div>
+
+            <div class="items-payment-box box">
+                <p class="box-title">ITEMS AND PAYMENT</p>
+                <div>
+                    <div class="content">
+                        <div class="product-side">
+                            <div *ngFor="let item of this.reservation.items">
+                                <div *ngIf="!editMode; else editItemFields">
+                                    <p>{{ item.name }} - {{ item.count }} count</p>
+                                    <p class="product-info">&nbsp;&nbsp; id: {{ item.productId }}</p>
+                                    <p class="product-info">&nbsp;&nbsp; price: ${{ item.price }}, deposit: ${{ item.deposit }}</p>
+                                </div>
+                                <ng-template #editItemFields>
+                                    <p>{{ item.name }} - <input type="number" [(ngModel)]="item.count" /> count</p>
+                                    <p class="product-info">&nbsp;&nbsp; id: {{ item.productId }}</p>
+                                    <p class="product-info">&nbsp;&nbsp; price: $<input type="number" [(ngModel)]="item.price" />, deposit: $<input type="number" [(ngModel)]="item.deposit" /></p>
+                                </ng-template>
+                            </div>
+                        </div>
+                        <div class="price-side">
+                            <p>PRICE: ${{ displayTotalPrice() }}</p>
+                            <p>DEPOSIT: ${{ displayTotalDeposit() }}</p>
+                        </div>
+                    </div>
+                    <p class="invoice-price">INVOICE PRICE: ${{ displayTotalPrice() + displayTotalDeposit() }}</p>
+                </div>
+            </div>
+
+            <div class="notes-box box">
+                <p class="box-title">NOTES</p>
+                <p class="light">Customer Notes:</p>
+                <p class="high-line" *ngIf="!editMode; else editCustomerNotes">{{ reservation.customerNotes }}</p>
+                <ng-template #editCustomerNotes>
+                    <textarea [(ngModel)]="editableReservation.customerNotes"></textarea>
+                </ng-template>
+                <p class="light">My Notes:</p>
+                <p class="high-line" *ngIf="!editMode; else editMyNotes">{{ reservation.myNotes }}</p>
+                <ng-template #editMyNotes>
+                    <textarea [(ngModel)]="editableReservation.myNotes"></textarea>
+                </ng-template>
+            </div>
+
+            <div class="dates-box box">
+                <p class="box-title">DATES</p>
+                <p class="light">Send Invoice:</p>
+                <p class="high-line">{{ displayDateFrom(reservation.dates[0], -100) }}</p>
+                <p class="light">Payment Due:</p>
+                <p class="high-line">{{ displayDateFrom(reservation.dates[0], -90) }}</p>
+                <p class="light">Return Deposit:</p>
+                <p class="high-line">{{ displayDateFrom(reservation.dates[0], 10) }}</p>
+            </div>
+        </div>  
+
+        <div *ngIf="expandBox" class="action-buttons">
+            <div class="buttons-not-edit">
+                <button *ngIf="!editMode" class="edit-button" (click)="toggleEditMode()">Edit</button>
+                <button *ngIf="!editMode" class="close-button" (click)="closeExpandedBox()">Close</button>
+            </div>
+            <div class="buttons-edit">
+                <button *ngIf="editMode" class="save-button" (click)="saveChanges()">Save</button>
+                <button *ngIf="editMode" class="cancel-button" (click)="cancelChanges()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+</body>

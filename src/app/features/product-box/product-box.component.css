@@ -1,0 +1,64 @@
+.product-item {
+    padding: 10px;
+    transition: transform 0.2s;
+    position: relative; /* Ensures the product-item container is positioned correctly */
+}
+
+.item-info {
+    padding: 10px 0;
+}
+
+.product-item:hover {
+    transform: scale(1.02); /* Adds a hover effect */
+    cursor: pointer;
+}
+
+.image-placeholder {
+    position: relative; /* Establishes a positioning context for the custom-icon */
+    width: 100%; /* Ensures the placeholder takes up the full width */
+}
+
+.image-container {
+    position: relative; /* Ensures the custom-icon is positioned relative to this container */
+    width: 100%; /* Ensures the container matches the placeholder width */
+    height: auto; /* Maintains aspect ratio */
+}
+
+.product-image {
+    display: block; /* Ensures the image doesn't add extra space */
+    width: 100%; /* Makes the image responsive */
+    height: auto; /* Maintains the aspect ratio */
+    object-fit: cover; /* Ensures the image covers the container without distortion */
+    transition: opacity 0.25s ease-in-out; /* Smooth transition for image loading */
+    aspect-ratio: 4/5;
+}
+
+.product-image.loaded {
+    opacity: 1; /* Ensures the image is fully visible once loaded */
+}
+
+.product-name {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}
+
+.info-price {
+    font-size: 1rem;
+    opacity: 0.5;
+    margin: 0;
+    padding: 2px 0 0 0;
+}
+  
+.custom-text {
+    position: absolute;
+    top: 0px; 
+    left: 0px;
+    padding: 5px;
+    margin: 0px;
+    z-index: 2; 
+    display: block;
+    font-size: 0.75rem;
+    background-color: rgb(168, 192, 224);
+}

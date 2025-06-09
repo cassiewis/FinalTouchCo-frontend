@@ -1,0 +1,48 @@
+<body class="create-button-form">
+    <button class="create-button" (click)="openReviewCreator()">Create Review</button>
+
+    <!-- Popup Modal -->
+    <div *ngIf="popupOpen" class="popup-overlay">
+    <div class="popup-content">
+      <h1 class="title">Create Review</h1>
+      <button mat-button (click)="closeReviewCreator()" class="close-button">X</button>
+      <div class="form-body">
+        <!-- Review Form -->
+        <form (ngSubmit)="createReview()" #reviewForm="ngForm" class="form-body">
+            <!-- Form fields for review details -->
+            <div class="form-section">
+                <div class="info-side">
+
+                    <mat-form-field appearance="outline" class="input-item">
+                        <mat-label>Author</mat-label>
+                        <input matInput class="input-box" placeholder="Enter Author's name" [(ngModel)]="review.author" name="author" required>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="input-item">
+                        <mat-label>Stars</mat-label>
+                        <input matInput class="input-box" type="number" placeholder="Enter Deposit" [(ngModel)]="review.rating" name="stars" required>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="input-item">
+                        <mat-label>Review</mat-label>
+                        <input matInput class="input-box" placeholder="Enter review" name="review" [(ngModel)]="review.content" name="content" required>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="input-item">
+                        <mat-label>Event Type</mat-label>
+                        <input matInput class="input-box" placeholder="Enter event type" name="event type" [(ngModel)]="review.event" name="event" required>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="input-item">
+                        <mat-label>Date of Review</mat-label>
+                        <input matInput class="input-box" placeholder="Enter date" name="date" [(ngModel)]="review.date" name="date" required>
+                    </mat-form-field>
+                </div>
+            </div>
+            <!-- Submit button -->
+            <button mat-raised-button color="primary" type="submit" [disabled]="!reviewForm.valid">Create Review</button>
+        </form>
+        </div>
+    </div>
+    </div>
+</body>

@@ -1,0 +1,15 @@
+<header class="tan-background">
+    <a href="/home" class="logo-container">
+        <img src="/logo.png" alt="Final touch" class="logo"/>
+    </a>
+    <nav class="nav-links">
+        <a href="/home" class="links">Home</a>
+        <a href="/shop" class="links">Shop</a>
+        <a href="/inspo" class="links">Inspo</a>
+        <a href="/faqs" class="links">FAQs</a>
+        <div class="cart-link-container">
+            <a href="/cart"><i class="fa fa-shopping-cart links cart-icon"></i></a>
+            <span class="cart-notification" *ngIf="cartCount > 0">{{ cartCount }}</span>
+        </div>
+   </nav>
+</header>

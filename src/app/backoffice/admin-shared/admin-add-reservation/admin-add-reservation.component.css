@@ -1,0 +1,57 @@
+
+  /* Form body spacing */
+  .form-section {
+    display: flex;
+    gap: 16px; /* Adds space between each form field */
+  }
+
+  .info-side {
+    width: 60%;
+  }
+
+  .items-side {
+    width: 40%;
+  }
+
+  .price-container, .name-container {
+    display: flex;
+    gap: 16px;
+  }
+
+
+  .items-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .checkbox-item {
+    display: inline-block;
+  }
+  
+  .picture-checkbox {
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    overflow: hidden;
+    display: inline-block;
+    width: 150px; /* Adjust size as needed */
+    text-align: center;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .picture-checkbox img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  .picture-checkbox .product-info {
+    padding: 3px;
+    background-color: #f9f9f9;
+  }
+  
+  .picture-checkbox.checked {
+    border-color: #007bff; /* Highlight color when selected */
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+  }

@@ -1,0 +1,157 @@
+
+body {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    justify-content: center;
+}
+
+.success-header {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    padding: 20px 20px;
+}
+
+.success-title-container {
+    width: 60%;
+}
+
+.whats-next-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 350px;
+    width: 100%;
+    color: white;
+    padding: 15px 0;
+    background: linear-gradient(to bottom, #faf3eb 0%, #faf3eb 50%, white 50%, white 100%);
+    overflow: hidden; /* Hide the overflowing parts of the image */
+  }
+
+  .whats-next-image {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 100%;
+    object-fit: cover; /* Crop the sides while keeping the image centered */
+  }
+
+  .next-steps-container {
+    margin: 30px 30px 60px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 8rem;
+    max-width: 1000px;
+    align-items: center; /* Center the .step blocks horizontally */
+  }
+
+  .step {
+    display: flex;
+    align-items: center;
+    width: 80%;      /* Each step is 80% of the container */
+    gap: 30px;
+  }
+
+  .step-image {
+    width: 90px;
+    height: 90px;
+  }
+
+  .step-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 0 0 5px 0;
+    margin: 0px;
+  }
+
+  .step-description {
+    padding: 0px;
+    margin: 0px;
+  }
+
+.left-step {
+  justify-content: flex-start;
+  margin-right: auto;
+}
+
+.right-step {
+  justify-content: flex-end;
+  margin-left: auto; /* Push the right-step to the right edge of the 80% block */
+}
+
+.left-step .step-text {
+  text-align: left;
+}
+
+.right-step .step-text {
+  text-align: right;
+}
+
+@media (max-width: 900px){
+  .whats-next-image {
+      height: 300px;
+    }
+}
+
+@media (max-width: 750px){
+
+.next-steps-container {
+    gap: 4rem;
+  }
+
+  .step {
+    width: 90%;
+  }
+
+  .whats-next-image {
+      height: 270px;
+    }
+}
+
+@media (max-width: 600px){
+
+  .step {
+    width: 100%;      /* Each step is 80% of the container */
+    gap: 20px;
+  }
+
+  .step-image {
+    width: 75px;
+    height: 75px;
+  }
+
+  .step-title {
+    font-size: 1.25rem;
+  }
+
+
+}
+
+@media (max-width: 600px){
+
+.next-steps-container {
+    margin: 20px;
+}
+
+.step-title {
+    font-size: 1rem;
+}
+
+.step-description {
+    font-size: 0.8rem;  
+}
+
+.step-image {
+    width: 50px;
+    height: 50px;
+  }
+
+  .success-title-container {
+    width: 90%;
+}
+
+}

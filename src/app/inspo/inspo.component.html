@@ -1,0 +1,40 @@
+<body class="white-background">
+    <app-error-banner></app-error-banner>
+    
+    <section *ngIf="inspoOpen" class="open-section">
+        <div class="header-container tan-background">
+            <div class="header-image-container">
+                <img class="title" src="images/inspo-title.png" alt="Inspiration Title">
+            </div>
+            <p class="side-text right-text" (click)="togglePage()">See Customer Testimonials</p>
+        </div>
+        <div class="inspo-grid-container">
+            <div *ngFor="let photo of inspoPhotos" class="inspo-photo">
+                <img [src]="photo" alt="Inspiration Photo">
+            </div>
+        </div>
+    </section>
+
+    <section *ngIf="!inspoOpen" class="open-section">
+        <div class="header-container tan-background">
+            <div class="header-image-container">
+                <img class="title" src="images/testimonials-title.png" alt="Inspiration Title">
+            </div>
+            <p class="side-text right-text" (click)="togglePage()">See Inspo Photos</p>
+        </div>
+        <div class="reviews-container">
+            <div *ngFor="let review of reviews" class="review">
+                <p class="stars">
+                    <span class ="yellow-font" *ngFor="let star of [].constructor(review.rating)">★</span>
+                </p>
+                <p class="review-text">{{ review.content }}</p>
+                <div class="review-footer">
+                    <p class="review-author green-font">{{ review.author }}</p>
+                    <p class="review-date green-font">{{ review.date }}</p>
+                    <p class="review-event-type green-font">{{ review.event }}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
