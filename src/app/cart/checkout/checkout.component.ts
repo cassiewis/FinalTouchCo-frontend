@@ -84,7 +84,7 @@ export class CheckoutComponent implements OnInit {
 
     // Get reCAPTCHA token before proceeding
     grecaptcha.ready(() => {
-      grecaptcha.execute('your_site_key', {action: 'submit'}).then(async (token: string) => {
+      grecaptcha.execute('6LcDEVsrAAAAAFl4PlRK9kPGNE7941aURycc1U95', {action: 'submit'}).then(async (token: string) => {
         this.checkoutForm.patchValue({ recaptchaToken: token });
 
         // Check if all items are available
@@ -102,7 +102,7 @@ export class CheckoutComponent implements OnInit {
         let failedSubmissions = 0;
 
         for (const single_reservation of reservations) {
-          this.reservationService.addReservation(single_reservation).subscribe(
+          this.reservationService.addReservation(single_reservation, token).subscribe(
             (response: Reservation) => {
               successfulSubmissions++;
               if (successfulSubmissions + failedSubmissions === reservations.length) {
