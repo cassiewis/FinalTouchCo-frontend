@@ -26,13 +26,20 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url('/images/inspo-header-background.jpg');
+  background-image: url('/images/inspo-header-background.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
   margin: 0 auto;
   z-index: 1;
 
+}
+
+/* WebP for browsers that support it */
+@supports (background-image: url("image.webp")) {
+  .header-image-container {
+    background-image: url('/images/inspo-header-background.webp');
+  }
 }
 
 .side-text {

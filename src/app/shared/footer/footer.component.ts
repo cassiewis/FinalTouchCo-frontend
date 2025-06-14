@@ -34,4 +34,17 @@ export class FooterComponent {
       }, 0); // delay the execution to ensure navigation finishes first
     });
   }
+
+  routeToInstagram() {
+    window.open('https://www.instagram.com/final.touch.co', '_blank');
+  }
+
+  routeToFacebook() {
+    window.open('https://www.facebook.com/profile.php?id=61573848536553', '_blank');
+  }
+
+  routeToEmail() {
+    const email = 'finaltouchco.info@gmail.com';
+    window.location.href = `mailto:${email}`;
+  }
 }
