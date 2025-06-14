@@ -1,12 +1,8 @@
 <body class="container white-background">
-  <div class="loading-section" *ngIf="loading">
-    <app-loading-icon></app-loading-icon>
-  </div>
 
   <div class="tan-background body" *ngIf="!loading">
     <div class="product-body">
       <div class="product-image-box">
-        <!-- <img src="/images/stock_photo.png" alt="product-image" class="product-image" (load)="loading=false"> -->
         <img [src]="product.imageUrl" alt="product-image" class="product-image" (load)="loading=false">
       </div>
       <div class="product-description-container">
@@ -22,7 +18,7 @@
         </div>
 
         <div class="reserve-container">
-          <p *ngIf="product.custom">⭐ This item is eligible for customization</p>
+          <p *ngIf="product.custom">⭐ This item is customizable</p>
           <app-reserve [product]="product"></app-reserve>
         </div>
         <div class="product-description-details">

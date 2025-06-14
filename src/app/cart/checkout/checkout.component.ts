@@ -60,6 +60,16 @@ export class CheckoutComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
+
+    if (!document.getElementById('recaptcha-script')) {
+      const script = document.createElement('script');
+      script.id = 'recaptcha-script';
+      script.src = 'https://www.google.com/recaptcha/api.js?render=6LcDEVsrAAAAAFl4PlRK9kPGNE7941aURycc1U95';
+      script.async = true;
+      script.defer = true;
+      document.body.appendChild(script);
+    }
+
     this.checkoutForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],

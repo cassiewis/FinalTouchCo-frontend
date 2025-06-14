@@ -6,7 +6,6 @@ import { Product } from '../../models/product.model';
 import { Location } from '@angular/common';
 import { CartService } from '../../services/cart-service.service';
 import { ReserveComponent } from './reserve/reserve.component';
-import { LoadingIconComponent } from '../../shared/loading-icon/loading-icon.component';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ProductBoxComponent } from '../product-box/product-box.component';
@@ -20,7 +19,7 @@ import { DetailsService } from '../../services/details.service';
   templateUrl: './product-page.component.html',
   styleUrls: ['./product-page.component.css'],
   standalone: true,
-  imports: [FormsModule, ReserveComponent, CommonModule, ProductBoxComponent, LoadingIconComponent],
+  imports: [FormsModule, ReserveComponent, CommonModule, ProductBoxComponent],
 })
 export class ProductPageComponent implements OnInit {
   product!: Product; // Assert that Product will always be defined

@@ -4,12 +4,11 @@ import { Product } from '../../models/product.model';
 import { ProductService } from '../../services/product.service';
 import { CommonModule } from '@angular/common';
 import { ProductBoxComponent } from '../../features/product-box/product-box.component';
-import { LoadingIconComponent } from '../../shared/loading-icon/loading-icon.component';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, ProductBoxComponent, RouterModule, LoadingIconComponent],
+  imports: [CommonModule, ProductBoxComponent, RouterModule],
   providers: [ProductService],
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css'], // corrected from styleUrl to styleUrls
