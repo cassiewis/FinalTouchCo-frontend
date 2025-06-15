@@ -1,0 +1,35 @@
+<body>
+
+    <div class="header">
+      <div class="title">
+              <h1>Blockout Dates</h1>
+      </div>
+      
+      <div class="reviews-stats-container">
+        <div class="total-orders-active stats">
+            <p class="stats-number">{{ blockoutDates.length }}</p>
+            <p class="stats-title">Blockout Dates</p>
+        </div>
+  
+        <div class="add-review-container">
+            <app-admin-add-blockout-dates></app-admin-add-blockout-dates>
+        </div>
+      </div>
+    </div>
+  
+    <div class="refresh-button-container">
+      <button (click)="fetchBlockoutDates()" class="refresh-button">refresh</button>
+    </div>
+  
+    <div class="blockout-list">
+        <div *ngFor="let blockoutDate of blockoutDates" class="list">
+            <div class="blockout-box">
+                <p class="box-section blockout-date-dates">{{ displayDates(blockoutDate) }}</p>
+                <p class="box-section blockout-date-reason">{{ blockoutDate.reason }}</p>
+                <p class="box-section blockout-date-notes">{{ blockoutDate.notes }}</p>
+                <p class="box-section blockout-date-button-container"><button class="box-section delete-button" (click)="deleteBlockout(blockoutDate.id)">Delete</button></p>
+
+            </div>
+        </div>
+    </div>
+  </body>

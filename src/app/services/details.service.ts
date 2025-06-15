@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, map, forkJoin } from 'rxjs';
 import { Review } from '../models/review.model';
 import { AddOnItem } from '../models/addOnItem.model';
+import { BlockoutDate } from '../models/blockoutDates';
 import { BACKEND_URL } from '../shared/constants';
 
 @Injectable({
@@ -20,6 +21,18 @@ export class DetailsService {
           return response.data;
         } else {
           throw new Error(response.message || 'Failed to fetch reviews');
+        }
+      })
+    );
+  }
+
+  getAllBlockoutDates(): Observable<Date[]> {
+    return this.http.get<string[]>(`${this.apiUrl}/blockoutdates`).pipe(
+      map((response: any) => {
+        if (response.success) {
+          return response.data;
+        } else {
+          throw new Error(response.message || 'Failed to fetch blockout dates');
         }
       })
     );

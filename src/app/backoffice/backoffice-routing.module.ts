@@ -6,6 +6,7 @@ import { AdminReservationsComponent } from './admin-reservations/admin-reservati
 import { LoginComponent } from './login/login.component';
 import { AdminReviewsComponent } from './admin-reviews/admin-reviews.component';
 import { AuthGuard } from './auth.guard';
+import { AdminBlockoutDates } from './admin-blockout-dates/admin-blockout-dates';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -17,8 +18,8 @@ const routes: Routes = [
       { path: 'products', component: AdminProductsComponent },
       { path: 'reservations', component: AdminReservationsComponent },
       { path: 'reviews', component:AdminReviewsComponent },
-
-      { path: '', redirectTo: 'products', pathMatch: 'full' },
+      { path: 'blockout-dates', component:AdminBlockoutDates},
+      // { path: '', redirectTo: 'products', pathMatch: 'full' },
     ]
   }
 ];

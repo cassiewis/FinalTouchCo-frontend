@@ -1,0 +1,13 @@
+/* Overlay background */
+  
+  .form-section {
+    display: flex;
+    gap: 16px;
+  }
+
+
+  .numbers-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+  }

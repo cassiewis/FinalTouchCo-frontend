@@ -15,7 +15,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomSnackbarComponent } from '../../../shared/custom-snackbar/custom-snackbar.component';
 import { ReservedDatesService } from '../../../services/reserved-dates.service';
 import { ConfirmNewReservationDialogComponent } from '../../../shared/confirm-new-reservation-dialog/confirm-new-reservation-dialog.component';
+import { DetailsService } from '../../../services/details.service';
 import { BUFFER_DAYS } from '../../../shared/constants';
+
 @Component({
   selector: 'app-reserve',
   standalone: true,
@@ -29,7 +31,8 @@ export class ReserveComponent implements OnChanges {
   // product!: Product;
   minDate: Date;
   maxDate: Date;
-  reservedDates: Date[];
+  reservedDates: Date[] = [];
+  blockoutDates: Date[] = [];
   showReservationPopup: boolean = false;
   isAgreed: boolean = false;
   ItemInCartMessage: string = 'Item already in Cart';
@@ -39,24 +42,23 @@ export class ReserveComponent implements OnChanges {
   });
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
-    private productService: ProductService,
     private reservedDatesService: ReservedDatesService,
     public dialog: MatDialog,
     private cartService: CartService,
+    private detailsService: DetailsService,
     private snackBar: MatSnackBar
   ) {
     const today = new Date();
     this.minDate = today;  // Current date
     this.maxDate = new Date(today.getFullYear(), today.getMonth() + 6, today.getDate());  // 1 year from today
-    this.reservedDates = [];
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['product'] && this.product) {
       // Load reserved dates for the new product
       this.loadReservedDates();
+      this.loadBlockoutDates();
     }
   }
 
@@ -64,7 +66,7 @@ export class ReserveComponent implements OnChanges {
     if (this.product && this.product.productId) {
       this.reservedDatesService.getReservedDatesByProductId(this.product.productId).subscribe(
         (data: Date[]) => {
-          this.reservedDates = data;
+          this.reservedDates = data;            
         },
         (error) => {
           console.error('Error fetching reserved dates:', error);
@@ -73,43 +75,61 @@ export class ReserveComponent implements OnChanges {
     }
   }
 
-
-// Define the dateFilter function with buffer support
-dateFilter = (date: Date | null): boolean => {
-  if (!date) return true; // Enable if the date is null
-
-  // Block out today and the next 9 days
-  const today = new Date();
-  today.setHours(0, 0, 0, 0); // Normalize to midnight
-  const tenDaysFromToday = new Date(today);
-  tenDaysFromToday.setDate(today.getDate() + 9);
-
-  if (date >= today && date <= tenDaysFromToday) {
-    return false;
+  loadBlockoutDates() {
+    this.detailsService.getAllBlockoutDates().subscribe(
+      (data: Date[]) => {
+        this.blockoutDates = data.map(date => new Date(date)); // Convert to Date objects
+        console.log('Fetched blockout dates:', this.blockoutDates);
+      },
+      (error) => {
+        console.error('Error fetching blockout dates:', error);
+      }
+    );
   }
 
-  // // Check if the current date is within the buffer range of any reserved date
-  const isDateDisabled = this.reservedDates.some((reservedDate) => {
-    // Calculate start and encd of buffer period
-    const reserved = new Date(reservedDate).getTime();
-    const bufferStart = new Date(reservedDate);
-    const bufferEnd = new Date(reservedDate);
-    bufferStart.setDate(bufferStart.getDate() - BUFFER_DAYS);
-    bufferEnd.setDate(bufferEnd.getDate() + BUFFER_DAYS);
+  // Define the dateFilter function with buffer support
+  dateFilter = (date: Date | null): boolean => {
+    if (!date) return true;
 
-    // Check if the current date falls within this buffer range
-    const isWithinBuffer =
-      date.getTime() >= bufferStart.getTime() && date.getTime() <= bufferEnd.getTime();
+    // Block out today and the next 9 days
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const tenDaysFromToday = new Date(today);
+    tenDaysFromToday.setDate(today.getDate() + 9);
 
-    if (isWithinBuffer) {
-      console.log(
-        `Date ${date} is within buffer of reserved date ${reservedDate}. Disabling.`
-      );
+    if (date >= today && date <= tenDaysFromToday) {
+      return false;
     }
-    return isWithinBuffer;
-  });
-  return !isDateDisabled;
-};
+
+    // 1. Check buffer for reserved dates
+    const isWithinReservedBuffer = this.reservedDates.some((reservedDate) => {
+      const bufferStart = new Date(reservedDate);
+      const bufferEnd = new Date(reservedDate);
+      bufferStart.setDate(bufferStart.getDate() - BUFFER_DAYS);
+      bufferEnd.setDate(bufferEnd.getDate() + BUFFER_DAYS);
+
+      return date.getTime() >= bufferStart.getTime() && date.getTime() <= bufferEnd.getTime();
+    });
+
+    if (isWithinReservedBuffer) {
+      return false;
+    }
+
+    // 2. Block exact blockout dates
+    const isBlockout = this.blockoutDates.some((blockoutDate) => {
+      return (
+        blockoutDate.getFullYear() === date.getFullYear() &&
+        blockoutDate.getMonth() === date.getMonth() &&
+        blockoutDate.getDate() === date.getDate()
+      );
+    });
+
+    if (isBlockout) {
+      return false;
+    }
+
+    return true;
+  };
 
   isDateRangeValid(): boolean {
     if (this.range.value.start && this.range.value.end) {

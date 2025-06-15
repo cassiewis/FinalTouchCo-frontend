@@ -1,0 +1,44 @@
+<body class="create-button-form">
+    <button class="create-button" (click)="openBlockoutCreator()">Create Blockout Dates</button>
+
+    <!-- Popup Modal -->
+    <div *ngIf="popupOpen" class="popup-overlay">
+    <div class="popup-content">
+      <h1 class="title">Create Blockout Dates</h1>
+      <button mat-button (click)="closeBlockoutCreator()" class="close-button">X</button>
+      <div class="form-body">
+        <!-- Blockout Dates Form -->
+        <form (ngSubmit)="createBlockoutDate()" #blockoutForm="ngForm" class="form-body">
+            <!-- Form fields for blockout details -->
+            <div class="form-section">
+                <div class="info-side">
+
+                    <mat-form-field appearance="outline" class="input-item">
+                        <mat-label>Reason</mat-label>
+                        <input matInput class="input-box" placeholder="Enter Author's name" [(ngModel)]="blockout.reason" name="author" required>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="input-item">
+                        <mat-label>Notes</mat-label>
+                        <input matInput class="input-box" placeholder="Enter blockout" name="blockout" [(ngModel)]="blockout.notes" name="content">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Select dates to block</mat-label>
+                        <mat-date-range-input [rangePicker]="picker">
+
+                        <input matStartDate [(ngModel)]="blockout.dates[0]" placeholder="Start date" name="startDate" required>
+                        <input matEndDate [(ngModel)]="blockout.dates[1]" placeholder="End date" name="endDate" required>
+                        </mat-date-range-input>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #picker></mat-date-range-picker>    
+                    </mat-form-field>
+                </div>
+            </div>
+            <!-- Submit button -->
+            <button mat-raised-button color="primary" type="submit" [disabled]="!blockoutForm.valid">Create Blockout Dates</button>
+        </form>
+        </div>
+    </div>
+    </div>
+</body>

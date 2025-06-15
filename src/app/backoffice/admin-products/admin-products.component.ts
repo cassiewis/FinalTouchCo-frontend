@@ -92,4 +92,17 @@ export class AdminProductsComponent {
       );
     }
   }
+
+  // getNumReservationsForProduct(product: Product): number {
+  //   // Get all reservations (already done and stored in admin cache)
+
+  //   // find what reservations are for this product
+
+  //   const reservations = this.adminProductService.getReservationsForProduct(product.productId);
+  //   if (reservations) {
+  //     return reservations.length;
+  //   }
+
+  //   return 0;
+  // }
 }

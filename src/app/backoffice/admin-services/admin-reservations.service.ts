@@ -176,7 +176,7 @@ export class AdminReservationsService {
           this.saveCacheToSessionStorage(this.adminReservationsCache);
         }
       })
-    );
+    ); 
   }
 
   /**
