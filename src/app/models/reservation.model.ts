@@ -20,7 +20,7 @@ export interface Reservation {
 
 export interface ReservedItem {
     productId: string;
-    count: number;
+    quantity: number;
     name: string;
     price: number;
     deposit: number;

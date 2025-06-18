@@ -36,7 +36,7 @@ export class AdminAddProductComponent {
     productId: '',
     active: false,
     custom: false,
-    count: 0, 
+    quantity: 1, 
     name: '', 
     price: 0,
     deposit: 0,

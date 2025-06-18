@@ -11,10 +11,10 @@
         <p class="product-price">${{ product.price }}</p>
         
         <div class="quantity-container">
-          <label for="quantity">Quantity:</label>
-          <select id="quantity" [(ngModel)]="quantity" class="quantity-dropdown" disabled>
-            <option *ngFor="let qty of quantities" [value]="qty">{{ qty }}</option>
-          </select>
+          <label *ngIf="product.quantity > 0" for="quantity">Qty: {{ product.quantity }}</label>
+          <!-- <select id="quantity" [(ngModel)]="quantity" class="quantity-dropdown" disabled>
+            <option *ngFor="let qty of quantities" [value]="qty">{{ product.count }}</option>
+          </select> -->
         </div>
 
         <div class="reserve-container">

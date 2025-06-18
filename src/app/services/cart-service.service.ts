@@ -9,7 +9,7 @@ export interface CartItem {
   deposit: number;
   datesReserved: Date[];
   imageUrl: string;
-  count: number;
+  quantity: number;
 }
 
 @Injectable({

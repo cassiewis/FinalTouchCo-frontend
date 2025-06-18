@@ -3,7 +3,7 @@ export interface AddOnItem {
     type: string;
     itemId: string;
     active: boolean;
-    count: number;
+    quantity: number;
     name: string;
     price: number;
     deposit: number,

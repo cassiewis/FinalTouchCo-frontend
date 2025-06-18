@@ -3,7 +3,7 @@ export interface Product {
     productId: string;
     active: boolean;
     custom: boolean;
-    count: number;
+    quantity: number;
     name: string;
     price: number;
     deposit: number;

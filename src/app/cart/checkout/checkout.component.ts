@@ -171,7 +171,7 @@ export class CheckoutComponent implements OnInit {
               price: product?.price ?? item.price,
               deposit: product?.deposit ?? item.deposit,
               description: product?.description ?? "no description avaliable",
-              count: item.count
+              quantity: item.quantity
             };
         });
 

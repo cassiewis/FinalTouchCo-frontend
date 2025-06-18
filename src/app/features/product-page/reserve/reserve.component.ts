@@ -203,7 +203,7 @@ export class ReserveComponent implements OnChanges {
           deposit: this.product.deposit,
           datesReserved: currentDatesReserved,
           imageUrl: this.product.imageUrl,
-          count: 1, // Default count to 1 but change when 
+          quantity: this.product.quantity,
         };
             this.cartService.addToCart(cartItem);
   

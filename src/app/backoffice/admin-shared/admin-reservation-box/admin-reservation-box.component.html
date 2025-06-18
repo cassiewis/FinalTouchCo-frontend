@@ -117,12 +117,12 @@
                         <div class="product-side">
                             <div *ngFor="let item of this.reservation.items">
                                 <div *ngIf="!editMode; else editItemFields">
-                                    <p>{{ item.name }} - {{ item.count }} count</p>
+                                    <p>{{ item.name }} - {{ item.quantity }} quantity</p>
                                     <p class="product-info">&nbsp;&nbsp; id: {{ item.productId }}</p>
                                     <p class="product-info">&nbsp;&nbsp; price: ${{ item.price }}, deposit: ${{ item.deposit }}</p>
                                 </div>
                                 <ng-template #editItemFields>
-                                    <p>{{ item.name }} - <input type="number" [(ngModel)]="item.count" /> count</p>
+                                    <p>{{ item.name }} - <input type="number" [(ngModel)]="item.quantity" /> quantity</p>
                                     <p class="product-info">&nbsp;&nbsp; id: {{ item.productId }}</p>
                                     <p class="product-info">&nbsp;&nbsp; price: $<input type="number" [(ngModel)]="item.price" />, deposit: $<input type="number" [(ngModel)]="item.deposit" /></p>
                                 </ng-template>
