@@ -8,7 +8,7 @@ import { CartService } from '../../services/cart-service.service';
 import { Reservation, ReservedItem } from '../../models/reservation.model';
 import { ProductService } from '../../services/product.service';
 import { ReservedDatesService } from '../../services/reserved-dates.service';
-import { BUFFER_DAYS } from '../../shared/constants';
+import { BUFFER_DAYS, EMAIL } from '../../shared/constants';
 import { EventEmitter } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
@@ -131,7 +131,7 @@ export class CheckoutComponent implements OnInit {
               if (successfulSubmissions + failedSubmissions === reservations.length) {
                 this.loading = false;
                 if (successfulSubmissions === 0) {
-                  this.errorMessage = 'There was an error processing your reservation.<br>Try again, if it still fails, please email your reservation details to finaltouchco.info@gmail.com. Sorry for the inconvenience.';
+                  this.errorMessage = 'There was an error processing your reservation.<br>Try again, if it still fails, please email your reservation details to {EMAIL}. Sorry for the inconvenience.';
                 } else {
                   this.partialSuccessMessage = `${successfulSubmissions} out of ${reservations.length} reservations were successfully submitted, but some failed.`;
                   this.updateCart.emit('something');

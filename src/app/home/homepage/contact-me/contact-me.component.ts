@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { EMAIL } from '../../../shared/constants';
 @Component({
   selector: 'app-contact-me',
   standalone: true,
@@ -8,6 +8,6 @@ import { Component } from '@angular/core';
   styleUrl: './contact-me.component.css'
 })
 export class ContactMeComponent {
-
+  email = EMAIL;
 
 }

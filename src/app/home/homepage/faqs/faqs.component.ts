@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HowItWorksComponent } from '../how-it-works/how-it-works.component';
+import { EMAIL, RESERVATION_LENGTH } from '../../../shared/constants';
 
 @Component({
   selector: 'app-faqs',
@@ -13,7 +14,7 @@ export class FaqsComponent {
   generalFaqs = [
     {
       question: 'How long is the rental period?',
-      answer: 'The rental period is 4 days, giving you plenty of time for pickup, use during your event, and return without stress.',
+      answer: `The rental period is ${RESERVATION_LENGTH} days, giving you plenty of time for pickup, use during your event, and return without stress.`,
       open: false
     },
     {
@@ -23,7 +24,7 @@ export class FaqsComponent {
     },
     {
       question: 'What should I do if I need to change my reservation?',
-      answer: 'We’re happy to accommodate changes whenever possible! Just send us a message - finaltouchco.info@gmail.com - with the updates you would like to make, and we will do our best to adjust your reservation.',
+      answer: `We’re happy to accommodate changes whenever possible! Just send us a message - ${EMAIL} - with the updates you would like to make, and we will do our best to adjust your reservation.`,
       open: false
     }
   ];

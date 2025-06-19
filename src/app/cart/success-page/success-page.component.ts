@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
+import { EMAIL } from '../../shared/constants';
 
 @Component({
   selector: 'app-success-page',
@@ -10,7 +11,7 @@ import { OnInit } from '@angular/core';
 })
 export class SuccessPageComponent implements OnInit {
   successMessage: string = 'Your order has been successfully placed! Thank you for shopping with us.';
-
+  email = EMAIL;
   ngOnInit(): void {
     window.scrollTo(0, 0); 
   }

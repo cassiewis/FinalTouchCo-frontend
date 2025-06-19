@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
-
+import { EMAIL } from '../../shared/constants';
 @Component({
   selector: 'app-footer',
   standalone: true,
@@ -44,7 +44,7 @@ export class FooterComponent {
   }
 
   routeToEmail() {
-    const email = 'finaltouchco.info@gmail.com';
+    const email = EMAIL;
     window.location.href = `mailto:${email}`;
   }
 }
