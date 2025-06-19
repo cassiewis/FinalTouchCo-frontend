@@ -56,7 +56,6 @@ body {
   white-space: nowrap;
 }
 
-
 .inside-question {
   width: 100%;
   font-size: 1rem;
@@ -183,7 +182,6 @@ textarea {
   height: 40px;
   border: 2px solid #c57b75; /* muted rose color */
   border-radius: 50%;
-  /* color: #c57b75; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -191,7 +189,6 @@ textarea {
   font-size: 24px;
   margin: 0 auto; /* center horizontally */
 }
-
 
 button {
   padding: 0.75rem;
@@ -219,6 +216,25 @@ button:disabled {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+  }
+
+}
+
+
+@media (max-width: 425px) {
+
+
+  .checkout-form, .terms-of-service, .error-message {
+    max-width: 100vw;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 12px; /* optional: add a little horizontal padding */
+  }
+
+  .submit-button {
+    width: 95%;
+    align-self: center;
   }
 
 }

@@ -239,14 +239,8 @@
     text-align: center;
   }
 
-
-  .cart-reservation-total {
-    border: 1px solid blue;
-  }
-
   .reservation-group {
     width: 100%;
-    border: 1px solid green;
     margin: 0;
     padding: 0;
   }

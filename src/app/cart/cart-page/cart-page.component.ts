@@ -16,8 +16,6 @@ import { BUFFER_DAYS } from '../../shared/constants';
 })
 export class CartComponent implements OnInit {
    @ViewChild('sectionRef') sectionRef!: ElementRef;
-
-
   cartItems: CartItem[] = [];
   groupedItems: Map<string, CartItem[]> = new Map();
   totalCost: number = 0;
