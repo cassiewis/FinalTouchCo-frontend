@@ -28,7 +28,6 @@ export class CheckoutComponent implements OnInit {
   successMessage = '';
   errorMessage = '';
   partialSuccessMessage = '';
-  cartEmpty = false; // Flag to check if cart is empty
   @Output("updateCart") updateCart: EventEmitter<any> = new EventEmitter(); // EventEmitter to notify CartComponent
   
   terms = [
@@ -79,9 +78,7 @@ export class CheckoutComponent implements OnInit {
       recaptchaToken: ['']
     });
     // Check if the cart is empty
-    const cartItems = this.cartService.getItems();
-    this.cartEmpty = cartItems.length === 0;
-      
+    const cartItems = this.cartService.getItems();      
   }
 
   async submitForm() {
@@ -255,7 +252,6 @@ export class CheckoutComponent implements OnInit {
         this.cartService.removeFromCart(productId);
 
         const cartItems = this.cartService.getItems();
-        this.cartEmpty = cartItems.length === 0;
 
         this.updateCart.emit('something');
       });

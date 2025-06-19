@@ -55,13 +55,11 @@
             >Checkout
           </button>
           
-          <!-- <button [routerLink]="[]" fragment="contact">Go to Contact</button> -->
-
         </div>
       </div>
     </div>
   </div>
-  <div #sectionRef>
+  <div *ngIf="cartItems.length > 0" #sectionRef>
       <app-checkout (updateCart)="refreshCart()"></app-checkout>
     </div>
 </div>
