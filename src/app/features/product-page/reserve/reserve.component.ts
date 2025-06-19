@@ -6,8 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import { Product } from '../../../models/product.model';
-import { MatDialog } from '@angular/material/dialog';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CartService } from '../../../services/cart-service.service';
@@ -16,7 +15,7 @@ import { CustomSnackbarComponent } from '../../../shared/custom-snackbar/custom-
 import { ReservedDatesService } from '../../../services/reserved-dates.service';
 import { ConfirmNewReservationDialogComponent } from '../../../shared/confirm-new-reservation-dialog/confirm-new-reservation-dialog.component';
 import { DetailsService } from '../../../services/details.service';
-import { BUFFER_DAYS } from '../../../shared/constants';
+import { BUFFER_DAYS, RESERVATION_LENGTH } from '../../../shared/constants';
 
 @Component({
   selector: 'app-reserve',
@@ -148,9 +147,26 @@ export class ReserveComponent implements OnChanges {
       console.log(`start: ${ this.range.value.start }, end: ${ this.range.value.end }`);
       const diffInTime = this.range.value.end.getTime() - this.range.value.start.getTime();
       const diffInDays = (diffInTime / (1000 * 3600 * 24)) + 1;
-      return diffInDays <= 5;
+
+      // check if all middle dates are valid
+      let current = new Date(this.range.value.start);
+      while (current <= this.range.value.end) {
+        if (!this.dateFilter(current)) {
+          console.log(`Invalid date found: ${current}`);
+          return false; // Found an invalid date
+        }
+        current.setDate(current.getDate() + 1);
+      }
+      return diffInDays <= RESERVATION_LENGTH; // Check if the range is 5 days or less
     }
+    console.log('Invalid date range');
     return false;
+  }
+
+  get showUnavailableTooltip(): boolean {
+    const start = this.range.get('start')?.value;
+    const end = this.range.get('end')?.value;
+    return !!start && !!end && !this.isDateRangeValid();
   }
 
   async onCartClick() {
@@ -234,7 +250,7 @@ export class ReserveComponent implements OnChanges {
       // Create snackbar with item details
       this.snackBar.openFromComponent(CustomSnackbarComponent, {
         data: {
-          message: `Please select a valid date range.<br>5 days max.`,
+          message: `Please select a valid date range.<br>${RESERVATION_LENGTH} days max.`,
           action: () => {}, // No action needed
           actionLabel: 'Close'
         },
