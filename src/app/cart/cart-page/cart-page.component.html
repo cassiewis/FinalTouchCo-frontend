@@ -15,7 +15,12 @@
       <div class="left-cart">
 
         <div class="cart-reservation" *ngFor="let groupKey of getGroupedKeys()">
-          <h3>Reservation: {{ formatDateRangeFromItems(groupedItems.get(groupKey)!) }}</h3>
+          <h3>
+            Reservation: {{ formatDateRangeFromItems(groupedItems.get(groupKey)!) }}
+          <div *ngIf="isBelowMinimum(groupedItems.get(groupKey)!)" class="error-minimum">
+            Almost there—${{ MINIMUM_ORDER }} minimum per reservation
+          </div>
+        </h3>
           <div class="cart-item" *ngFor="let item of groupedItems.get(groupKey)">
             <app-cart-item [item]="item" (updateCart)="updateCart()"></app-cart-item>
           </div>
@@ -60,6 +65,6 @@
     </div>
   </div>
   <div *ngIf="cartItems.length > 0" #sectionRef>
-      <app-checkout (updateCart)="refreshCart()"></app-checkout>
-    </div>
+    <app-checkout (updateCart)="refreshCart()"></app-checkout>
+  </div>
 </div>

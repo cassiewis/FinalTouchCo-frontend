@@ -8,10 +8,11 @@ import { CartService } from '../../services/cart-service.service';
 import { Reservation, ReservedItem } from '../../models/reservation.model';
 import { ProductService } from '../../services/product.service';
 import { ReservedDatesService } from '../../services/reserved-dates.service';
-import { BUFFER_DAYS, EMAIL } from '../../shared/constants';
+import { BUFFER_DAYS, EMAIL, MINIMUM_ORDER } from '../../shared/constants';
 import { EventEmitter } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
+import { CartItem } from '../../services/cart-service.service';
 
 declare var grecaptcha: any;
 
@@ -105,6 +106,19 @@ export class CheckoutComponent implements OnInit {
 
         // Only submit if all items are available
         const reservations = this.createReservations();
+
+        // check that all reservations hit the minimum order
+        for (const reservation of reservations) {
+          const groupPrice = reservation.items.reduce((sum, item) => sum + item.price, 0);
+          if (groupPrice < MINIMUM_ORDER) {
+            this.loading = false;
+            console.error(`Reservation for ${reservation.name} is below the minimum order of $${groupPrice}.`);
+            this.errorMessage = `Your reservation total is below the minimum order of $${MINIMUM_ORDER}.<br>Please add more items to your cart or increase the quantity of existing items.`;
+            return;
+          }
+        }
+        
+
         let successfulSubmissions = 0;
         let failedSubmissions = 0;
 
@@ -131,7 +145,7 @@ export class CheckoutComponent implements OnInit {
               if (successfulSubmissions + failedSubmissions === reservations.length) {
                 this.loading = false;
                 if (successfulSubmissions === 0) {
-                  this.errorMessage = 'There was an error processing your reservation.<br>Try again, if it still fails, please email your reservation details to {EMAIL}. Sorry for the inconvenience.';
+                  this.errorMessage = `There was an error processing your reservation.<br>Try again, if it still fails, please email your reservation details to ${EMAIL}. Sorry for the inconvenience.`;
                 } else {
                   this.partialSuccessMessage = `${successfulSubmissions} out of ${reservations.length} reservations were successfully submitted, but some failed.`;
                   this.updateCart.emit('something');
@@ -200,6 +214,7 @@ export class CheckoutComponent implements OnInit {
       return reservations;
     }
 
+
     async checkCartAvalibility(): Promise<Map<string, string>> {
       await this.productService.fetchProducts(); // get the most up to date products
       console.log("Checking cart availability...");
@@ -266,4 +281,8 @@ export class CheckoutComponent implements OnInit {
   closeErrorPopup() {
     this.errorMessage = '';
   }
+
+  calculateGroupTotal(items: CartItem[]): number {
+      return items.reduce((total, item) => total + item.price, 0);
+    }
 }

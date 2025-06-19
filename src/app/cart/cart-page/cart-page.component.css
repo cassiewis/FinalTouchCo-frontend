@@ -52,6 +52,13 @@
   min-width: 300px;
 }
 
+.error-minimum {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 4px;
+  font-weight: normal;
+}
+
 .cart-item {
   margin: 20px;
 }
@@ -244,9 +251,6 @@
     margin: 0;
     padding: 0;
   }
-
-
-
 }
 
 @media (max-width: 380px) {

@@ -92,7 +92,7 @@ export class AdminProductService {
   updateProduct(product: Product): Observable<Product> {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + this.getAdminToken() // Use a token or other method to authenticate as admin
-    }); 
+    });
 
     return this.http.put<ApiResponse<Product>>(`${this.apiUrl}/${product.productId}`, product, { headers }).pipe(
       map(response => {

@@ -6,7 +6,7 @@ import { ProductService } from '../../services/product.service';
 import { CartItemComponent } from '../cart-item/cart-item.component';
 import { ReservationService } from '../../services/reservation.service';
 import { CheckoutComponent } from '../checkout/checkout.component';
-import { BUFFER_DAYS } from '../../shared/constants';
+import { BUFFER_DAYS, MINIMUM_ORDER } from '../../shared/constants';
 @Component({
   selector: 'app-cart',
   templateUrl: './cart-page.component.html',
@@ -20,6 +20,7 @@ export class CartComponent implements OnInit {
   groupedItems: Map<string, CartItem[]> = new Map();
   totalCost: number = 0;
   totalDeposit: number = 0;
+  MINIMUM_ORDER = MINIMUM_ORDER;
 
   @ViewChildren(CartItemComponent) cartItemComponents!: QueryList<CartItemComponent>;
 
@@ -127,6 +128,10 @@ export class CartComponent implements OnInit {
     } else {
       console.warn('Scroll target not found');
     }
+  }
+
+  isBelowMinimum(items: CartItem[]): boolean {
+    return this.calculateGroupTotal(items) < MINIMUM_ORDER;
   }
 
 }
