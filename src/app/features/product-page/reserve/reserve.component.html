@@ -1,18 +1,43 @@
 <div class="availability-checker"> 
   <div class="input-box">
+
+    <div class="info-message-container">
+      <div class="info-message" *ngIf="showInfoMessage">
+        Reservation dates open 6 months in advance.
+      </div>
+    </div>
+
     <mat-form-field appearance="outline" class="form-field">
       <mat-label class="label">Select up to 5 days to reserve</mat-label>
+
       <mat-date-range-input
         [rangePicker]="picker"
         [min]="minDate"
         [max]="maxDate"
         [formGroup]="range"
         [dateFilter]="dateFilter">
-        <input class="input" matStartDate formControlName="start" placeholder="Pickup"/>
-        <input class="input" matEndDate formControlName="end" placeholder="Return"/>
+          <input 
+            class="input" 
+            matStartDate 
+            formControlName="start" 
+            placeholder="Pickup"
+            (focus)="showInfoMessage = true"
+            (blur)="showInfoMessage = false"
+          />
+          <input 
+            class="input" 
+            matEndDate 
+            formControlName="end" 
+            placeholder="Return"
+            (focus)="showInfoMessage = true"
+            (blur)="showInfoMessage = false"
+          />
       </mat-date-range-input>
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-date-range-picker #picker></mat-date-range-picker>
+      <mat-date-range-picker #picker
+        (opened)="showInfoMessage = true"
+        (closed)="showInfoMessage = false">
+      </mat-date-range-picker>
     </mat-form-field>
     
   </div>

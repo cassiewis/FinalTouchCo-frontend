@@ -6,9 +6,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import { Product } from '../../../models/product.model';
-import { ProductService } from '../../../services/product.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CartService } from '../../../services/cart-service.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -21,7 +21,18 @@ import { BUFFER_DAYS } from '../../../shared/constants';
 @Component({
   selector: 'app-reserve',
   standalone: true,
-  imports: [CommonModule, MatDatepickerModule, MatInputModule, MatFormFieldModule, MatNativeDateModule, MatDialogModule, FormsModule, ReactiveFormsModule, CustomSnackbarComponent],
+  imports: [
+    CommonModule, 
+    MatDatepickerModule, 
+    MatInputModule, 
+    MatFormFieldModule, 
+    MatNativeDateModule, 
+    MatDialogModule, 
+    FormsModule, 
+    ReactiveFormsModule, 
+    CustomSnackbarComponent,
+    MatTooltipModule
+  ],
   templateUrl: './reserve.component.html',
   styleUrls: ['./reserve.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -35,6 +46,7 @@ export class ReserveComponent implements OnChanges {
   blockoutDates: Date[] = [];
   showReservationPopup: boolean = false;
   isAgreed: boolean = false;
+  showInfoMessage = false;
   ItemInCartMessage: string = 'Item already in Cart';
   range = new FormGroup({
     start: new FormControl<Date | null>(null),
