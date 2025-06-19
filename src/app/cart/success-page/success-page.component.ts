@@ -13,7 +13,8 @@ export class SuccessPageComponent implements OnInit {
   successMessage: string = 'Your order has been successfully placed! Thank you for shopping with us.';
   email = EMAIL;
   ngOnInit(): void {
-    window.scrollTo(0, 0); 
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    console.log('SuccessPageComponent initialized');
   }
 
 
