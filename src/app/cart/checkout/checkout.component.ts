@@ -91,6 +91,14 @@ export class CheckoutComponent implements OnInit {
     this.errorMessage = '';
     this.partialSuccessMessage = '';
 
+    // Check reservation count does not exceed 2
+    if (this.cartService.getReservationCount() > 2) {
+      this.loading = false;
+      console.error(`You can only submit up to 2 reservations at a time.`);
+      this.errorMessage = `You can only submit up to 2 reservations at a time. Sorry for the inconvenience. <br>If you need to submit more, please checkout with the first two, and then start a new reservation for the rest.`;
+      return;
+    }
+
     // Check if all items are available
     const unavaliableItems = await this.checkCartAvalibility();
     if (unavaliableItems.size > 0) {

@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -214,6 +214,22 @@ export class ReserveComponent implements OnChanges {
             });
             return false;
           }
+        }
+
+        // Check reservation count
+        if (this.cartService.getReservationCount() >= 2) {
+          this.snackBar.openFromComponent(CustomSnackbarComponent, {
+            data: {
+              message: `You can only have 2 active reservations for different date ranges at a time.<br>
+                        To reserve more, please complete your current checkout, then start a new reservation.<br>
+                        If you want to add this item for the same dates as an existing reservation, you can add it to your cart.`,
+              action: () => {},
+              actionLabel: 'Close'
+            },
+            duration: 5000,
+            panelClass: 'custom-snackbar'
+          });
+          return false;
         }
 
         const hasMatch = this.cartService.hasMatchingReservationDates(currentDatesReserved);

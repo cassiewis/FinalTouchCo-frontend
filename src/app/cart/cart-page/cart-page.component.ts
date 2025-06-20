@@ -53,6 +53,7 @@ export class CartComponent implements OnInit {
     this.groupedItems = this.cartService.getReservationMap();
   }
 
+
   private generateGroupKey(dates: Date[]): string {
     return dates
       .map(d => {
