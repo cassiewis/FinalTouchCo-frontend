@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { OnInit } from '@angular/core';
+import { AfterViewInit } from '@angular/core';
 import { EMAIL } from '../../shared/constants';
 
 @Component({
@@ -9,12 +9,13 @@ import { EMAIL } from '../../shared/constants';
   templateUrl: './success-page.component.html',
   styleUrl: './success-page.component.css'
 })
-export class SuccessPageComponent implements OnInit {
+export class SuccessPageComponent implements AfterViewInit {
   successMessage: string = 'Your order has been successfully placed! Thank you for shopping with us.';
   email = EMAIL;
-  ngOnInit(): void {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    console.log('SuccessPageComponent initialized');
+
+  ngAfterViewInit(): void {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    console.log('SuccessPageComponent view initialized');
   }
 
 

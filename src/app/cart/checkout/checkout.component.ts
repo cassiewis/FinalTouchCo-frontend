@@ -82,6 +82,7 @@ export class CheckoutComponent implements OnInit {
     const cartItems = this.cartService.getItems();      
   }
 
+    // ...existing code...
   async submitForm() {
     if (this.checkoutForm.invalid) return;
 
@@ -90,73 +91,76 @@ export class CheckoutComponent implements OnInit {
     this.errorMessage = '';
     this.partialSuccessMessage = '';
 
-    // Get reCAPTCHA token before proceeding
-    grecaptcha.ready(() => {
-      grecaptcha.execute('6LcDEVsrAAAAAFl4PlRK9kPGNE7941aURycc1U95', {action: 'submit'}).then(async (token: string) => {
-        this.checkoutForm.patchValue({ recaptchaToken: token });
+    // Check if all items are available
+    const unavaliableItems = await this.checkCartAvalibility();
+    if (unavaliableItems.size > 0) {
+      this.removeUnavaliableItems(unavaliableItems);
+      this.loading = false;
+      // Do NOT submit any reservations if any item is unavailable
+      return;
+    }
 
-        // Check if all items are available
-        const unavaliableItems = await this.checkCartAvalibility();
-        if (unavaliableItems.size > 0) {
-          this.removeUnavaliableItems(unavaliableItems);
-          this.loading = false;
-          // Do NOT submit any reservations if any item is unavailable
-          return;
-        }
+    // Only submit if all items are available
+    const reservations = this.createReservations();
 
-        // Only submit if all items are available
-        const reservations = this.createReservations();
+    // check that all reservations hit the minimum order
+    for (const reservation of reservations) {
+      const groupPrice = reservation.items.reduce((sum, item) => sum + item.price, 0);
+      if (groupPrice < MINIMUM_ORDER) {
+        this.loading = false;
+        console.error(`Reservation for ${reservation.name} is below the minimum order of $${groupPrice}.`);
+        this.errorMessage = `Your reservation total is below the minimum order of $${MINIMUM_ORDER}.<br>Please add more items to your cart or increase the quantity of existing items.`;
+        return;
+      }
+    }
 
-        // check that all reservations hit the minimum order
-        for (const reservation of reservations) {
-          const groupPrice = reservation.items.reduce((sum, item) => sum + item.price, 0);
-          if (groupPrice < MINIMUM_ORDER) {
-            this.loading = false;
-            console.error(`Reservation for ${reservation.name} is below the minimum order of $${groupPrice}.`);
-            this.errorMessage = `Your reservation total is below the minimum order of $${MINIMUM_ORDER}.<br>Please add more items to your cart or increase the quantity of existing items.`;
-            return;
-          }
-        }
-        
+    let successfulSubmissions = 0;
+    let failedSubmissions = 0;
 
-        let successfulSubmissions = 0;
-        let failedSubmissions = 0;
-
-        for (const single_reservation of reservations) {
-          this.reservationService.addReservation(single_reservation, token).subscribe(
-            (response: Reservation) => {
-              successfulSubmissions++;
-              if (successfulSubmissions + failedSubmissions === reservations.length) {
-                this.loading = false;
-                if (successfulSubmissions === reservations.length) {
-                  this.cartService.clearCart();
-                  this.successMessage = 'Your reservation has been successfully submitted! You will receive a confirmation email within 3-5 business days. Please check your spam folder if you do not see it in your inbox.\nThank you for choosing Final Touch !';
-                  sessionStorage.setItem('reservationSuccess', 'true');
-                  this.router.navigate(['/reservation-success']);
-                } else if (successfulSubmissions > 0) {
-                  this.partialSuccessMessage = `${successfulSubmissions} out of ${reservations.length} reservations were successfully submitted, but some failed.`;
-                  this.updateCart.emit('something');
+    for (const single_reservation of reservations) {
+      // Generate a fresh token for each reservation
+      await new Promise<void>((resolve) => {
+        grecaptcha.ready(() => {
+          grecaptcha.execute('6LcDEVsrAAAAAFl4PlRK9kPGNE7941aURycc1U95', {action: 'submit'}).then((token: string) => {
+            this.checkoutForm.patchValue({ recaptchaToken: token });
+            this.reservationService.addReservation(single_reservation, token).subscribe(
+              (response: Reservation) => {
+                successfulSubmissions++;
+                if (successfulSubmissions + failedSubmissions === reservations.length) {
+                  this.loading = false;
+                  if (successfulSubmissions === reservations.length) {
+                    this.cartService.clearCart();
+                    this.successMessage = 'Your reservation has been successfully submitted! You will receive a confirmation email within 3-5 business days. Please check your spam folder if you do not see it in your inbox.\nThank you for choosing Final Touch !';
+                    sessionStorage.setItem('reservationSuccess', 'true');
+                    this.router.navigate(['/reservation-success']);
+                  } else if (successfulSubmissions > 0) {
+                    this.partialSuccessMessage = `${successfulSubmissions} out of ${reservations.length} reservations were successfully submitted, but some failed.`;
+                    this.updateCart.emit('something');
+                  }
                 }
-              }
-            },
-            (error: any) => {
-              failedSubmissions++;
-              console.error('Error adding reservation:', error);
-              if (successfulSubmissions + failedSubmissions === reservations.length) {
-                this.loading = false;
-                if (successfulSubmissions === 0) {
-                  this.errorMessage = `There was an error processing your reservation.<br>Try again, if it still fails, please email your reservation details to ${EMAIL}. Sorry for the inconvenience.`;
-                } else {
-                  this.partialSuccessMessage = `${successfulSubmissions} out of ${reservations.length} reservations were successfully submitted, but some failed.`;
-                  this.updateCart.emit('something');
+                resolve();
+              },
+              (error: any) => {
+                failedSubmissions++;
+                console.error('Error adding reservation:', error);
+                if (successfulSubmissions + failedSubmissions === reservations.length) {
+                  this.loading = false;
+                  if (successfulSubmissions === 0) {
+                    this.errorMessage = `There was an error processing your reservation.<br>Try again, if it still fails, please email your reservation details to ${EMAIL}. Sorry for the inconvenience.`;
+                  } else {
+                    this.partialSuccessMessage = `${successfulSubmissions} out of ${reservations.length} reservations were successfully submitted, but some failed. Please try again, and if it still fails, please email your reservation details to ${EMAIL}.`;
+                    this.updateCart.emit('something');
+                  }
                 }
+                resolve();
               }
-            }
-          );
-        }
+            );
+          });
+        });
       });
-    });
+    }
   }
+
 
     /**
      * Create reservations based on cart items grouped by `datesReserved`.

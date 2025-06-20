@@ -4,3 +4,4 @@ export const EMAIL = "finaltouchco.info@gmail.com";
 export const MINIMUM_ORDER = 50;
 export const BACKEND_URL = "https://finaltouchco-backend.onrender.com"
 // export const BACKEND_URL = "http://192.168.0.46:8080"
+// export const BACKEND_URL = "http://localhost:8080";
