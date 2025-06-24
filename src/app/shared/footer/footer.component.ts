@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
-import { EMAIL } from '../../shared/constants';
+import { EMAIL, navigateWithScroll } from '../../shared/constants';
 @Component({
   selector: 'app-footer',
   standalone: true,
@@ -14,13 +14,16 @@ export class FooterComponent {
 
   constructor(private router: Router) {}
 
-  routeTo(path: string) {
-    this.router.navigate([path]).then(() => {
-      // Ensure smooth scrolling to the top after navigation
-      setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 50); // Delay to allow Angular's routing to settle before scrolling
-    });
+  routeTo(path: string, event?: MouseEvent) {
+    navigateWithScroll(this.router, event, path);
+  }
+
+  routeToWithFilter(filterName: string, event?: MouseEvent) {
+      navigateWithScroll(this.router, event, '/shop', { filters: filterName }); 
+  }
+
+  routeToCustomShop(event?: MouseEvent) {
+    navigateWithScroll(this.router, event, '/shop', { custom: "Custom" }); 
   }
 
   routeToSection(path: string, fragment: string) {
@@ -46,5 +49,9 @@ export class FooterComponent {
   routeToEmail() {
     const email = EMAIL;
     window.location.href = `mailto:${email}`;
+  }
+
+  routeToReview() {
+    window.open('https://docs.google.com/forms/d/e/1FAIpQLSevs_gtQs1Tuic-veWSx9PAbzuqhz8jW02wfzgc-EfTb2RmdA/viewform?usp=header', '_blank');
   }
 }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { navigateWithScroll } from '../../shared/constants'; // Assuming you have a utility function for navigation with scroll
 
 @Component({
   selector: 'app-not-found',
@@ -15,7 +15,9 @@ export class NotFoundComponent {
     private router: Router,
   ) {}
 
-  routeHome(){
-    this.router.navigate(['/home']);
+  routeHome(event?: MouseEvent){
+    navigateWithScroll(this.router, event, `/home`);
   }
+
+
 }

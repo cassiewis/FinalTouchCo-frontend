@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ImageService } from '../services/image.service';
 import { Review } from '../models/review.model';
 import { DetailsService } from '../services/details.service';
@@ -22,13 +23,28 @@ export class InspoComponent implements OnInit {
   constructor(
     private imageService: ImageService, 
     private detailsService: DetailsService,
-    private bannerService: BannerService
+    private bannerService: BannerService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   // on load, fetch inspo photos from the backend
   ngOnInit() {
     console.log("InspoComponent: fetching inspirations");
-    this.fetchInspoPhotos();
+    
+    // Determine which section to show based on route
+    this.route.url.subscribe(urlSegments => {
+      const currentPath = urlSegments[0]?.path;
+      this.inspoOpen = currentPath !== 'testimonials';
+      
+      // Always fetch inspo photos
+      this.fetchInspoPhotos();
+      
+      // Fetch reviews if we're on testimonials page
+      if (!this.inspoOpen) {
+        this.fetchReviews();
+      }
+    });
   }
 
   fetchInspoPhotos() {
@@ -57,11 +73,34 @@ export class InspoComponent implements OnInit {
   }
 
   togglePage() {
-    this.inspoOpen = !this.inspoOpen;
     console.log("InspoComponent: toggling page");
-
-    if (!this.inspoOpen && this.reviews.length === 0) {
-      this.fetchReviews();
+    
+    if (this.inspoOpen) {
+      // Navigate to testimonials
+      this.router.navigate(['/testimonials']).then(() => {
+        // Scroll to top of testimonials page
+        setTimeout(() => {
+          const headerContainer = document.querySelector('.header-container');
+          if (headerContainer) {
+            headerContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          } else {
+            window.scrollTo(0, 0);
+          }
+        }, 100);
+      });
+    } else {
+      // Navigate to inspo
+      this.router.navigate(['/inspo']).then(() => {
+        // Scroll to top of inspo page
+        setTimeout(() => {
+          const headerContainer = document.querySelector('.header-container');
+          if (headerContainer) {
+            headerContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          } else {
+            window.scrollTo(0, 0);
+          }
+        }, 100);
+      });
     }
   }
 

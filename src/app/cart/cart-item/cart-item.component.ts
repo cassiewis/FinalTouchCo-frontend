@@ -1,14 +1,13 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CartItem } from '../../services/cart-service.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../services/cart-service.service';
 import { CartComponent } from '../cart-page/cart-page.component';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product.model';
-import { BUFFER_DAYS } from '../../shared/constants';
 import { ReservedDatesService } from '../../services/reserved-dates.service';
-
+import { navigateWithScroll } from '../../shared/constants'; // Assuming you have a utility function for navigation with scroll
 @Component({
   selector: 'app-cart-item',
   standalone: true,
@@ -43,8 +42,8 @@ export class CartItemComponent implements OnInit {
         );
   }
 
-  routeToProduct() {
-    this.router.navigate(['/product/' + this.item.productId]);
+  routeToProduct(event?: MouseEvent) {
+    navigateWithScroll(this.router, event, `/product/${this.item.productId}`);
   }
 
   checkValidDates(bufferDates: number) {

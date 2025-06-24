@@ -1,9 +1,8 @@
 <div class="cart-item">
-    <img class="cart-item-image" (click)="routeToProduct()" src="{{ item.imageUrl }}" alt="{{ item.name }}">
-    <!-- <img class="cart-item-image" (click)="routeToProduct()" src="/images/stock_photo.png" alt="{{ this.item.name }}"> -->
+    <img class="cart-item-image" (click)="routeToProduct($event)" src="{{ item.imageUrl }}" alt="{{ item.name }}">
     <div class="cart-item-info">
       <div class="cart-item-box">
-        <p class="product-title" (click)="routeToProduct()">{{ item.name }}</p>
+        <p class="product-title" (click)="routeToProduct($event)">{{ item.name }}</p>
         <p class="item-info">${{ this.item.price }}</p>
         <p class="item-info">Qty: 1</p>
       </div>

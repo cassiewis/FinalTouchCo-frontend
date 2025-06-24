@@ -38,4 +38,6 @@ export class AppComponent {
     const returnValue = this.router.url.startsWith('/backoffice'); // Adjust the condition based on your route
     return returnValue;
   }
+
+
 }

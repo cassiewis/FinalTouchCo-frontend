@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Review } from '../../../models/review.model';
 import { DetailsService } from '../../../services/details.service';
+import { navigateWithScroll } from '../../../shared/constants'; // Assuming you have a utility function for navigation with scroll
 @Component({
   selector: 'app-testimonials',
   standalone: true,
@@ -52,7 +53,7 @@ export class TestimonialsComponent implements OnInit, OnDestroy {
       return `translateX(-${this.currentIndex * 100}%)`;
     }
 
-    routeToInspo() {
-      this.router.navigate(['/inspo']);
+    routeToInspo(event: MouseEvent) {
+      navigateWithScroll(this.router, event, `/inspo}`);
     }
 }

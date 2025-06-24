@@ -6,7 +6,7 @@
         <img [src]="product.imageUrl" alt="product-image" class="product-image" (load)="loading=false">
       </div>
       <div class="product-description-container">
-        <p class="path"><a (click)="goToShop()">INVENTORY</a> / {{ product.name }}</p>
+        <p class="path"><a (click)="goToShop($event)">INVENTORY</a> / {{ product.name }}</p>
         <p class="product-name">{{ product.name }}</p>
         <p class="product-price">${{ product.price }}</p>
         

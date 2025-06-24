@@ -7,3 +7,38 @@ export const PAYMENT_DUE_DAYS = 30; // Days before the date to send deposit
 export const BACKEND_URL = "https://finaltouchco-backend.onrender.com"
 // export const BACKEND_URL = "http://192.168.0.46:8080"
 // export const BACKEND_URL = "http://localhost:8080";
+
+// Generic navigation function with cmd+click support and auto-scroll
+export const navigateWithScroll = (
+  router: any, 
+  event: MouseEvent | undefined, 
+  path: string, 
+  queryParams?: any
+): void => {
+  // Handle cmd+click for new tab
+  if (event && (event.metaKey || event.ctrlKey)) {
+    const url = queryParams 
+      ? `${path}?${new URLSearchParams(queryParams).toString()}`
+      : path;
+    window.open(url, '_blank');
+    return;
+  }
+  
+  // Normal navigation with scroll
+  const navigationOptions: any = {};
+  if (queryParams) {
+    navigationOptions.queryParams = queryParams;
+  }
+  
+  router.navigate([path], navigationOptions).then(() => {
+    // Scroll to .app-container
+    setTimeout(() => {
+      const appContainer = document.querySelector('.app-container');
+      if (appContainer) {
+        appContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        window.scrollTo(0, 0);
+      }
+    }, 100);
+  });
+};

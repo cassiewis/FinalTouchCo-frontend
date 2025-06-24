@@ -13,6 +13,7 @@ export const routes: Routes = [
     { path: 'home', component: HomepageComponent },
     { path: 'shop', component: ShopComponent },
     { path: 'inspo', loadComponent: () => import('./inspo/inspo.component').then((m) => m.InspoComponent),},
+    { path: 'testimonials', loadComponent: () => import('./inspo/inspo.component').then((m) => m.InspoComponent),},
     { path: 'cart', loadComponent: () => import('./cart/cart-page/cart-page.component').then((m) => m.CartComponent),},
     { path: 'reservation-success', component: SuccessPageComponent, canActivate: [ReservationSuccessGuard]},
     { path: 'faqs', component: FaqsComponent },

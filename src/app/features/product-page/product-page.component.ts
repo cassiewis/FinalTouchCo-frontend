@@ -1,18 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product.model';
-import { Location } from '@angular/common';
-import { CartService } from '../../services/cart-service.service';
 import { ReserveComponent } from './reserve/reserve.component';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ProductBoxComponent } from '../product-box/product-box.component';
 import { FormsModule } from '@angular/forms';
-// import { AddonBoxComponent } from '../addon-box/addon-box.component';
-// import { AddOnItem } from '../../models/addOnItem.model';
-import { DetailsService } from '../../services/details.service';
+import { navigateWithScroll } from '../../shared/constants'; // Assuming you have a utility function for navigation with scroll
 
 @Component({
   selector: 'app-product-page',
@@ -37,10 +33,7 @@ export class ProductPageComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
-    private location: Location,
     private router: Router,
-    private cartService: CartService,
-    private detailsService: DetailsService
   ) {}
 
   ngOnInit(): void {
@@ -91,8 +84,8 @@ export class ProductPageComponent implements OnInit {
     console.log('Product page loaded');
   }
 
-  goToShop(): void {
-    this.router.navigate(['/shop']);
+  goToShop(event: MouseEvent): void {
+    navigateWithScroll(this.router, event, `/shop`);
   }
 
   setActiveTab(tabId: string) {

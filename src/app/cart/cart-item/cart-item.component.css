@@ -33,7 +33,7 @@
     font-weight: bold;
   }
 
-  .product-title:hover {
+  .product-title:hover, .cart-item-image:hover {
     cursor: pointer;
   }
     

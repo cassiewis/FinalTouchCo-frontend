@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, HostListener, ViewChild, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from '../services/product.service';
@@ -25,7 +25,7 @@ import { ErrorBannerComponent } from '../shared/error-banner/error-banner.compon
   templateUrl: './shop.component.html',
   styleUrls: ['./shop.component.scss']
 })
-export class ShopComponent implements AfterViewInit {
+export class ShopComponent implements AfterViewInit, OnInit {
   products: Product[] = [];
   filteredProducts: Product[] = [];
 
@@ -35,6 +35,7 @@ export class ShopComponent implements AfterViewInit {
   maxPrice: number = 100;
 
   loading: boolean = true;
+  private isInitialLoad: boolean = true; // Track if this is the first load
 
   showMobileFilter: boolean = false;
   isSmallScreen: boolean = false;

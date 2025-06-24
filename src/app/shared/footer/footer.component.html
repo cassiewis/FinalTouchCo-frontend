@@ -3,23 +3,24 @@
         <div class="left-container">
             <div class="links-container">
                 <p>COMPANY</p>
-                <a class="link" (click)="routeTo('/home')">Home</a>
-                <a class="link" (click)="routeTo('/inspo')">Testimonials</a>
-                <a class="link" (click)="routeToSection('/home', 'howItWorks')">How it Works</a>                
+                <a class="link" (click)="routeTo('/home', $event)">Home</a>
+                <a class="link" (click)="routeToSection('/home', 'howItWorks')">How it Works</a>
+                <a class="link" (click)="routeToSection('/home', 'about')">About Us</a>
             </div>
             <div class="links-container">
                 <p>SHOP</p>
-                <a class="link" (click)="routeTo('/shop')">Shop All</a>
-                <a class="link" [routerLink]="['/shop']" [queryParams]="{ filters: 'Custom' }">Custom</a>
-                <a class="link" [routerLink]="['/shop']" [queryParams]="{ filters: 'Signage' }">Signage</a>
-                <a class="link" [routerLink]="['/shop']" [queryParams]="{ filters: 'Lighting' }">Lighting</a>
-                <a class="link" [routerLink]="['/shop']" [queryParams]="{ filters: 'Fabrics' }">Fabrics</a>
+                <a class="link" (click)="routeTo('/shop', $event)">Shop All</a>
+                <a class="link" (click)="routeToCustomShop($event)">Custom</a>
+                <a class="link" (click)="routeToWithFilter('Signage', $event)">Signage</a>
+                <a class="link" (click)="routeToWithFilter('Lighting', $event)">Lighting</a>
+                <a class="link" (click)="routeToWithFilter('Fabrics', $event)">Fabrics</a>
             </div>
             <div class="links-container">
                 <p>RESOURCES</p>
-                <a class="link" (click)="routeToSection('/home', 'faqs')">FAQs</a>
-                <a class="link" (click)="routeTo('/inspo')">Testimonials</a>
-                <a class="link" (click)="routeTo('/inspo')">Inspo</a>
+                <a class="link" (click)="routeTo('/faqs', $event)">FAQs</a>
+                <a class="link" (click)="routeTo('/testimonials', $event)">Testimonials</a>
+                <a class="link" (click)="routeTo('/inspo', $event)">Inspo</a>
+                <a class="link" (click)="routeToReview()">Leave a Review</a>
             </div>
         </div>
         <div class="right-container">
@@ -36,6 +37,6 @@
     </div>
     <div class="bottom-section">
         <p>Boise, Idaho</p>
-        <p>&copy; 2025 Finishing Touch Co. All Rights Reserved.</p>
+        <p>&copy; 2025 Final Touch Co. All Rights Reserved.</p>
     </div>
 </footer>
