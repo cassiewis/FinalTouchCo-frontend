@@ -253,7 +253,7 @@ export class ShopComponent implements AfterViewInit, OnInit {
       const matchesCustom =
         this.customSelection === 'Any' ||
         (this.customSelection === 'Custom' && product.custom === true) ||
-        (this.customSelection === 'Not Custom' && product.custom !== true);  
+        (this.customSelection === 'Ready-made' && product.custom !== true);  
       
       const matchesSearch = !search || product.name.toLowerCase().includes(search);
       

@@ -13,6 +13,6 @@ export class HeroComponent {
   constructor(private router: Router) {}
 
   routeToShop(event?: MouseEvent) {
-    navigateWithScroll(this.router, event, `/shop}`, { custom: 'Custom' });
+    navigateWithScroll(this.router, event, `/shop`);
   }
 }

@@ -15,6 +15,9 @@ export const navigateWithScroll = (
   path: string, 
   queryParams?: any
 ): void => {
+
+  console.log("Navigating to:", path, "with queryParams:", queryParams);
+
   // Handle cmd+click for new tab
   if (event && (event.metaKey || event.ctrlKey)) {
     const url = queryParams 

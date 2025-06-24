@@ -57,7 +57,14 @@ export class CheckoutComponent implements OnInit {
     private productService: ProductService,
     private reservedDatesService: ReservedDatesService,
     private router: Router
-  ) {}
+  ) {
+    this.checkoutForm = this.fb.group({
+      phoneNumber: ['', [
+        Validators.required,
+        Validators.pattern(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/)
+      ]]
+    });
+  }
 
   async ngOnInit() {
 
@@ -82,6 +89,10 @@ export class CheckoutComponent implements OnInit {
     const cartItems = this.cartService.getItems();      
   }
 
+  get phoneNumber() {
+    return this.checkoutForm.get('phoneNumber');
+  }
+  
     // ...existing code...
   async submitForm() {
     if (this.checkoutForm.invalid) return;
