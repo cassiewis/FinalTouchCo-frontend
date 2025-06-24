@@ -1,6 +1,26 @@
 
   /* Form body spacing */
-  .form-section {
+  
+  .create-button {
+  min-width: 150px;
+  min-height: 50px;
+  background-color: #e8e8e8;
+  border-radius: 0px;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.create-button:focus,
+.create-button:active,
+.create-button:hover {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background-color: #dbdada;
+}
+
+.form-section {
     display: flex;
     gap: 16px; /* Adds space between each form field */
   }

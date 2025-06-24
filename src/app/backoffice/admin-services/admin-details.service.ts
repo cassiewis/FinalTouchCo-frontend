@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map, forkJoin } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Review } from '../../models/review.model';
 import { AuthService } from '../auth.service';
 import { HttpHeaders } from '@angular/common/http';

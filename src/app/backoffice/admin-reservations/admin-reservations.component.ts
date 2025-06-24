@@ -39,9 +39,6 @@ export class AdminReservationsComponent {
         console.log('filteredReservations:', this.filteredReservations); // Debugging
         this.loading = false;
 
-        // Always keep 'approval needed' reservations separate
-        // this.pendingReservations = reservations.filter(reservation => reservation.status === 'pending');
-
         // Sort reservations by date
         this.reservations.sort((a, b) => {
           const dateA = new Date(a.dates[0]);

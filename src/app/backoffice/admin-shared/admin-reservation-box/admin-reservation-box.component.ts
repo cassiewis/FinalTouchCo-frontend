@@ -5,6 +5,7 @@ import { FormGroup, FormControl, ReactiveFormsModule, FormsModule } from '@angul
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ReservationService } from '../../../services/reservation.service';
 import { AdminReservationsService } from '../../admin-services/admin-reservations.service';
+import { PAYMENT_DUE_DAYS, SEND_INVOICE_DAYS } from '../../../shared/constants';
 
 @Component({
   selector: 'app-admin-reservation-box',
@@ -19,6 +20,11 @@ export class AdminReservationBoxComponent {
   editMode: boolean = false;
   showStatusDropdown: boolean = false;
   editableReservation!: Reservation; // Editable copy of reservation
+  
+  // Expose the constant for template use
+  readonly PAYMENT_DUE_DAYS = PAYMENT_DUE_DAYS;
+  readonly SEND_INVOICE_DAYS = SEND_INVOICE_DAYS;
+  
   datesForm: FormGroup = new FormGroup({
     start: new FormControl(),
     end: new FormControl()
@@ -37,8 +43,8 @@ export class AdminReservationBoxComponent {
     });
   }
 
-  public openExpandedBox(): void {
-    this.expandBox = true;
+  public toggleExpandedBox(): void {
+    this.expandBox = !this.expandBox;
   }
 
   closeExpandedBox(): void {
@@ -133,7 +139,7 @@ export class AdminReservationBoxComponent {
       const calculatedDate = new Date(date.getTime());
       
       // Adjust the date by the specified number of days
-      calculatedDate.setDate(calculatedDate.getDate() + days);
+      calculatedDate.setDate(calculatedDate.getDate() - days);
   
       // Format the result to display as desired
       const options: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric', year: 'numeric' };
@@ -150,14 +156,34 @@ export class AdminReservationBoxComponent {
     return this.reservation.items.reduce((total, item) => total + item.deposit, 0);
   }
 
+  openReservationEditor(){
+
+  }
+
   toggleStatusDropdown(event: Event): void {
     event.stopPropagation(); // Prevent the click from triggering the expanded box
     this.showStatusDropdown = !this.showStatusDropdown;
   }
 
+  closeStatusDropdown() {
+    this.showStatusDropdown = false;
+  }
+
+  onDocumentClick(event: Event) {
+    // Close the dropdown when clicking outside
+    if (this.showStatusDropdown) {
+      this.showStatusDropdown = false;
+    }
+  }
+
   updateReservationStatus(newStatus: string): void {
     // update reservation status ONLY if status changes
     if (this.reservation.status === newStatus) {
+      this.showStatusDropdown = false; // Close the dropdown
+      return;
+    }
+    // if changing to canceled, confirm with user
+    if (newStatus === 'canceled' && !confirm('Are you sure you want to cancel this reservation?')) {
       this.showStatusDropdown = false; // Close the dropdown
       return;
     }
@@ -174,4 +200,14 @@ export class AdminReservationBoxComponent {
         }
       });
   }
+
+  isStatusLate(reservationDay: Date, days: number): boolean {
+    // display if the current date is past the date
+    const today = new Date();
+    const reservationDate = new Date(reservationDay);
+    reservationDate.setDate(reservationDate.getDate() - days); // Adjust the reservation date
+    return today > reservationDate;
+  }
+
+
 }

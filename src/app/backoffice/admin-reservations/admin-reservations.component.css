@@ -1,11 +1,5 @@
 
-body {
-    color: #454545;
-
-}
-
 .title {
-    color: #454545;
     font-weight: normal;
 }
 
@@ -17,21 +11,26 @@ body {
 
 .header {
     display: flex;
-    justify-content: space-between; /* Space out the title and button */
-    align-items: center; /* Vertically center all items in the header */
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stats-and-add-container {
+    display: flex;
 }
 
 .order-stats-container {
-    padding: 0px 25px 0px 25px;
+    flex: 1 1 700px;
+    padding: 10px 25px;
     margin: 20px 20px 20px 20px;
-    box-shadow: 2px 4px 6px 2px rgba(0, 0, 0, 0.1);
-    border-radius: 6px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 15px;
+    background-color: #b6c9b3;
 }
 
 .add-reservation-container {
+    min-width: 250px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -40,11 +39,11 @@ body {
 
 .table-title-container {
     display: grid;
-    grid-template-columns: 0.35fr 0.7fr 0.5fr 0.4fr 0.9fr 0.35fr 0.45fr 0.45fr; /* Adjust ratios if needed */
+    grid-template-columns: 0.35fr 0.7fr 0.5fr 0.4fr 0.9fr 0.35fr 0.45fr; /* Adjust ratios if needed */
     padding-left: 10px;
     margin: 0px 20px 0px 20px;
-    background-color: rgb(245, 245, 245);
-    border: 1px solid rgb(214, 214, 214);
+    background-color: white;
+    border: 2px solid #F4F4F4;
 }
 
 .list {
@@ -61,7 +60,6 @@ body {
 
 .stats {
     text-align: center;
-    /* padding: 10px; */
 }
 
 .stats-number {

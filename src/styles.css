@@ -105,6 +105,10 @@ body { margin: 0; font-family: "Philosopher", sans-serif; font-weight: normal; }
   background-color: #efe6b9;
 }
 
+.blue-background {
+  background-color: #C6CED6;
+}
+
 /* font colors: */
 .tan-font {
   color: #faf3eb;

@@ -34,25 +34,5 @@ export class ReservationService {
     );
   }
 
-  // Add a new reservation
-  // addReservation(reservation: Reservation): Observable<Reservation> {
-  //   const name = reservation.name.replace(/\s+/g, '');
-  //   const generatedstring = Math.random().toString(36).substring(2, 10);
-  //   reservation.reservationId = name + "-" + generatedstring;
-
-  //   // set status as pending for security
-  //   reservation.status = 'pending';
-
-  //   console.log("ReservationService: adding reservation");
-  //   return this.http.post<ApiResponse<Reservation>>(this.apiUrl, reservation).pipe(
-  //     map(response => {
-  //         if (response.success) return response.data; // Extract the Product array from the ApiResponse
-  //         else throw new Error(response.message || 'Failed to fetch products');
-  //       }),
-  //     tap(newReservation => {
-  //       console.log('Added reservation:', newReservation);
-  //     })
-  //   );
-  // }
 
 }

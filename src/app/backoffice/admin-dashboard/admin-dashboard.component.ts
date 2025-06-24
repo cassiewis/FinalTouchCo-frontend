@@ -1,15 +1,14 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminAddProductComponent } from '../admin-shared/admin-add-product/admin-add-product.component';
 import { AdminAddReservationComponent } from '../admin-shared/admin-add-reservation/admin-add-reservation.component';
 import { Reservation } from '../../models/reservation.model';
 import { Product } from '../../models/product.model';
-import { ReservationService } from '../../services/reservation.service';
 import { AdminReservationsService } from '../admin-services/admin-reservations.service';
-import { ProductService } from '../../services/product.service';
 import { AdminProductService } from '../admin-services/admin-product.service';
+import { AdminDetailsService } from '../admin-services/admin-details.service';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
-import { AuthService } from '../auth.service';
+import { SEND_INVOICE_DAYS, PAYMENT_DUE_DAYS } from '../../shared/constants';
 import {
   Chart,
   ChartConfiguration,
@@ -20,6 +19,7 @@ import {
   Title,
   Tooltip,
 } from 'chart.js';
+import { BlockoutDate } from '../../models/blockoutDates';
 
 @Component({
   selector: 'app-backoffice-home',
@@ -33,8 +33,10 @@ import {
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.css'
 })
-export class AdminDashboardComponent implements OnInit, AfterViewInit {
-  // public pendingApprovalReservations: Reservation[] = [];
+export class AdminDashboardComponent implements AfterViewInit {
+  @ViewChild('myChart', { static: false }) chartCanvas!: ElementRef<HTMLCanvasElement>;
+
+
   public reservations: Reservation[] = [];
   public pendingReservations: Reservation[] = [];
   public upcomingReservations: Reservation[] = [];
@@ -42,27 +44,20 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
   public now = new Date(); // Current date
   public activeProducts: Product[] = [];
   public tasks: Map<string, Reservation> = new Map();
+  public blockouts: BlockoutDate[] = [];
 
   constructor(
-    private reservationService: ReservationService, 
     private adminReservationService: AdminReservationsService, 
-    private productService: ProductService,
     private adminProductService: AdminProductService,
-    private router: Router, 
-    private route: ActivatedRoute,
-    private authService: AuthService
-  ){
+    private adminDetailsService: AdminDetailsService,
+    private router: Router
+    ){
       // Register required Chart.js components
       Chart.register(BarController, BarElement, CategoryScale, LinearScale, Title, Tooltip);
   }
 
   ngOnInit() {
     
-    // temp print out admin key
-    console.log("Admin Key: ", this.authService.getToken());
-
-
-
     this.adminReservationService.getAdminReservations().subscribe(
       (reservations: Reservation[]) => {
         // Separate reservations into those pending approval and others
@@ -91,10 +86,22 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
         this.activeProducts = products;
       }
     );
+
+    this.adminDetailsService.getAllBlockoutDates().subscribe(
+      (blockouts: BlockoutDate[]) => {
+        this.blockouts = blockouts;
+        console.log("Blockout Dates: ", this.blockouts);
+      }
+    );
   }
 
   ngAfterViewInit(): void {
-    this.createBarChart();
+    // Add a small delay to ensure the DOM is fully rendered
+    setTimeout(() => {
+      if (!this.isChildRouteActive()) {
+        this.createBarChart();
+      }
+    }, 100);
   }
 
   isChildRouteActive(): boolean {
@@ -116,19 +123,13 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
   
       // 2. Check if reservation date is 110 days or less from the first date, and invoiceStatus == 'not sent' (key = "Pay Invoice")
       const daysToFirstDate = Math.floor((firstDate.getTime() - now.getTime()) / (1000 * 3600 * 24));
-      if (daysToFirstDate <= 105 && reservation.invoiceStatus === 'not sent') {
+      if (daysToFirstDate <= (SEND_INVOICE_DAYS+2) && reservation.invoiceStatus === 'not sent') {
         this.tasks.set("Send Invoice", reservation );
       }
   
       // 3. Check if reservation date is 100 days or less from the first date, and paymentStatus == 'not received' (key = "Pay Invoice")
-      if (daysToFirstDate <= 90 && reservation.paymentStatus === 'not received') {
+      if (daysToFirstDate <= PAYMENT_DUE_DAYS && reservation.paymentStatus === 'not received') {
         this.tasks.set("Payment Due", reservation );
-      }
-  
-      // 4. Check if reservation date is 12 days or more from the last date, and depositStatus == 'not sent' (key = "Pay Invoice")
-      const daysFromLastDate = Math.floor((now.getTime() - lastDate.getTime()) / (1000 * 3600 * 24));
-      if (daysFromLastDate >= 10 && reservation.depositStatus === 'not sent') {
-        this.tasks.set("Send Deposit", reservation );
       }
     });
   }
@@ -158,52 +159,60 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
   }
 
 createBarChart(): void {
-  const ctx = (document.getElementById('myChart') as HTMLCanvasElement).getContext('2d');
-  if (ctx) {
-    const chartData = this.prepareChartData();
+  if (!this.chartCanvas?.nativeElement) {
+    console.warn('Chart canvas not available');
+    return;
+  }
+  
+  const ctx = this.chartCanvas.nativeElement.getContext('2d');
+  if (!ctx) {
+    console.warn('Could not get 2D context from canvas');
+    return;
+  }
 
-    // Find the maximum value in the data to determine the upper Y-axis limit
-    const maxDataValue = Math.max(...chartData.data);
-    // Set the Y-axis minimum to 5, but ensure it doesn't exceed the max value
-    const yAxisMax = maxDataValue < 5 ? 5 : maxDataValue;
+  const chartData = this.prepareChartData();
 
-    const data = {
-      labels: chartData.labels,
-      datasets: [
-        {
-          label: 'Upcoming Orders',
-          data: chartData.data,
-          backgroundColor: '#DFA1A3',
-          borderWidth: 1,
+  // Find the maximum value in the data to determine the upper Y-axis limit
+  const maxDataValue = Math.max(...chartData.data);
+  // Set the Y-axis minimum to 5, but ensure it doesn't exceed the max value
+  const yAxisMax = maxDataValue < 5 ? 5 : maxDataValue;
+
+  const data = {
+    labels: chartData.labels,
+    datasets: [
+      {
+        label: 'Upcoming Orders',
+        data: chartData.data,
+        backgroundColor: '#DFA1A3',
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const config: ChartConfiguration = {
+    type: 'bar',
+    data,
+    options: {
+      responsive: true,
+      scales: {
+        x: {
+          grid: {
+            display: false,  // Disable vertical grid lines (for x axis)
+          }
         },
-      ],
-    };
-
-    const config: ChartConfiguration = {
-      type: 'bar',
-      data,
-      options: {
-        responsive: true,
-        scales: {
-          x: {
-            grid: {
-              display: false,  // Disable vertical grid lines (for x axis)
-            }
-          },
-          y: {
-            beginAtZero: true,
-            max: yAxisMax, // Set the Y-axis minimum value
-            min: 0,
-            ticks: {
-              stepSize: 1,
-            }
-          },
+        y: {
+          beginAtZero: true,
+          max: yAxisMax, // Set the Y-axis minimum value
+          min: 0,
+          ticks: {
+            stepSize: 1,
+          }
         },
       },
-    };
+    },
+  };
 
-    new Chart(ctx, config);
-  }
+  new Chart(ctx, config);
 }
 
 getUpcomingReservationsByMonth(): { [key: string]: number } {

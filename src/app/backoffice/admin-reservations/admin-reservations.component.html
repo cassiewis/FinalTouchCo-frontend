@@ -35,22 +35,23 @@
         </div>
     </div>
 
-    <div class="order-stats-container">
-        <div class="total-orders-active stats">
-            <p class="stats-number">{{ reservations.length }}</p>
-            <p class="stats-title">Total Active</p>
-        </div>
+    <div class="stats-and-add-container"> 
+        <div class="order-stats-container">
+            <div class="total-orders-active stats">
+                <p class="stats-number">{{ reservations.length }}</p>
+                <p class="stats-title">Total Active</p>
+            </div>
 
-        <div class="total-orders-pending stats">
-            <p class="stats-number">{{ reservations.length }}</p>
-            <p class="stats-title">Total Pending</p>
-        </div>
+            <div class="total-orders-pending stats">
+                <p class="stats-number">{{ reservations.length }}</p>
+                <p class="stats-title">Total Pending</p>
+            </div>
 
-        <div class="total-orders-fulfilled stats">
-            <p class="stats-number">{{ reservations.length }}</p>
-            <p class="stats-title">Total Fulfilled</p>
+            <div class="total-orders-fulfilled stats">
+                <p class="stats-number">{{ reservations.length }}</p>
+                <p class="stats-title">Total Fulfilled</p>
+            </div>
         </div>
-
         <div class="add-reservation-container">
             <app-admin-add-reservation></app-admin-add-reservation>
         </div>
@@ -67,7 +68,6 @@
             <p>Email</p>
             <p>Invoice</p>
             <p>Payment</p>
-            <p>Refund</p>
         </div>
 
         <!-- Display the filtered reservation list -->
