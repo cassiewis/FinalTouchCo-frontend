@@ -8,7 +8,7 @@ import { CartService } from '../../services/cart-service.service';
 import { Reservation, ReservedItem } from '../../models/reservation.model';
 import { ProductService } from '../../services/product.service';
 import { ReservedDatesService } from '../../services/reserved-dates.service';
-import { BUFFER_DAYS, EMAIL, MINIMUM_ORDER } from '../../shared/constants';
+import { BUFFER_DAYS, EMAIL, MINIMUM_ORDER, navigateWithScroll } from '../../shared/constants';
 import { EventEmitter } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
@@ -91,14 +91,6 @@ export class CheckoutComponent implements OnInit {
       document.body.appendChild(script);
     }
 
-    this.checkoutForm = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      phone: ['', Validators.required],
-      notes: [''],
-      agreedToTerms: [false, Validators.requiredTrue],
-      recaptchaToken: ['']
-    });
     // Check if the cart is empty
     const cartItems = this.cartService.getItems();      
   }
@@ -186,7 +178,8 @@ export class CheckoutComponent implements OnInit {
                     this.cartService.clearCart();
                     this.successMessage = 'Your reservation has been successfully submitted! You will receive a confirmation email within 3-5 business days. Please check your spam folder if you do not see it in your inbox.\nThank you for choosing Final Touch !';
                     sessionStorage.setItem('reservationSuccess', 'true');
-                    this.router.navigate(['/reservation-success']);
+                    this.routeToSuccessPage();
+                    // this.router.navigate(['/reservation-success']);
                   } else if (successfulSubmissions > 0) {
                     this.partialSuccessMessage = `${successfulSubmissions} out of ${reservations.length} reservations were successfully submitted, but some failed.`;
                     this.updateCart.emit('something');
@@ -213,6 +206,20 @@ export class CheckoutComponent implements OnInit {
         });
       });
     }
+  }
+
+  routeToSuccessPage() {
+    this.router.navigate(['/reservation-success']).then(() => {
+        // Scroll to .app-container
+        setTimeout(() => {
+          const appContainer = document.querySelector('.app-container');
+          if (appContainer) {
+            appContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          } else {
+            window.scrollTo(0, 0);
+          }
+        }, 100);
+      });
   }
 
 
