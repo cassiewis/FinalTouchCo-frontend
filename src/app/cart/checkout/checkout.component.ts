@@ -59,10 +59,24 @@ export class CheckoutComponent implements OnInit {
     private router: Router
   ) {
     this.checkoutForm = this.fb.group({
-      phoneNumber: ['', [
+      name: ['', [
+        Validators.required,
+        Validators.pattern(/^[A-Za-z\s]+$/),
+        Validators.minLength(2),
+        Validators.maxLength(50)
+      ]],
+      email: ['', [
+        Validators.required,
+        Validators.email,
+        Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/)
+      ]],
+      phone: ['', [
         Validators.required,
         Validators.pattern(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/)
-      ]]
+      ]],
+      notes: [''], // Optional field
+      agreedToTerms: [false, Validators.requiredTrue], // Must be checked
+      recaptchaToken: [''] // For bot prevention
     });
   }
 
@@ -89,8 +103,29 @@ export class CheckoutComponent implements OnInit {
     const cartItems = this.cartService.getItems();      
   }
 
-  get phoneNumber() {
-    return this.checkoutForm.get('phoneNumber');
+  // Getter methods for form validation
+  get name() {
+    return this.checkoutForm.get('name');
+  }
+
+  get email() {
+    return this.checkoutForm.get('email');
+  }
+
+  get phone() {
+    return this.checkoutForm.get('phone');
+  }
+
+  get notes() {
+    return this.checkoutForm.get('notes');
+  }
+
+  get agreedToTerms() {
+    return this.checkoutForm.get('agreedToTerms');
+  }
+
+  get recaptchaToken() {
+    return this.checkoutForm.get('recaptchaToken');
   }
   
     // ...existing code...
