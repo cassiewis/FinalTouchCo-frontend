@@ -5,9 +5,9 @@ export const MINIMUM_ORDER = 50;
 export const SEND_INVOICE_DAYS = 45; // Days before the date to send invoice
 export const PAYMENT_DUE_DAYS = 30; // Days before the date to send deposit
 export const DAILY_LATE_FEE = 30; // Daily late fee in dollars
-export const TAX_PERCENTAGE = 0.06; // 8% tax rate
-// export const BACKEND_URL = "https://finaltouchco-backend.onrender.com"
-export const BACKEND_URL = "http://localhost:8080";
+export const TAX_PERCENTAGE = 0.06; // 6% tax rate
+export const BACKEND_URL = "https://finaltouchco-backend.onrender.com"
+// export const BACKEND_URL = "http://localhost:8080";
 
 // Generic navigation function with cmd+click support and auto-scroll
 export const navigateWithScroll = (
