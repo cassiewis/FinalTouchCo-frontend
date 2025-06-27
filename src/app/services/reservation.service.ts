@@ -34,5 +34,23 @@ export class ReservationService {
     );
   }
 
+  // Send email verification code
+  sendVerificationCode(email: string): Observable<any> {
+    return this.http.post<ApiResponse<any>>(`${BACKEND_URL}/api/email/send-verification`, { email }).pipe(
+      map(response => {
+        if (response.success) return response.data;
+        else throw new Error(response.message || 'Failed to send verification code');
+      })
+    );
+  }
 
+  // Verify email code
+  verifyEmailCode(email: string, code: string): Observable<boolean> {
+    return this.http.post<ApiResponse<boolean>>(`${BACKEND_URL}/api/email/verify-code`, { email, code }).pipe(
+      map(response => {
+        if (response.success) return response.data;
+        else throw new Error(response.message || 'Failed to verify code');
+      })
+    );
+  }
 }

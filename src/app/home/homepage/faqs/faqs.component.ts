@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HowItWorksComponent } from '../how-it-works/how-it-works.component';
-import { EMAIL, RESERVATION_LENGTH } from '../../../shared/constants';
+import { EMAIL, RESERVATION_LENGTH, MINIMUM_ORDER } from '../../../shared/constants';
 
 @Component({
   selector: 'app-faqs',
@@ -19,7 +19,7 @@ export class FaqsComponent {
     },
     {
       question: 'Is there a minimum order amount for rentals?',
-      answer: 'While we work hard to keep our prices affordable, we do require a minimum rental order of $40 to make each order worthwhile. Thank you for understanding and supporting small businesses like ours!',
+      answer: `While we work hard to keep our prices affordable, we do require a minimum rental order of $${MINIMUM_ORDER} to make each order worthwhile. Thank you for understanding and supporting small businesses like ours!`,
       open: false
     },
     {

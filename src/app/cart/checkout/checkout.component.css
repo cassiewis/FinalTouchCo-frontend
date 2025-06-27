@@ -204,6 +204,114 @@ button:disabled {
   cursor: not-allowed;
 }
 
+/* Email verification only mode styling */
+.email-verification-only {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 30px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.verification-message {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  border: 2px solid #4CAF50;
+}
+
+.verification-message h3 {
+  color: #2E7D32;
+  margin: 0 0 15px 0;
+  font-size: 1.5rem;
+}
+
+.verification-message p {
+  margin: 10px 0;
+  color: #555;
+  line-height: 1.5;
+}
+
+.verification-code-container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.verification-input {
+  flex: 1;
+  min-width: 200px;
+  padding: 12px;
+  font-size: 18px;
+  text-align: center;
+  letter-spacing: 2px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  background: white;
+}
+
+.verification-input:focus {
+  border-color: #4CAF50;
+  outline: none;
+}
+
+.verify-btn {
+  padding: 12px 24px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.verify-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.verify-btn:not(:disabled):hover {
+  background: #45a049;
+}
+
+.resend-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.resend-btn {
+  padding: 8px 16px;
+  background: transparent;
+  color: #666;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.resend-btn:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.resend-btn:not(:disabled):hover {
+  background: #f5f5f5;
+  border-color: #999;
+}
+
+.verification-hint {
+  display: block;
+  margin-top: 10px;
+  color: #666;
+  font-size: 14px;
+  text-align: center;
+}
+
 
 @media (max-width: 815px) {
 

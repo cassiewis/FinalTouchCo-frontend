@@ -83,14 +83,14 @@
                  [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 === 1}">
                 <img src="/images/item-image.png" alt="Item image" class="product-image">
                 <p class="product-name item-info">{{ item.name }}<br><p class="item-id">{{ item.productId }}</p></p>
-                <p class="product-price item-info">Price: ${{ item.price }}</p>
+                <p class="product-price item-info">Price: {{ item.price  | currency }}</p>
                 <p class="product-quantity item-info">Quantity: {{ item.quantity || 1 }}</p>
-                <p class="subtotal item-info">Subtotal: ${{ item.price * item.quantity || 20}}</p>
+                <p class="subtotal item-info">Subtotal: {{ item.price * ( item.quantity ?? 1 ) | currency }}</p>
             </div>
             <div class="total-price" 
                [ngClass]="{'even-row': reservation.items.length % 2 === 0, 'odd-row': reservation.items.length % 2 === 1}">
                <button class="edit-button" (click)="openEditMode()">edit</button>
-               <span class="total-price-text">Total Price: ${{ displayTotalPrice() }}</span>
+               <span class="total-price-text">Total Price: {{ reservation.price | currency }}</span>
             </div>
         </div>
     </div>

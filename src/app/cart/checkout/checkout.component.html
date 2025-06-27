@@ -5,7 +5,49 @@
   <form [formGroup]="checkoutForm" (ngSubmit)="submitForm()" class="checkout-container">
     <input type="hidden" formControlName="recaptchaToken" /> <!-- Used for bot prevention -->
 
-    <div class="checkout-sides">
+    <!-- Show email verification only when needed -->
+    <div *ngIf="emailVerificationStep" class="email-verification-only">
+      <div class="verification-message">
+        <h3>Email Verification Required</h3>
+        <p>Please check your email for a verification code and enter it below to complete your reservation.</p>
+        <p><strong>Email:</strong> {{ email?.value }}</p>
+      </div>
+      
+      <div class="form-field">
+        <label>Verification Code</label>
+        <div class="verification-code-container">
+          <input 
+            type="text" 
+            formControlName="verificationCode"
+            placeholder="Enter 6-digit code"
+            maxlength="6"
+            pattern="[0-9]{6}"
+            class="verification-input"
+            autocomplete="one-time-code"/>
+          <button 
+            type="button" 
+            class="verify-btn"
+            [disabled]="!verificationCode?.valid || verificationCode?.value?.length !== 6 || loading"
+            (click)="verifyEmailCode()">
+            {{ loading ? 'Verifying...' : 'Verify & Complete Reservation' }}
+          </button>
+        </div>
+        <small class="verification-hint">Check your email for the 6-digit verification code</small>
+        
+        <div class="resend-container">
+          <button 
+            type="button" 
+            class="resend-btn"
+            [disabled]="loading || resendCooldown > 0"
+            (click)="sendVerificationCode()">
+            {{ resendCooldown > 0 ? 'Resend in ' + resendCooldown + 's' : 'Resend Code' }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Show main form when not in email verification mode -->
+    <div *ngIf="!emailVerificationStep" class="checkout-sides">
       <div class="checkout-form">
         <div class="form-field">
           <label>Name</label>
@@ -68,14 +110,14 @@
           </label>
         </div>
       </div>
-    </div>
+    </div> <!-- End of checkout-sides -->
 
     <div *ngIf="partialSuccessMessage" class="error-message">
       <span>&#9888;&#65039;</span>
       <span [innerHTML]="partialSuccessMessage"></span>
     </div>
 
-    <button class="submit-button" type="submit" [disabled]="checkoutForm.invalid || loading || !checkoutForm.get('agreedToTerms')?.value">
+    <button *ngIf="!emailVerificationStep" class="submit-button" type="submit" [disabled]="checkoutForm.invalid || loading || !checkoutForm.get('agreedToTerms')?.value">
       {{ loading ? 'Processing...' : 'Submit Reservation' }}
     </button>
 
@@ -84,11 +126,11 @@
 </body>
 
  <!-- Error popup on reservation failure -->
-  <div class="error-popup" *ngIf="errorMessage">
-    <div class="error-popup-content tan-background">
-      <div class="error-icon">!</div>
-      <h3>Reservation Failed</h3>
-      <p [innerHTML]="errorMessage"></p>
-      <button (click)="closeErrorPopup()">Got it</button>
-    </div>
+<div class="error-popup" *ngIf="errorMessage">
+  <div class="error-popup-content tan-background">
+    <div class="error-icon">!</div>
+    <h3>Reservation Failed</h3>
+    <p [innerHTML]="errorMessage"></p>
+    <button (click)="closeErrorPopup()">Got it</button>
   </div>
+</div>

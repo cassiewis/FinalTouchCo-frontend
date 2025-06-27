@@ -8,7 +8,7 @@ import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ProductBoxComponent } from '../product-box/product-box.component';
 import { FormsModule } from '@angular/forms';
-import { navigateWithScroll } from '../../shared/constants'; // Assuming you have a utility function for navigation with scroll
+import { navigateWithScroll, DAILY_LATE_FEE } from '../../shared/constants'; // Assuming you have a utility function for navigation with scroll
 
 @Component({
   selector: 'app-product-page',
@@ -24,6 +24,7 @@ export class ProductPageComponent implements OnInit {
   activeTab: string = 'details';
   quantity: number = 1;
   quantities: number[] = Array.from({ length: 10 }, (_, i) => i + 1);
+  DAILY_LATE_FEE = DAILY_LATE_FEE; // Daily late fee in dollars
 
   selectedAddons: string[] = [];
   // addons: AddOnItem[] = [];

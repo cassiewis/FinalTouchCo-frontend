@@ -4,15 +4,14 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ReservationService } from '../../services/reservation.service';
-import { CartService } from '../../services/cart-service.service';
+import { CartService, CartItem } from '../../services/cart-service.service';
 import { Reservation, ReservedItem } from '../../models/reservation.model';
 import { ProductService } from '../../services/product.service';
 import { ReservedDatesService } from '../../services/reserved-dates.service';
-import { BUFFER_DAYS, EMAIL, MINIMUM_ORDER, navigateWithScroll } from '../../shared/constants';
+import { BUFFER_DAYS, EMAIL, MINIMUM_ORDER, DAILY_LATE_FEE, TAX_PERCENTAGE } from '../../shared/constants';
 import { EventEmitter } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
-import { CartItem } from '../../services/cart-service.service';
 
 declare var grecaptcha: any;
 
@@ -29,6 +28,14 @@ export class CheckoutComponent implements OnInit {
   successMessage = '';
   errorMessage = '';
   partialSuccessMessage = '';
+
+  // Email verification state
+  emailVerificationStep = false;
+  verificationCodeSent = false;
+  emailVerified = false;
+  resendCooldown = 0;
+
+
   @Output("updateCart") updateCart: EventEmitter<any> = new EventEmitter(); // EventEmitter to notify CartComponent
   
   terms = [
@@ -43,8 +50,8 @@ export class CheckoutComponent implements OnInit {
       open: false
     },
     {
-      question: 'Late returns will incur a fee of $50 per day',
-      answer: 'If items are not returned by the agreed return date, a $50 fee will be charged for each late day unless alternate arrangements have been approved by Finishing Touch Co. in advance.',
+      question: `Late returns will incur a fee of $${DAILY_LATE_FEE} per day`,
+      answer: `If items are not returned by the agreed return date, a $${DAILY_LATE_FEE} fee will be charged for each late day unless alternate arrangements have been approved by Final Touch Co. in advance.`,
       open: false
     }
   ];
@@ -75,6 +82,7 @@ export class CheckoutComponent implements OnInit {
         Validators.pattern(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/)
       ]],
       notes: [''], // Optional field
+      verificationCode: [''], // For email verification
       agreedToTerms: [false, Validators.requiredTrue], // Must be checked
       recaptchaToken: [''] // For bot prevention
     });
@@ -119,8 +127,79 @@ export class CheckoutComponent implements OnInit {
   get recaptchaToken() {
     return this.checkoutForm.get('recaptchaToken');
   }
+
+  get verificationCode() {
+    return this.checkoutForm.get('verificationCode');
+  }
   
-    // ...existing code...
+  // send the verification code through google api to verify email
+  async sendVerificationCode() {
+    if (!this.email?.valid) {
+      this.errorMessage = 'Please enter a valid email address first.';
+      return;
+    }
+
+    this.loading = true;
+    try {
+      // Call your backend API to send verification code
+      await lastValueFrom(this.reservationService.sendVerificationCode(this.email.value));
+      this.verificationCodeSent = true;
+      this.emailVerificationStep = true;
+      this.startResendCooldown();
+      this.errorMessage = '';
+      this.successMessage = 'Verification code sent! Please check your email.';
+    } catch (error) {
+      console.error('Error sending verification code:', error);
+      this.errorMessage = 'Failed to send verification code. Please try again.';
+    } finally {
+      this.loading = false;
+    }
+  }
+
+  async verifyEmailCode() {
+    if (!this.verificationCode?.valid || !this.verificationCode.value) {
+      this.errorMessage = 'Please enter the verification code.';
+      return;
+    }
+
+    this.loading = true;
+    try {
+      // Call your backend API to verify the code
+      const isValid = await lastValueFrom(this.reservationService.verifyEmailCode(
+        this.email?.value, 
+        this.verificationCode.value
+      ));
+      
+      if (isValid) {
+        this.emailVerified = true;
+        this.emailVerificationStep = false;
+        this.successMessage = 'Email verified! Processing your reservation...';
+        this.errorMessage = '';
+        
+        // Automatically proceed with reservation submission
+        await this.submitReservations(this.createReservations());
+      } else {
+        this.errorMessage = 'Invalid verification code. Please try again.';
+      }
+    } catch (error) {
+      console.error('Error verifying code:', error);
+      this.errorMessage = 'Failed to verify code. Please try again.';
+    } finally {
+      this.loading = false;
+    }
+  }
+
+  startResendCooldown() {
+    this.resendCooldown = 60; // 60 seconds cooldown
+    const interval = setInterval(() => {
+      this.resendCooldown--;
+      if (this.resendCooldown <= 0) {
+        clearInterval(interval);
+      }
+    }, 1000);
+  }
+
+
   async submitForm() {
     if (this.checkoutForm.invalid) return;
 
@@ -160,6 +239,17 @@ export class CheckoutComponent implements OnInit {
       }
     }
 
+    // check email verification
+    if (!this.emailVerified) {
+      await this.sendVerificationCode();
+      return;
+    }
+    // If email is verified, proceed with reservation submission
+    await this.submitReservations(reservations);
+  }
+
+  async submitReservations(reservations: Reservation[]) {
+    
     let successfulSubmissions = 0;
     let failedSubmissions = 0;
 
@@ -234,8 +324,8 @@ export class CheckoutComponent implements OnInit {
       // Loop through each group (key = date range, value = CartItem[])
       reservationsMap.forEach((groupedItems, key) => {
 
-        // Calculate totals
-        const totalPrice = groupedItems.reduce((sum, item) => sum + item.price, 0);
+        // Calculate totals plus tax 
+        const totalPrice = groupedItems.reduce((sum, item) => sum + item.price, 0) + (groupedItems.reduce((sum, item) => sum + item.price, 0) * TAX_PERCENTAGE); // Assuming 6% tax
         const totalDeposit = groupedItems.reduce((sum, item) => sum + item.deposit, 0);
 
         // Create ReservedItem[] from groupedItems

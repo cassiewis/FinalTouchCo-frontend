@@ -6,7 +6,7 @@ import { ProductService } from '../../services/product.service';
 import { CartItemComponent } from '../cart-item/cart-item.component';
 import { ReservationService } from '../../services/reservation.service';
 import { CheckoutComponent } from '../checkout/checkout.component';
-import { BUFFER_DAYS, MINIMUM_ORDER } from '../../shared/constants';
+import { BUFFER_DAYS, MINIMUM_ORDER, TAX_PERCENTAGE } from '../../shared/constants';
 @Component({
   selector: 'app-cart',
   templateUrl: './cart-page.component.html',
@@ -109,8 +109,7 @@ export class CartComponent implements OnInit {
 
   calculateTax(items: CartItem[]): number {
     const subtotal = this.calculateGroupTotal(items);
-    const taxRate = 0.06; // Idaho sales tax
-    return subtotal * taxRate;
+    return subtotal * TAX_PERCENTAGE;
   }
 
   goShop() {
