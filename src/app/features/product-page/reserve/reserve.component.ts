@@ -142,32 +142,39 @@ export class ReserveComponent implements OnChanges {
     return true;
   };
 
-  isDateRangeValid(): boolean {
-    if (this.range.value.start && this.range.value.end) {
-      console.log(`start: ${ this.range.value.start }, end: ${ this.range.value.end }`);
-      const diffInTime = this.range.value.end.getTime() - this.range.value.start.getTime();
-      const diffInDays = (diffInTime / (1000 * 3600 * 24)) + 1;
-
-      // check if all middle dates are valid
-      let current = new Date(this.range.value.start);
-      while (current <= this.range.value.end) {
-        if (!this.dateFilter(current)) {
-          console.log(`Invalid date found: ${current}`);
-          return false; // Found an invalid date
-        }
-        current.setDate(current.getDate() + 1);
+  // Check if all dates in range are available
+  areAllDatesAvailable(): boolean {
+    if (!this.range.value.start || !this.range.value.end) return false;
+    
+    let current = new Date(this.range.value.start);
+    while (current <= this.range.value.end) {
+      if (!this.dateFilter(current)) {
+        return false;
       }
-      return diffInDays <= RESERVATION_LENGTH; // Check if the range is 5 days or less
+      current.setDate(current.getDate() + 1);
     }
-    console.log('Invalid date range');
-    return false;
+    return true;
   }
 
-  get showUnavailableTooltip(): boolean {
-    const start = this.range.get('start')?.value;
-    const end = this.range.get('end')?.value;
-    return !!start && !!end && !this.isDateRangeValid();
+  // Check if duration is within limit
+  isWithinDurationLimit(): boolean {
+    if (!this.range.value.start || !this.range.value.end) return false;
+    
+    const diffInTime = this.range.value.end.getTime() - this.range.value.start.getTime();
+    const diffInDays = (diffInTime / (1000 * 3600 * 24)) + 1;
+    return diffInDays <= RESERVATION_LENGTH;
   }
+
+  // Overall validation
+  isDateRangeValid(): boolean {
+    return this.areAllDatesAvailable() && this.isWithinDurationLimit();
+  }
+
+  // get showUnavailableTooltip(): boolean {
+  //   const start = this.range.get('start')?.value;
+  //   const end = this.range.get('end')?.value;
+  //   return !!start && !!end && !this.isDateRangeValid();
+  // }
 
   async onCartClick() {
     if (this.range.invalid) {
@@ -274,6 +281,26 @@ export class ReserveComponent implements OnChanges {
       });
     }
     return true;
+  }
+
+  get showUnavailableTooltip(): boolean {
+    const start = this.range.get('start')?.value;
+    const end = this.range.get('end')?.value;
+    
+    if (!start || !end) return false;
+    
+    // Show tooltip for both availability and duration issues
+    return !this.areAllDatesAvailable() || !this.isWithinDurationLimit();
+  }
+
+  get tooltipMessage(): string {
+    if (!this.areAllDatesAvailable()) {
+      return 'Some of the dates you selected are unavailable.';
+    }
+    if (!this.isWithinDurationLimit()) {
+      return `Maximum reservation length is ${RESERVATION_LENGTH} days.`;
+    }
+    return '';
   }
   
 }

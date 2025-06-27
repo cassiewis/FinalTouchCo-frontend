@@ -42,9 +42,9 @@
     
   </div>
   <span
-    [matTooltip]="showUnavailableTooltip ? 'Some of the dates you selected are unavailable.' : ''"
+    [matTooltip]="tooltipMessage"
     matTooltipShowDelay="100"
-    [matTooltipDisabled]="!showUnavailableTooltip"
+    [matTooltipDisabled]="!tooltipMessage"
   >
     <button
       class="reserve-button button-theme green-background white-font"
