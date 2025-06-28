@@ -50,6 +50,6 @@ export class TestimonialsComponent implements OnInit, OnDestroy {
     }
 
     routeToInspo(event: MouseEvent) {
-      navigateWithScroll(this.router, event, `/inspo}`);
+      navigateWithScroll(this.router, event, `/inspo`);
     }
 }
