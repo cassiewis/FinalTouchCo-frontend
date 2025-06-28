@@ -11,6 +11,7 @@ import { EMAIL, navigateWithScroll } from '../../shared/constants';
 })
 export class FooterComponent {
   inspoImages!: boolean;
+  EMAIL = EMAIL;
 
   constructor(private router: Router) {}
 
