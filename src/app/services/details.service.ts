@@ -26,6 +26,36 @@ export class DetailsService {
     );
   }
 
+  getFeaturedReviews(): Review[] {
+    const reviews: Review[] = [
+      {
+        id: '1',
+        author: 'Danielle',
+        rating: 5,
+        content: 'Loved working with Cassie!! She made a mirror welcome sign for my wedding and it turned out so good! I got so many compliments on it! Thank you Cassie and I will definitely be using her again for other events!',
+        event: "Wedding",
+        date: '5/18/25'
+      },
+      {
+        id: '2',
+        author: 'Jazmin',
+        rating: 5,
+        content: 'It was the best experience as they accommodated my needs.',
+        event: "Quinceanera",
+        date: '4/16/25'
+      },
+      {
+        id: '3',
+        author: 'Abby',
+        rating: 5,
+        content: 'Cassie was absolutely amazing! She did a beautiful job on our mirror for our wedding, it looked exactly how I imagined and we got so many compliments on it. She was always so responsive and willing to work with me on scheduling for pick up and drop off. I would highly highly recommend her for any of your wedding needs!!',
+        event: "Wedding",
+        date: '6/16/25'
+      }
+    ];
+    return reviews;
+  }
+
   getAllBlockoutDates(): Observable<Date[]> {
     return this.http.get<string[]>(`${this.apiUrl}/blockoutdates`).pipe(
       map((response: any) => {

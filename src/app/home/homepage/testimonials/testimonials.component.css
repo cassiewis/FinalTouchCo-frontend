@@ -47,12 +47,10 @@ body {
 
 .review {
   flex: 0 0 auto; /* Prevents the review boxes from shrinking or growing */
-  /* background-color: white; */
   border-radius: 4px;
-  width: 200px; /* Ensures each review box has a consistent width */
-  height: 290px; /* Sets a fixed height for the review box */
+  width: 230px; /* Ensures each review box has a consistent width */
+  height: 325px; /* Sets a fixed height for the review box */
   text-align: center;
-  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); Adds a subtle shadow for better visuals */
   overflow: hidden; /* Ensures content stays within the box */
   padding: 15px;
 }
@@ -105,6 +103,9 @@ body {
 
   .review {
       font-size: 0.8rem;
+      width: 200px;
+      height: 280px;
+      font-size: 0.9rem;
   }
 
   .stars {

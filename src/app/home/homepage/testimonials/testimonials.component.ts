@@ -23,11 +23,7 @@ export class TestimonialsComponent implements OnInit, OnDestroy {
       // Start the automatic carousel
       this.startCarousel();
 
-      this.detailsService.getAllReviews().subscribe(reviews => {
-        this.reviews = reviews;
-        console.log("fetched reviews: ", this.reviews);
-      });
-
+      this.reviews = this.detailsService.getFeaturedReviews();
     }
   
     ngOnDestroy(): void {

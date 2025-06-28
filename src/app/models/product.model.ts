@@ -11,6 +11,7 @@ export interface Product {
     imageUrl: string;
     datesReserved: Date[];
     tags: string[];
+    // searchTerms: string[];
     material: string;
     addons?: string[];
 }

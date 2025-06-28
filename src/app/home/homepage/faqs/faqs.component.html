@@ -1,17 +1,18 @@
-<body class="green-background topDiv">
+<body class="tan-background topDiv">
 
     <div class="container">
         <div class="title-container">
-            <h1 class="title">FREQUENTLY ASKED QUESTIONS</h1>
+            <!-- <h1 class="title">FREQUENTLY ASKED QUESTIONS</h1> -->
+             <img src="/images/faqs.png" alt="FAQ Banner" class="faq-banner">
         </div>
     
         <div class="faq-grid">
             <div class="faq-category">
-                <h2 class="cursive-font faq-category-title">General Questions</h2>
+                <h2 class="faq-category-title">GENERAL QUESTIONS</h2>
             </div>
             <div class="faqs-container">
-                <div class="faq" *ngFor="let faq of generalFaqs; let i = index">
-                  <div class="faq-question" (click)="toggleAnswer(generalFaqs, i)">
+                <div class="faq" *ngFor="let faq of generalFaqs; let i = index" (click)="toggleAnswer(generalFaqs, i)">
+                  <div class="faq-question">
                     <div class="inside-question">
                       <span>{{ faq.question }}</span>
                       <i class="arrow down"></i>
@@ -25,11 +26,11 @@
               
 
             <div class="faq-category">
-                <h2 class="cursive-font faq-category-title">Custom Items</h2>
+                <h2 class="faq-category-title">CUSTOM ITEMS</h2>
             </div>
             <div class="faqs-container">
-                <div class="faq" *ngFor="let faq of customFaqs; let i = index">
-                  <div class="faq-question" (click)="toggleAnswer(customFaqs, i)">
+                <div class="faq" *ngFor="let faq of customFaqs; let i = index" (click)="toggleAnswer(customFaqs, i)">
+                  <div class="faq-question">
                     <div class="inside-question">
                       <span>{{ faq.question }}</span>
                       <i class="arrow down"></i>
@@ -43,11 +44,11 @@
               
 
             <div class="faq-category">
-                <h2 class="cursive-font faq-category-title">Policies & Payment</h2>
+                <h2 class="faq-category-title">POLICIES & PAYMENTS</h2>
             </div>
             <div class="faqs-container">
-                <div class="faq" *ngFor="let faq of policyFaqs; let i = index">
-                  <div class="faq-question" (click)="toggleAnswer(policyFaqs, i)">
+                <div class="faq" *ngFor="let faq of policyFaqs; let i = index" (click)="toggleAnswer(policyFaqs, i)">
+                  <div class="faq-question">
                     <div class="inside-question">
                       <span>{{ faq.question }}</span>
                       <i class="arrow down"></i>

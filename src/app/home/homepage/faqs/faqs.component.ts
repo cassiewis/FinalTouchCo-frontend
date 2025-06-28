@@ -66,17 +66,18 @@ export class FaqsComponent {
   ];
 
   toggleAnswer(list: any[], index: number) {
-    // close all questions in OTHER lists
-    if (list !== this.generalFaqs) this.generalFaqs.forEach(faq => faq.open = false);
-    if (list !== this.customFaqs)  this.customFaqs.forEach(faq => faq.open = false);
-    if (list !== this.policyFaqs)  this.policyFaqs.forEach(faq => faq.open = false);
-    // Toggle the clicked FAQ (open it if it's closed, close it if it's already open)
-    // if the question is closed, close everythnig in the list
-    if (!list[index].open) {
-      list.forEach(faq => faq.open = false);
-    }
-    // Toggle the clicked FAQ
-    list[index].open = !list[index].open;
-  }
+  // Close all questions in OTHER lists
+  if (list !== this.generalFaqs) this.generalFaqs.forEach(faq => faq.open = false);
+  if (list !== this.customFaqs) this.customFaqs.forEach(faq => faq.open = false);
+  if (list !== this.policyFaqs) this.policyFaqs.forEach(faq => faq.open = false);
+  
+  // Close all other FAQs in the current list
+  list.forEach((faq, i) => {
+    if (i !== index) faq.open = false;
+  });
+  
+  // Toggle only the clicked FAQ
+  list[index].open = !list[index].open;
+}
 
 }
