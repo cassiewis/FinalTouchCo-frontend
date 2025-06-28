@@ -14,7 +14,12 @@
   }
 
   .faq-banner {
-    width: 100%;;
+    width: 100%;
+    height: 200px; /* Set appropriate height */
+    background-image: url('/images/faqs.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
   }
   
   .faq-category-title {
@@ -77,18 +82,31 @@
   /* Responsive */
   @media (max-width: 780px) {
 
-    .faq-category {
-      text-align: left
+    .faq-banner {
+      background-image: url('/images/faqs-mobile.png'); /* Your mobile image */
+      height: 150px; /* Adjust height if needed */
     }
 
-    
+    .faq-category-title {
+      font-size: 2rem;
+      font-weight: normal;
+      text-align: center;
+    }
   }
 
-  @media (max-width: 600px) {
-  
-    .title {
+  @media (max-width: 530px) {
+
+    .faq-banner {
+      height: 120px; /* Adjust height if needed */
+    }
+    
+
+  @media (max-width: 450px) {
+
+    .faq-category-title {
       font-size: 1.5rem;
     }
+  }
 
-    
+
   }
