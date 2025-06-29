@@ -83,6 +83,15 @@ body {
 html, body { height: 100%; }
 body { margin: 0; font-family: "Philosopher", sans-serif; font-weight: normal; }
 
+button {
+  text-decoration: none;
+}
+
+/* Ensure button text doesn't inherit blue link colors */
+button, button * {
+  color: inherit;
+}
+
 /*
  * Custom styles for the app 
  */
