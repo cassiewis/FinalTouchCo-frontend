@@ -45,12 +45,57 @@
                         <textarea matInput class="input-box" placeholder="Enter Description" [(ngModel)]="product.description" name="description" required></textarea>
                     </mat-form-field>
 
-                    <mat-checkbox [(ngModel)]="product.active" name="active">
-                        Active
-                    </mat-checkbox>
-                    <mat-checkbox [(ngModel)]="product.custom" name="custom">
-                        Custom
-                    </mat-checkbox>
+                    <!-- Tags Selection with Checkboxes -->
+                    <div class="tags-section">
+                        <h4>Tags Selection</h4>
+                        <div class="tag-category">
+                            <h5>Event Types</h5>
+                            <div class="checkbox-grid">
+                                <mat-checkbox 
+                                    *ngFor="let eventType of eventTypes" 
+                                    [checked]="isTagSelected(eventType)"
+                                    (change)="toggleTag(eventType, $event.checked)"
+                                    class="tag-checkbox">
+                                    {{ eventType }}
+                                </mat-checkbox>
+                            </div>
+                        </div>
+
+                        <div class="tag-category">
+                            <h5>Categories</h5>
+                            <div class="checkbox-grid">
+                                <mat-checkbox 
+                                    *ngFor="let category of categories" 
+                                    [checked]="isTagSelected(category)"
+                                    (change)="toggleTag(category, $event.checked)"
+                                    class="tag-checkbox">
+                                    {{ category }}
+                                </mat-checkbox>
+                            </div>
+                        </div>
+
+                        <div class="tag-category">
+                            <h5>Materials</h5>
+                            <div class="checkbox-grid">
+                                <mat-checkbox 
+                                    *ngFor="let material of materials" 
+                                    [checked]="isTagSelected(material)"
+                                    (change)="toggleTag(material, $event.checked)"
+                                    class="tag-checkbox">
+                                    {{ material }}
+                                </mat-checkbox>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="checkbox-container">
+                        <mat-checkbox [(ngModel)]="product.active" name="active">
+                            Active
+                        </mat-checkbox>
+                        <mat-checkbox [(ngModel)]="product.custom" name="custom">
+                            Custom
+                        </mat-checkbox>
+                    </div>
                     
                     <mat-form-field appearance="outline" class="input-item">
                         <mat-label>Image url</mat-label>

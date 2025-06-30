@@ -10,6 +10,7 @@ import { Options } from '@angular-slider/ngx-slider';
 import { MatSliderModule } from '@angular/material/slider';
 import { BannerService } from '../services/banner.service';
 import { ErrorBannerComponent } from '../shared/error-banner/error-banner.component';
+import { EVENT_TYPES, CATEGORIES, MATERIALS, COLORS } from '../shared/constants';
 @Component({
   selector: 'app-shop',
   standalone: true,
@@ -42,9 +43,10 @@ export class ShopComponent implements AfterViewInit, OnInit {
   productsPerPage: number = 12;
   currentPage: number = 0;
   
-  typeCategory: string[] = ['Signage', 'Table Numbers', 'Florals', 'Lighting', 'Tableware'];
-  colorCategory: string[] = ['White', 'Black', 'Gold', 'Silver', 'Clear', 'Brown', 'Blue', 'Green', 'Pink', 'Purple', 'Red', 'Yellow', 'Orange'];
-  eventCategory: string[] = ['Wedding', 'Baby Shower', 'Engagement', 'Bridal Shower', 'Birthday'];
+  typeCategory = CATEGORIES;
+  colorCategory = COLORS;
+  eventCategory = EVENT_TYPES;
+  materialCategory = MATERIALS;
   customSelection = 'Any';
 
   openSections: { [key: string]: boolean } = {
@@ -227,7 +229,8 @@ export class ShopComponent implements AfterViewInit, OnInit {
     const groupedFilters: { [key: string]: string[] } = {
       type: [],
       color: [],
-      event: []
+      event: [],
+      material: []
     };
 
     this.currentPage = 0;
@@ -240,6 +243,8 @@ export class ShopComponent implements AfterViewInit, OnInit {
         groupedFilters['color'].push(lcFilter);
       } else if (this.eventCategory.map(f => f.toLowerCase()).includes(lcFilter)) {
         groupedFilters['event'].push(lcFilter);
+      } else if (this.materialCategory.map(f => f.toLowerCase()).includes(lcFilter)) {
+        groupedFilters['material'].push(lcFilter);
       }
     });
 
@@ -249,6 +254,7 @@ export class ShopComponent implements AfterViewInit, OnInit {
       const matchesType = groupedFilters['type'].length === 0 || groupedFilters['type'].some(f => tags.includes(f));
       const matchesColor = groupedFilters['color'].length === 0 || groupedFilters['color'].some(f => tags.includes(f));
       const matchesEvent = groupedFilters['event'].length === 0 || groupedFilters['event'].some(f => tags.includes(f));
+      const matchesMaterial = groupedFilters['material'].length === 0 || groupedFilters['material'].some(f => tags.includes(f));
       
       const matchesCustom =
         this.customSelection === 'Any' ||
@@ -261,7 +267,7 @@ export class ShopComponent implements AfterViewInit, OnInit {
         (this.minPrice === null || product.price >= this.minPrice) &&
         (this.maxPrice === null || product.price <= this.maxPrice);
 
-      return matchesType && matchesColor && matchesEvent && matchesCustom && matchesSearch && matchesPrice;
+      return matchesType && matchesColor && matchesEvent && matchesCustom && matchesSearch && matchesPrice && matchesMaterial;
     });
   }
 

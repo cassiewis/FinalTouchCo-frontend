@@ -137,18 +137,58 @@
     padding: 30px;
     border-radius: 8px;
     z-index: 1000;
-    width: 65%;
+    width: 90%;
+    max-width: 900px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.popup-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Popup header styling */
+.popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.popup-header h2 {
+    margin: 0;
+    color: #333;
+}
+
+.close-button {
+    margin-left: auto;
 }
 
 .popup-content {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 0px;
+}
+
+.name-checkbox-container {
+    display: flex;
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .form-group label {
@@ -158,15 +198,33 @@
 .form-group input,
 .form-group textarea,
 .form-group select {
-    padding: 8px;
+    padding: 0px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
+/* Material form field styling */
+.form-group mat-form-field {
+    width: 100%;
+}
+
+.prices-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 15px;
+}
+
+.prices-container .form-group {
+    margin: 0;
+}
+
 .edit-button-container {
     display: flex;
-    /* justify-content: space-between; */
-    margin-top: 10px;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
 }
 
 .edit-button {
@@ -174,15 +232,11 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    margin: 10px;
+    margin: 0;
 }
 
 .edit-button:hover {
     opacity: 0.9;
-}
-
-.prices-container {
-    display: flex;
 }
 
 .calendar-container {
@@ -200,6 +254,11 @@
 mat-icon {
     font-size: 24px;
 }
+.description-field textarea { 
+    min-height: 200px;
+}
+
+
 
 .calendar-popup {
     position: absolute;
@@ -214,3 +273,95 @@ button.reserved-date {
     background-color: rgb(120, 120, 120) !important;  /* Use !important to override any other styles */
     border-radius: 50%;
   }
+
+/* Custom checkbox group styling */
+.custom-checkbox-group {
+    /* margin: 15px 0; */
+    width: 40%;
+    margin: 0;
+    padding: 0;
+}
+
+.checkbox {
+    margin: 0;
+    padding: 0;
+    height: 30px;
+}
+
+/* Tags selection styling */
+.tags-section {
+    margin: 20px 0;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #fafafa;
+}
+
+.tags-section h4 {
+    margin: 0 0 15px 0;
+    color: #333;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.tag-category {
+    margin-bottom: 15px;
+}
+
+.tag-category:last-child {
+    margin-bottom: 0;
+}
+
+.tag-category h5 {
+    margin: 0 0 8px 0;
+    color: #666;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.tag-checkbox {
+    font-size: 12px;
+}
+
+.tag-checkbox .mdc-form-field {
+    padding: 4px 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .edit-popup {
+        width: 95%;
+        max-width: none;
+        padding: 20px;
+    }
+    
+    .prices-container {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .edit-button-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .edit-button-container button {
+        width: 100%;
+    }
+
+    .checkbox-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 6px;
+    }
+    
+    .tag-checkbox {
+        font-size: 11px;
+    }
+}

@@ -6,31 +6,51 @@
         </div>
             <!-- Filter controls -->
         <div class="top-container">
-            <div class="filter-container">
-                <label>
-                    <input
-                        type="checkbox" 
-                        (change)="onFilterChange('pending', $event)"
-                        [checked]="selectedStatuses.includes('pending')" /> Pending
-                </label>
-                <label>
-                    <input 
-                        type="checkbox" 
-                        (change)="onFilterChange('active', $event)"
-                        [checked]="selectedStatuses.includes('active')" /> Active
-                </label>
-                <label>
-                    <input 
-                        type="checkbox" 
-                        (change)="onFilterChange('canceled', $event)"
-                        [checked]="selectedStatuses.includes('canceled')" /> Canceled
-                </label>
-                <label>
-                    <input 
-                        type="checkbox" 
-                        (change)="onFilterChange('fulfilled', $event)"
-                        [checked]="selectedStatuses.includes('fulfilled')" /> Fulfilled
-                </label>
+            <div class="filter-dropdown-container">
+                <button class="filter-toggle-btn" (click)="toggleFilters()">
+                    <span>Filters</span>
+                    <span class="filter-count" *ngIf="selectedStatuses.length > 0">({{ selectedStatuses.length }})</span>
+                    <span class="dropdown-arrow" [class.open]="showFilters">▼</span>
+                </button>
+                
+                <div class="filter-dropdown" *ngIf="showFilters">
+                    <div class="filter-option">
+                        <label>
+                            <input
+                                type="checkbox" 
+                                (change)="onFilterChange('pending', $event)"
+                                [checked]="selectedStatuses.includes('pending')" /> 
+                            <span>Pending</span>
+                        </label>
+                    </div>
+                    <div class="filter-option">
+                        <label>
+                            <input 
+                                type="checkbox" 
+                                (change)="onFilterChange('active', $event)"
+                                [checked]="selectedStatuses.includes('active')" /> 
+                            <span>Active</span>
+                        </label>
+                    </div>
+                    <div class="filter-option">
+                        <label>
+                            <input 
+                                type="checkbox" 
+                                (change)="onFilterChange('canceled', $event)"
+                                [checked]="selectedStatuses.includes('canceled')" /> 
+                            <span>Canceled</span>
+                        </label>
+                    </div>
+                    <div class="filter-option">
+                        <label>
+                            <input 
+                                type="checkbox" 
+                                (change)="onFilterChange('fulfilled', $event)"
+                                [checked]="selectedStatuses.includes('fulfilled')" /> 
+                            <span>Fulfilled</span>
+                        </label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -25,8 +25,14 @@ export class AdminReservationsComponent {
   filteredReservations: Reservation[] = [];  // Array for filtered reservations
   selectedStatuses: string[] = []; // Array to track selected statuses
   loading: boolean = true;
+  showFilters: boolean = false; // For dropdown toggle
 
   constructor(private reservationService: ReservationService, private adminReservationsService: AdminReservationsService, private dialog: MatDialog) {}
+
+  // Toggle filter dropdown
+  toggleFilters(): void {
+    this.showFilters = !this.showFilters;
+  }
 
   // Method to get count of reservations by status
   getStatusCount(status: string): number {

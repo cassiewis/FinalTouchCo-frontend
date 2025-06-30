@@ -273,3 +273,13 @@ button, button * {
     font-size: 1.5rem;
   }
 }
+
+/* Global utility class for product descriptions with line breaks */
+.product-description {
+    white-space: pre-wrap; /* Preserves line breaks and spaces */
+}
+
+/* Alternative class for any text that needs line break preservation */
+.preserve-linebreaks {
+    white-space: pre-wrap;
+}

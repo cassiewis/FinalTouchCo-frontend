@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="filter-flyout" *ngIf="showMobileFilter" (click)="$event.stopPropagation()">
-                    <div class="filter-section">
+                    <div class="filter-section category-section">
                         <p class="filter-title" (click)="toggleSection('type')">
                             Category
                         </p>
@@ -38,6 +38,24 @@
                                     [checked]="selectedFilters.includes(type)"
                                     (change)="toggleFilter($event)"> 
                                     {{ type }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="filter-section category-section">
+                        <p class="filter-title" (click)="toggleSection('material')">
+                            Material
+                        </p>
+                        <div class="filter-box" *ngIf="openSections['material']">
+                            <div class="types" *ngFor="let material of materialCategory">
+                                <label>
+                                    <input 
+                                    class="checkbox" 
+                                    type="checkbox" 
+                                    [value]="material"
+                                    [checked]="selectedFilters.includes(material)"
+                                    (change)="toggleFilter($event)"> 
+                                    {{ material }}
                                 </label>
                             </div>
                         </div>

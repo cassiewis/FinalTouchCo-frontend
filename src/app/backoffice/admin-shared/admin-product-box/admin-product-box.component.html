@@ -31,7 +31,7 @@
         </div>
     </div>
 
-    <div class="description">
+    <div class="description product-description">
         <p>{{ product.description }}</p>
     </div>
 
@@ -48,62 +48,127 @@
     </div>
 </div>
 
-<!-- Edit Popup -->
-<div *ngIf="editMode" class="edit-popup form-class">
-    <div class="popup-content">
-        <h2>Edit Product</h2>
-        <div class="form-group">
-            <label>Name:</label>
-            <input [(ngModel)]="editableProduct.name" type="text" />
-        </div>
-        <div class="prices-container">
-            <div class="form-group">
-                <label>Price:</label>
-                <input [(ngModel)]="editableProduct.price" type="number" />
+<!-- Edit Popup with Backdrop -->
+<div *ngIf="editMode" class="popup-backdrop">
+    <div class="edit-popup form-class">
+        <div class="popup-content">
+            <div class="popup-header">
+                <h2>Edit Product</h2>
+                <button mat-icon-button (click)="closeProductEditor()" class="close-button">
+                    <mat-icon>close</mat-icon>
+                </button>
             </div>
-            <div class="form-group">
-                <label>Deposit:</label>
-                <input [(ngModel)]="editableProduct.deposit" type="number" />
+            
+            <div class="name-checkbox-container">
+                <mat-form-field appearance="outline" class="form-group">
+                    <mat-label>Name</mat-label>
+                    <input matInput [(ngModel)]="editableProduct.name" type="text" />
+                </mat-form-field>
+                <div class="form-group custom-checkbox-group">
+                    <mat-checkbox [(ngModel)]="editableProduct.active" name="isActive" class="checkbox">
+                        Active
+                    </mat-checkbox>
+                    <mat-checkbox [(ngModel)]="editableProduct.custom" name="isCustom" class="checkbox">
+                        Custom Item
+                    </mat-checkbox>
+                </div>
             </div>
-            <div class="form-group">
-                <label>Count:</label>
-                <input [(ngModel)]="editableProduct.quantity" type="number" />
+
+
+            <div class="prices-container">
+                <mat-form-field appearance="outline" class="form-group">
+                    <mat-label>Price</mat-label>
+                    <input matInput [(ngModel)]="editableProduct.price" type="number" />
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="form-group">
+                    <mat-label>Deposit</mat-label>
+                    <input matInput [(ngModel)]="editableProduct.deposit" type="number" />
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="form-group">
+                    <mat-label>Count</mat-label>
+                    <input matInput [(ngModel)]="editableProduct.quantity" type="number" />
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="form-group">
+                    <mat-label>Material</mat-label>
+                    <input matInput [(ngModel)]="editableProduct.material" type="text" />
+                </mat-form-field>
             </div>
-        </div>
-        <div class="form-group">
-            <label>Description:</label>
-            <textarea [(ngModel)]="editableProduct.description"></textarea>
-        </div>
-        <div class="form-group">
-            <label>Status:</label>
-            <select [(ngModel)]="editableProduct.active">
-                <option value="true">Active</option>
-                <option value="false">Inactive</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>Tags (comma-separated):</label>
-            <input [(ngModel)]="tagsInput" type="text" placeholder="e.g., signage, custom, rustic" />
-        </div>
-        <div class="form-group">
-            <label>Material:</label>
-            <input [(ngModel)]="editableProduct.material" type="text" />
-        </div>
-        <div class="form-group">
-            <label>Image URL:</label>
-            <input [(ngModel)]="editableProduct.imageUrl" type="text" />
-        </div>
-        <div class="form-group custom-checkbox-group">
-            <label class="custom-checkbox-label">
-                <input type="checkbox" [(ngModel)]="editableProduct.custom" name="isCustom" />
-                <span class="custom-checkbox-box"></span>
-                Custom Item
-            </label>
-        </div>
-        <div class="edit-button-container">
-            <button (click)="saveProduct()">Save</button>
-            <button (click)="closeProductEditor()">Cancel</button>
-            <button (click)="deleteProduct()">Delete</button>
+
+            <mat-form-field appearance="outline" class="form-group description-field">
+                <mat-label>Description</mat-label>
+                <textarea matInput [(ngModel)]="editableProduct.description"></textarea>
+            </mat-form-field>
+
+            <!-- Tags Selection with Checkboxes -->
+            <div class="tags-section">
+                <h4>Tags Selection</h4>
+                
+                <div class="tag-category">
+                    <h5>Event Types</h5>
+                    <div class="checkbox-grid">
+                        <mat-checkbox 
+                            *ngFor="let eventType of eventTypes" 
+                            [checked]="isTagSelected(eventType)"
+                            (change)="toggleTag(eventType, $event.checked)"
+                            class="tag-checkbox">
+                            {{ eventType }}
+                        </mat-checkbox>
+                    </div>
+                </div>
+
+                <div class="tag-category">
+                    <h5>Categories</h5>
+                    <div class="checkbox-grid">
+                        <mat-checkbox 
+                            *ngFor="let category of categories" 
+                            [checked]="isTagSelected(category)"
+                            (change)="toggleTag(category, $event.checked)"
+                            class="tag-checkbox">
+                            {{ category }}
+                        </mat-checkbox>
+                    </div>
+                </div>
+
+                <div class="tag-category">
+                    <h5>Materials</h5>
+                    <div class="checkbox-grid">
+                        <mat-checkbox 
+                            *ngFor="let material of materials" 
+                            [checked]="isTagSelected(material)"
+                            (change)="toggleTag(material, $event.checked)"
+                            class="tag-checkbox">
+                            {{ material }}
+                        </mat-checkbox>
+                    </div>
+                </div>
+
+                <div class="tag-category">
+                    <h5>Colors</h5>
+                    <div class="checkbox-grid">
+                        <mat-checkbox 
+                            *ngFor="let color of colors" 
+                            [checked]="isTagSelected(color)"
+                            (change)="toggleTag(color, $event.checked)"
+                            class="tag-checkbox">
+                            {{ color }}
+                        </mat-checkbox>
+                    </div>
+                </div>
+            </div>
+
+            <mat-form-field appearance="outline" class="form-group">
+                <mat-label>Image URL</mat-label>
+                <input matInput [(ngModel)]="editableProduct.imageUrl" type="text" />
+            </mat-form-field>
+
+            <div class="edit-button-container">
+                <button mat-raised-button color="primary" (click)="saveProduct()">Save</button>
+                <button mat-button (click)="closeProductEditor()">Cancel</button>
+                <button mat-raised-button color="warn" (click)="deleteProduct()">Delete</button>
+            </div>
         </div>
     </div>
 </div>
