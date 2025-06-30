@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HowItWorksComponent } from '../how-it-works/how-it-works.component';
-import { EMAIL, RESERVATION_LENGTH, MINIMUM_ORDER } from '../../../shared/constants';
+import { EMAIL, RESERVATION_LENGTH, MINIMUM_ORDER, PAYMENT_DUE_DAYS } from '../../../shared/constants';
 
 @Component({
   selector: 'app-faqs',
@@ -18,21 +18,27 @@ export class FaqsComponent {
       open: false
     },
     {
-      question: 'Is there a minimum order amount for rentals?',
-      answer: `While we work hard to keep our prices affordable, we do require a minimum rental order of $${MINIMUM_ORDER} to make each order worthwhile. Thank you for understanding and supporting small businesses like ours!`,
+      question: 'Is there a minimum order amount?',
+      answer: `Yes — we have a minimum rental order of $${MINIMUM_ORDER}. This helps ensure each order is sustainable for a small business. Thank you so much for supporting us!`,
       open: false
     },
     {
-      question: 'What should I do if I need to change my reservation?',
-      answer: `We’re happy to accommodate changes whenever possible! Just send us a message - ${EMAIL} - with the updates you would like to make, and we will do our best to adjust your reservation.`,
+      question: 'Can I make changes to my reservation?',
+      answer: `Absolutely! If you need to adjust your rental items or details, just send us an email at ${EMAIL}. We’ll do our best to accommodate any updates you need to make.`,
+      open: false
+    }
+    ,
+    {
+      question: 'Do you offer delivery or pickup services?',
+      answer: `Yes! We offer delivery and pickup options on a case-by-case basis, depending on availability and distance. Additional fees apply. If you're interested, just leave a note at checkout or reach out to us directly — we'll follow up with a custom quote.`,
       open: false
     }
   ];
 
   customFaqs = [
     {
-      question: 'Do you offer custom signage for purchase as well as rental?',
-      answer: 'At this time, we offer custom signage for rental only. We do not offer custom signs for purchase.',
+      question: 'How much customization can I make on signs?',
+      answer: `Each item is different! Some signs offer just a few customizable details, while others can be fully tailored to your event. You can find exactly what's customizable in the details section on each product page`,
       open: false
     },
     {
@@ -50,17 +56,17 @@ export class FaqsComponent {
   policyFaqs = [
     {
       question: 'What is your cancellation or refund policy?',
-      answer: 'Cancellations are accepted up to two weeks prior to your event. For cancellations within two weeks of the event date, refunds are handled on a case-by-case basis. This may depend on whether the reservation prevented another booking or if customization work has already been started.',
+      answer: `You can cancel your order for a full refund up to ${PAYMENT_DUE_DAYS} days before your pickup date. For cancellations within 30 days, refunds are handled on a case-by-case basis, depending on whether work has started or if your booking blocked out other reservations.`,
       open: false
     },
     {
-      question: 'What is the payment schedule and what fees should I expect?',
-      answer: 'We collect payment information at checkout, but you won’t be charged until 60 days before your event. The day before pickup, we will place a hold on your card for the deposit amount. This deposit is only collected if items are not returned in good condition.',
+      question: 'When do I pay, and are there any extra fees?',
+      answer: `You’ll enter your booking details at checkout, but payment isn’t due until ${PAYMENT_DUE_DAYS} days before your pickup date. There are no deposits, hidden fees, or surprise charges — just the rental price shown on each product page.`,
       open: false
     },
     {
       question: 'What happens if an item is damaged during my event?',
-      answer: 'If an item is damaged during your event, the deposit hold on your card will be collected. We only charge the amount necessary to cover the cost of repair or replacement — nothing more. If something does break, please let us know as soon as possible! Early notice can often help us repair the item quickly and keep your deposit charge as low as possible.',
+      answer: 'If any item is damaged during your rental period, you’re responsible for the cost of repair or replacement. Charges depend on the extent of the damage and will never exceed the item’s maximum replacement value, listed in the “Pickup and Return” section of each product page. If something happens, please let us know as soon as possible — early notice often helps minimize the cost.',
       open: false
     }
   ];

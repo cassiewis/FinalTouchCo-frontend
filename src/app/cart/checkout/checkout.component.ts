@@ -8,7 +8,7 @@ import { CartService, CartItem } from '../../services/cart-service.service';
 import { Reservation, ReservedItem } from '../../models/reservation.model';
 import { ProductService } from '../../services/product.service';
 import { ReservedDatesService } from '../../services/reserved-dates.service';
-import { BUFFER_DAYS, EMAIL, MINIMUM_ORDER, DAILY_LATE_FEE, TAX_PERCENTAGE } from '../../shared/constants';
+import { BUFFER_DAYS, EMAIL, MINIMUM_ORDER, DAILY_LATE_FEE, TAX_PERCENTAGE, PAYMENT_DUE_DAYS } from '../../shared/constants';
 import { EventEmitter } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
@@ -40,18 +40,18 @@ export class CheckoutComponent implements OnInit {
   
   terms = [
     {
-      question: 'Rental amount is due 30 days before event date',
-      answer: 'You will receive an invoice by email, and payment must be completed no later than 30 days prior to your event. If your reservation is made less than 30 days in advance, full payment is due within 3 days of confirmation.',
+      question: 'Damage or Loss Responsibility',
+      answer: 'You’re responsible for any damage or loss of items during your rental period. If an item is returned damaged or missing, you’ll be charged the repair or replacement cost, up to the maximum value listed on each product page.',
       open: false
     },
     {
-      question: 'Cancellations & Refunds accepted 30 days before event',
-      answer: 'You may cancel for a full refund up to 30 days before your event.<br>Cancellations made within 30 days of the event may not be eligible for a full refund, depending on the timing and whether items have already been prepared or reserved.',
+      question: 'Cancellation & Refund Policy',
+      answer: `You can cancel for a full refund up to ${PAYMENT_DUE_DAYS} days before your pickup date. Cancellations within ${PAYMENT_DUE_DAYS} days are reviewed case-by-case. No-shows or unused rentals are non-refundable.`,
       open: false
     },
     {
-      question: `Late returns will incur a fee of $${DAILY_LATE_FEE} per day`,
-      answer: `If items are not returned by the agreed return date, a $${DAILY_LATE_FEE} fee will be charged for each late day unless alternate arrangements have been approved by Final Touch Co. in advance.`,
+      question: `Late Return Fees`,
+      answer: `Items must be returned on time. Late returns may incur a $${DAILY_LATE_FEE} per day fee per item unless an extension is requested and approved in advance.`,
       open: false
     }
   ];
