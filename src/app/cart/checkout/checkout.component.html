@@ -89,7 +89,7 @@
         </div>
       </div>
       <div class="terms-of-service">
-        <h2 class="faq-category-title">Terms Summary</h2>
+        <h2 class="faq-category-title">Rental Agreement Summary</h2>
         <div class="terms-container">
             <div class="term" *ngFor="let term of terms; let i = index">
               <div class="terms-question" (click)="toggleAnswer(terms, i)">
@@ -104,9 +104,9 @@
             </div>
         </div>
         <div class="accept-terms-container">
-          <a [href]="'TermsAndConditions-v1.pdf'" target="_blank" class="terms-link main-font">View full Terms and Conditions (PDF)</a>
+          <a [href]="'TermsAndConditions-v1.pdf'" target="_blank" class="terms-link main-font">View full Rental Agreement (PDF)</a>
           <label class="terms-accept-button" >
-            <input type="checkbox" formControlName="agreedToTerms" /> I have read and agree to the Terms and Conditions
+            <input type="checkbox" formControlName="agreedToTerms"/> By checking this box, I confirm I’ve read and <b>agree to the Final Touch Co. Rental Agreement</b> and understand I’m responsible for any damage, loss, or late returns.
           </label>
         </div>
       </div>
