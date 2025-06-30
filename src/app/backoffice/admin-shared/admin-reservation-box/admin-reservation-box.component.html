@@ -64,10 +64,10 @@
                 <p>email: {{ reservation.email }}</p>
             </div>
             <div class="notes-container">
-                <h4>Customer Notes:</h4>
-                <p>{{ reservation.customerNotes }}</p>
-                <h4>My Notes:</h4>
-                <p>{{ reservation.myNotes }}</p>
+                <h4 class="notes-title">Customer Notes:</h4>
+                <p class="notes-content">{{ reservation.customerNotes }}</p>
+                <h4 class="notes-title">My Notes:</h4>
+                <p class="notes-content">{{ reservation.myNotes }}</p>
             </div>
             <div class="dates-container">
                 <p><b>Send Invoice:</b> {{ displayDateFrom(reservation.dates[0], SEND_INVOICE_DAYS) }}</p>
@@ -97,61 +97,101 @@
 </body>
 
 <!-- Edit Popup -->
-<!-- <div *ngIf="editMode" class="edit-popup form-class">
+<div *ngIf="editMode" class="edit-popup">
     <div class="popup-content">
         <h2>Edit Reservation</h2>
-        <div class="form-group">
-            <label>Name:</label>
-            <input [(ngModel)]="Reservation.name" type="text" />
-        </div>
-        <div class="prices-container">
-            <div class="form-group">
-                <label>Price:</label>
-                <input [(ngModel)]="editableProduct.price" type="number" />
+        
+        <form class="edit-form">
+            <div class="user-details-container">
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Name</mat-label>
+                    <input matInput [(ngModel)]="reservation.name" name="name" type="text" />
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Email</mat-label>
+                    <input matInput [(ngModel)]="editableReservation.email" name="email" type="email" />
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Phone Number</mat-label>
+                    <input matInput [(ngModel)]="editableReservation.phoneNumber" name="phone" type="tel" />
+                </mat-form-field>
             </div>
-            <div class="form-group">
-                <label>Deposit:</label>
-                <input [(ngModel)]="editableProduct.deposit" type="number" />
+            <div class="notes-container">
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>My Notes</mat-label>
+                    <textarea matInput [(ngModel)]="editableReservation.myNotes" name="myNotes" rows="3"></textarea>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Customer Notes</mat-label>
+                    <textarea matInput [(ngModel)]="editableReservation.customerNotes" name="customerNotes" rows="3"></textarea>
+                </mat-form-field>
             </div>
-            <div class="form-group">
-                <label>Count:</label>
-                <input [(ngModel)]="editableProduct.quantity" type="number" />
+            <div class="dates-price-container">
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Dates:</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                    <input matStartDate [(ngModel)]="reservation.dates[0]" placeholder="Pickup date" name="startDate" required>
+                    <input matEndDate [(ngModel)]="reservation.dates[1]" placeholder="Dropoff date" name="endDate" required>
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>    
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Total Price:</mat-label>
+                    <input matInput [(ngModel)]="editableReservation.price" name="totalPrice" type="number" />
+                </mat-form-field>
             </div>
-        </div>
-        <div class="form-group">
-            <label>Description:</label>
-            <textarea [(ngModel)]="editableProduct.description"></textarea>
-        </div>
-        <div class="form-group">
-            <label>Status:</label>
-            <select [(ngModel)]="editableProduct.active">
-                <option value="true">Active</option>
-                <option value="false">Inactive</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>Tags (comma-separated):</label>
-            <input [(ngModel)]="tagsInput" type="text" placeholder="e.g., signage, custom, rustic" />
-        </div>
-        <div class="form-group">
-            <label>Material:</label>
-            <input [(ngModel)]="editableProduct.material" type="text" />
-        </div>
-        <div class="form-group">
-            <label>Image URL:</label>
-            <input [(ngModel)]="editableProduct.imageUrl" type="text" />
-        </div>
-        <div class="form-group custom-checkbox-group">
-            <label class="custom-checkbox-label">
-                <input type="checkbox" [(ngModel)]="editableProduct.custom" name="isCustom" />
-                <span class="custom-checkbox-box"></span>
-                Custom Item
-            </label>
-        </div>
-        <div class="edit-button-container">
-            <button (click)="saveProduct()">Save</button>
-            <button (click)="closeProductEditor()">Cancel</button>
-            <button (click)="deleteProduct()">Delete</button>
-        </div>
-    </div>
-</div> -->
+
+            <div class="reserved-products-container">
+                <h3>Reserved Products:</h3>
+                <div class="products-grid">
+                    <!-- List All products that are currently reserved -->
+                    <div *ngFor="let item of editableReservation.items" class="reserved-product-item">
+                        <img src="/images/item-image.png" alt="Item image" class="product-image">
+                        <p class="product-name">{{ item.name }}<br><span class="item-id">{{ item.productId }}</span></p>
+                        <!-- Reserved products should always be editable -->
+                        <div class="item-price-remove-container">
+                            <mat-form-field appearance="outline" class="item-price">
+                                <mat-label>Price:</mat-label>
+                                <input matInput [(ngModel)]="item.price" [name]="'reservedPrice_' + item.productId" type="number" />
+                            </mat-form-field>
+                            <button mat-raised-button color="warn"
+                                (click)="removeProductFromReservation(item)"
+                                class="remove-product-button">Remove</button>
+                        </div>
+                    </div>    
+                </div>
+            </div>
+            <div class="add-products-container">
+                <h3 (click)="toggleAddProducts()" class="clickable-header">
+                    Add Products:
+                    <span class="toggle-icon">{{ showAddProducts ? '▼' : '▶' }}</span>
+                </h3>
+                <div *ngIf="showAddProducts" class="add-products-grid">
+                    <div *ngFor="let product of allProducts" 
+                         class="add-product-item"
+                         [ngClass]="{'disabled': !isProductAvailable(product.productId)}">
+                        <img [src]="product.imageUrl" alt="Item image" class="product-image">
+                        <p class="product-name">{{ product.name }}<br><span class="item-id">{{ product.productId }}</span></p>
+                        <mat-form-field appearance="outline" class="item-price">
+                            <mat-label>Price:</mat-label>
+                            <input matInput [(ngModel)]="product.price" [name]="'addPrice_' + product.productId" type="number" [disabled]="!isProductAvailable(product.productId)"/>
+                        </mat-form-field>
+                        <button mat-raised-button color="primary" 
+                                (click)="addProductToReservation(product)"
+                                [disabled]="!isProductAvailable(product.productId)">Add</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="edit-button-container">
+                <button mat-raised-button color="primary" (click)="saveReservation()">Save</button>
+                <button mat-stroked-button (click)="closeReservationEditor()">Cancel</button>
+                <!-- <button mat-raised-button color="warn" (click)="deleteReservation()">Delete</button> -->
+            </div>
+        </form>
+    </div> 
+</div> 

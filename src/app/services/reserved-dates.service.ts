@@ -33,6 +33,18 @@ export class ReservedDatesService {
       })
     );
   }
+
+  getReservedProductsByDate(date: Date): Observable<string[]> {
+    return this.http.get<ApiResponse<string[]>>(`${this.apiUrl}/productIds/${date.toISOString()}`).pipe(
+      map((response) => {
+        if (response.success) {
+          return response.data; // Return the array of product IDs
+        } else {
+          throw new Error(response.message || 'Failed to fetch reserved products for date');
+        }
+      })
+    );
+  }
 }
 
 

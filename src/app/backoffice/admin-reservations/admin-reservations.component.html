@@ -2,7 +2,7 @@
 
     <div class="header">
         <div class="title">
-                <h1>Orders</h1>
+                <h1>Reservations</h1>
         </div>
             <!-- Filter controls -->
         <div class="top-container">
@@ -37,23 +37,28 @@
 
     <div class="stats-and-add-container"> 
         <div class="order-stats-container">
-            <div class="total-orders-active stats">
-                <p class="stats-number">{{ reservations.length }}</p>
-                <p class="stats-title">Total Active</p>
+            <div class="total-orders-pending stats">
+                <p class="stats-number">{{ getStatusCount('pending') }}</p>
+                <p class="stats-title">Pending</p>
             </div>
 
-            <div class="total-orders-pending stats">
-                <p class="stats-number">{{ reservations.length }}</p>
-                <p class="stats-title">Total Pending</p>
+            <div class="total-orders-active stats">
+                <p class="stats-number">{{ getStatusCount('active') }}</p>
+                <p class="stats-title">Active</p>
             </div>
 
             <div class="total-orders-fulfilled stats">
-                <p class="stats-number">{{ reservations.length }}</p>
-                <p class="stats-title">Total Fulfilled</p>
+                <p class="stats-number">{{ getStatusCount('fulfilled') }}</p>
+                <p class="stats-title">Fulfilled</p>
+            </div>
+
+            <div class="total-orders-canceled stats">
+                <p class="stats-number">{{ getStatusCount('canceled') }}</p>
+                <p class="stats-title">Canceled</p>
             </div>
         </div>
         <div class="add-reservation-container">
-            <app-admin-add-reservation></app-admin-add-reservation>
+            <app-admin-add-reservation (reservationAdded)="onReservationAdded()"></app-admin-add-reservation>
         </div>
     </div>
     <div class="refresh-button-container">

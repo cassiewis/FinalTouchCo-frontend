@@ -28,23 +28,41 @@ export class AdminReservationsComponent {
 
   constructor(private reservationService: ReservationService, private adminReservationsService: AdminReservationsService, private dialog: MatDialog) {}
 
+  // Method to get count of reservations by status
+  getStatusCount(status: string): number {
+    return this.reservations.filter(reservation => reservation.status === status).length;
+  }
+
+  // Method to sort reservations with priority order
+  sortReservations(reservations: Reservation[]): Reservation[] {
+    const statusPriority = { 'pending': 1, 'active': 1, 'fulfilled': 2, 'canceled': 3 };
+    
+    return reservations.sort((a, b) => {
+      // First sort by status priority
+      const statusComparison = (statusPriority[a.status as keyof typeof statusPriority] || 5) - 
+                              (statusPriority[b.status as keyof typeof statusPriority] || 5);
+      
+      if (statusComparison !== 0) {
+        return statusComparison;
+      }
+      
+      // Then sort by date within same status
+      const dateA = new Date(a.dates[0]);
+      const dateB = new Date(b.dates[0]);
+      return dateA.getTime() - dateB.getTime();
+    });
+  }
+
   ngOnInit(): void {
     // Get reservations from service
     this.adminReservationsService.getAdminReservations().subscribe(
       (reservations: Reservation[]) => {
-        // Separate reservations into those pending approval and others
-        this.reservations = reservations;
+        // Sort reservations with priority order (pending/active first, then fulfilled/canceled)
+        this.reservations = this.sortReservations(reservations);
         console.log('Reservations:', this.reservations); // Debugging
         this.filteredReservations = [...this.reservations]; // Initialize filtered list
         console.log('filteredReservations:', this.filteredReservations); // Debugging
         this.loading = false;
-
-        // Sort reservations by date
-        this.reservations.sort((a, b) => {
-          const dateA = new Date(a.dates[0]);
-          const dateB = new Date(b.dates[0]);
-          return dateA.getTime() - dateB.getTime();
-        });
       },
       (error) => {
         console.error('Error loading reservations:', error);  // Error handling
@@ -66,13 +84,14 @@ export class AdminReservationsComponent {
 
   applyFilters(): void {
     if (this.selectedStatuses.length === 0) {
-      // If no filter is selected, show all reservations
+      // If no filter is selected, show all reservations (already sorted)
       this.filteredReservations = this.reservations;
     } else {
-      // Apply filter to reservations based on selected statuses
-      this.filteredReservations = this.reservations.filter(reservation =>
+      // Apply filter to reservations based on selected statuses and maintain sorting
+      const filtered = this.reservations.filter(reservation =>
         this.selectedStatuses.includes(reservation.status)
       );
+      this.filteredReservations = this.sortReservations(filtered);
     }
 
     console.log('Filtered Reservations:', this.filteredReservations); // Debugging
@@ -80,15 +99,25 @@ export class AdminReservationsComponent {
 
   refreshReservations(): void {
     console.log("refreshed");
+    this.loading = true;
     this.adminReservationsService.fetchReservations().subscribe(
       (reservations: Reservation[]) => {
         console.log("Reservations refreshed:", reservations);
-        this.reservations = reservations;
-        this.filteredReservations = [...this.reservations]; // Update filtered list
+        // Sort reservations with priority order
+        this.reservations = this.sortReservations(reservations);
+        // Reapply current filters
+        this.applyFilters();
+        this.loading = false;
       },
       (error) => {
         console.error("Error refreshing reservations:", error);
+        this.loading = false;
       }
     );
+  }
+
+  onReservationAdded(): void {
+    console.log("New reservation added - refreshing list");
+    this.refreshReservations();
   }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -9,9 +9,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Reservation } from '../../../models/reservation.model';
 import { AdminReservationsService } from '../../admin-services/admin-reservations.service';
 import { Product } from '../../../models/product.model';
-import { ProductService } from '../../../services/product.service';
+import { AdminProductService } from '../../admin-services/admin-product.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBar } from '@angular/material/snack-bar';  // Import Snackbar
+import { ReservedDatesService } from '../../../services/reserved-dates.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-admin-add-reservation',
@@ -31,9 +33,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';  // Import Snackbar
   styleUrl: './admin-add-reservation.component.css'
 })
 export class AdminAddReservationComponent {
+  @Output() reservationAdded = new EventEmitter<void>();
+  
   popupOpen: boolean = false;
   products: Product[] = [];
-  selectedItems: { [key: string]: boolean } = {}; // Initialize as empty object
   reservation: Reservation = {
     status: 'pending', // pending, active, canceled, or fufilled
     reservationId: '', // generate random number
@@ -52,25 +55,148 @@ export class AdminAddReservationComponent {
     depositStatus: '',
     myNotes: '',
   }
+  unavaliableItems: Product[] = []; // This will hold the products that are not available for reservation
+  selectedProducts: Set<string> = new Set(); // Track selected products
   
   constructor(
-    private productService: ProductService, 
+    private adminProductService: AdminProductService, 
     private adminReservationService: AdminReservationsService,
+    private reservedDatesService: ReservedDatesService, // Assuming this service fetches reserved products by date
     private snackBar: MatSnackBar){}
     
 
   ngOnInit() {    
-    this.productService.getProducts().subscribe(products => {
+    this.adminProductService.getAdminProducts().subscribe(products => {
       this.products = products;
     });
   }
 
   openReservationCreator(){
     this.popupOpen = true;
+    // Don't fetch unavailable items here - wait for dates to be selected
   }
 
   closeReservationCreator() {
     this.popupOpen = false;
+  }
+
+  areDatesSelected(): boolean {
+    return this.reservation.dates && this.reservation.dates.length >= 2 && 
+           !!this.reservation.dates[0] && !!this.reservation.dates[1];
+  }
+
+  onDateChange(): void {
+    // Clear previously selected products when dates change
+    this.selectedProducts.clear();
+    this.reservation.items = [];
+    
+    // Fetch unavailable items when both dates are selected
+    if (this.areDatesSelected()) {
+      this.getUnavaliableItems();
+    } else {
+      this.unavaliableItems = [];
+    }
+  }
+
+  isProductAvailable(productId: string): boolean {
+    // Only check if the product is unavailable due to other reservations
+    // Don't disable products that are already selected in this reservation
+    const isUnavailable = this.unavaliableItems.some(item => item.productId === productId);
+    
+    if (isUnavailable) {
+      console.log(`Product ${productId} is unavailable`);
+      return false;
+    }
+    
+    // Allow products that are already in this reservation to remain enabled for deselection
+    return true;
+  }
+
+  getUnavaliableItems(): void {
+    // Only fetch if dates are selected
+    if (!this.areDatesSelected()) {
+      this.unavaliableItems = [];
+      console.log('No dates selected, clearing unavailable items');
+      return;
+    }
+
+    console.log('Fetching unavailable items for dates:', this.reservation.dates);
+
+    // Fetch unavailable items based on all the reserved dates
+    // Create an array of observables for each date
+    const dateChecks = this.reservation.dates.map(date => {
+      console.log('Calling API for date:', date, 'ISO string:', date.toISOString());
+      return this.reservedDatesService.getReservedProductsByDate(date);
+    });
+
+    // Execute all checks and wait for all to complete
+    forkJoin(dateChecks).subscribe({
+      next: (results) => {
+        console.log('API results for date checks:', results);
+        
+        // Flatten all product ID arrays and get unique values
+        const allUnavailableIds = results.flat();
+        const uniqueUnavailableIds = [...new Set(allUnavailableIds)];
+        
+        console.log('Unavailable product IDs:', uniqueUnavailableIds);
+        
+        // Filter products that are unavailable on any of the dates
+        this.unavaliableItems = this.products.filter(product => 
+          uniqueUnavailableIds.includes(product.productId)
+        );
+        
+        console.log('Unavailable products:', this.unavaliableItems.map(p => p.name));
+      },
+      error: (error) => {
+        console.error('Error fetching unavailable items:', error);
+        this.unavaliableItems = []; // Fallback to empty array
+      }
+    });
+  }
+
+  // Check if a product is selected
+  isProductSelected(productId: string): boolean {
+    return this.selectedProducts.has(productId);
+  }
+
+  // Toggle product selection
+  toggleProductSelection(product: Product, isChecked: boolean): void {
+    console.log('Toggle product selection:', product.name, 'isChecked:', isChecked);
+    
+    if (isChecked) {
+      this.selectedProducts.add(product.productId);
+      // Add to reservation items
+      this.addProductToReservation(product);
+      console.log('Added product:', product.name);
+    } else {
+      this.selectedProducts.delete(product.productId);
+      // Remove from reservation items
+      this.removeProductFromReservation(product.productId);
+      console.log('Removed product:', product.name);
+    }
+    
+    console.log('Selected products:', Array.from(this.selectedProducts));
+    console.log('Reservation items:', this.reservation.items.map(item => item.name));
+  }
+
+  // Add product to reservation
+  addProductToReservation(product: Product): void {
+    // Check if product is already in the reservation
+    if (!this.reservation.items.some(item => item.productId === product.productId)) {
+      this.reservation.items.push({
+        productId: product.productId,
+        quantity: 1,
+        name: product.name,
+        price: product.price,
+        deposit: product.deposit,
+        description: product.description
+      });
+    }
+  }
+
+  // Remove product from reservation
+  removeProductFromReservation(productId: string): void {
+    this.reservation.items = this.reservation.items.filter(item => item.productId !== productId);
   }
 
   submitReservation() {
@@ -85,7 +211,8 @@ export class AdminAddReservationComponent {
       console.log('dates:', this.reservation.dates);
     }
 
-    this.reservation.items = this.products.filter(product => this.selectedItems[product.productId]); // Filter selected products
+    // Note: reservation.items is already populated by the checkbox toggle methods
+    // No need to filter here since items are added/removed in real-time
   
     // If price and deposit are -1, calculate based on the product inserted
     if (this.reservation.price === -1){
@@ -109,18 +236,19 @@ export class AdminAddReservationComponent {
     this.adminReservationService.addReservation(this.reservation).subscribe(
       (response: Reservation) => { // Specify the response type
         console.log('Reservation added successfully:', response);
+        
+        // Emit event to notify parent component
+        this.reservationAdded.emit();
+        
+        // Close the popup and reset form
+        this.closeReservationCreator();
+        this.setDefaults();
       },
       (error: any) => {
         console.error('Error adding reservation:', error);
         this.displayError(error);
       }
     );
-
-    this.closeReservationCreator();
-    console.log("Should have closed.")
-
-    // default values
-    this.setDefaults();
 
   }
 
@@ -165,6 +293,8 @@ export class AdminAddReservationComponent {
     this.reservation.price = -1;
     this.reservation.deposit = -1;
     this.reservation.dates = [];
+    this.reservation.items = [];
+    this.selectedProducts.clear(); // Clear selected products
   }
 
   displayError(error: any): void {

@@ -19,7 +19,6 @@ const routes: Routes = [
       { path: 'reservations', component: AdminReservationsComponent },
       { path: 'reviews', component:AdminReviewsComponent },
       { path: 'blockout-dates', component:AdminBlockoutDates},
-      // { path: '', redirectTo: 'products', pathMatch: 'full' },
     ]
   }
 ];

@@ -33,8 +33,8 @@
                         <mat-label>Select dates to reserve</mat-label>
                         <mat-date-range-input [rangePicker]="picker">
 
-                        <input matStartDate [(ngModel)]="reservation.dates[0]" placeholder="Pickup date" name="startDate" required>
-                        <input matEndDate [(ngModel)]="reservation.dates[1]" placeholder="Dropoff date" name="endDate" required>
+                        <input matStartDate [(ngModel)]="reservation.dates[0]" placeholder="Pickup date" name="startDate" required (ngModelChange)="onDateChange()">
+                        <input matEndDate [(ngModel)]="reservation.dates[1]" placeholder="Dropoff date" name="endDate" required (ngModelChange)="onDateChange()">
                         </mat-date-range-input>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-date-range-picker #picker></mat-date-range-picker>    
@@ -62,16 +62,34 @@
                     </div>
                 </div>
                 <!-- Select items to reserve -->
-                <div class="items-container">
-                    <h3>Select items to reserve</h3>
-                    <div *ngFor="let product of products" class="checkbox-item">
-                        <mat-checkbox
-                        class="checkbox-item"
-                        [(ngModel)]="selectedItems[product.productId]"
-                        [name]="'product-' + product.productId">
-                        {{ product.productId }} - ${{ product.price }}
+                <div class="add-products-container">
+                <h3 class="header">Add Products:</h3>
+                
+                <!-- Show message when dates not selected -->
+                <div *ngIf="!areDatesSelected()" class="date-warning">
+                    <p>Please select pickup and return dates first to see available products.</p>
+                </div>
+                
+                <!-- Show products when dates are selected -->
+                <div *ngIf="areDatesSelected()" class="add-products-grid">
+                    <div *ngFor="let product of products" 
+                         class="add-product-item"
+                         [ngClass]="{'disabled': !isProductAvailable(product.productId), 'selected': isProductSelected(product.productId)}">
+                        <mat-checkbox 
+                            [checked]="isProductSelected(product.productId)"
+                            [disabled]="!isProductAvailable(product.productId)"
+                            (click)="$event.stopPropagation()"
+                            (change)="toggleProductSelection(product, $event.checked)"
+                            class="product-checkbox">
                         </mat-checkbox>
+                        <img [src]="product.imageUrl" alt="Item image" class="product-image">
+                        <p class="product-name">{{ product.name }}<br><span class="item-id">{{ product.productId }}</span></p>
+                        <mat-form-field appearance="outline" class="item-price">
+                            <mat-label>Price:</mat-label>
+                            <input matInput [(ngModel)]="product.price" [name]="'addPrice_' + product.productId" type="number" [disabled]="!isProductAvailable(product.productId)"/>
+                        </mat-form-field>
                     </div>
+                </div>
                 </div>
             </div>
             <!-- Submit button -->
