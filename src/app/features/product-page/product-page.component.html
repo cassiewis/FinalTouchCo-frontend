@@ -32,9 +32,7 @@
               (click)="setActiveTab('shipping')">Pickup & Return</button>
           </div>
           
-          <div class="tab-content product-description" *ngIf="isActiveTab('details')">
-            {{ product.description }}
-          </div>
+          <div class="tab-content product-description" *ngIf="isActiveTab('details')">{{ product.description }}</div>
           
           <div class="tab-content" *ngIf="isActiveTab('shipping')">
             All rentals must be picked up and returned by the renter in downtown Boise.

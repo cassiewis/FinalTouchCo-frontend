@@ -25,12 +25,15 @@
 }
 
 .product-image {
-    display: block; /* Ensures the image doesn't add extra space */
-    width: 100%; /* Makes the image responsive */
-    height: auto; /* Maintains the aspect ratio */
-    object-fit: cover; /* Ensures the image covers the container without distortion */
-    transition: opacity 0.25s ease-in-out; /* Smooth transition for image loading */
-    aspect-ratio: 4/5;
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain; /* or cover, depending on preference */
+    transition: opacity 0.25s ease-in-out;
+    aspect-ratio: 4 / 5;
+    
+    /* Improve rendering sharpness */
+    image-rendering: crisp-edges; /* or try 'pixelated' */
 }
 
 .product-image.loaded {
