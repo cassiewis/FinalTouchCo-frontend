@@ -4,14 +4,15 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ReservationService } from '../../services/reservation.service';
-import { CartService, CartItem } from '../../services/cart-service.service';
+import { CartService } from '../../services/cart-service.service';
 import { Reservation, ReservedItem } from '../../models/reservation.model';
 import { ProductService } from '../../services/product.service';
 import { ReservedDatesService } from '../../services/reserved-dates.service';
-import { BUFFER_DAYS, EMAIL, MINIMUM_ORDER, DAILY_LATE_FEE, TAX_PERCENTAGE, PAYMENT_DUE_DAYS } from '../../shared/constants';
+import { BUFFER_DAYS, EMAIL, MINIMUM_ORDER, DAILY_LATE_FEE } from '../../shared/constants';
 import { EventEmitter } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
+import { CartItem } from '../../services/cart-service.service';
 
 declare var grecaptcha: any;
 
@@ -35,23 +36,22 @@ export class CheckoutComponent implements OnInit {
   emailVerified = false;
   resendCooldown = 0;
 
-
   @Output("updateCart") updateCart: EventEmitter<any> = new EventEmitter(); // EventEmitter to notify CartComponent
   
   terms = [
     {
-      question: 'Damage or Loss Responsibility',
-      answer: 'You’re responsible for any damage or loss of items during your rental period. If an item is returned damaged or missing, you’ll be charged the repair or replacement cost, up to the maximum value listed on each product page.',
+      question: 'Rental amount is due 30 days before event date',
+      answer: 'You will receive an invoice by email, and payment must be completed no later than 30 days prior to your event. If your reservation is made less than 30 days in advance, full payment is due within 3 days of confirmation.',
       open: false
     },
     {
-      question: 'Cancellation & Refund Policy',
-      answer: `You can cancel for a full refund up to ${PAYMENT_DUE_DAYS} days before your pickup date. Cancellations within ${PAYMENT_DUE_DAYS} days are reviewed case-by-case. No-shows or unused rentals are non-refundable.`,
+      question: 'Cancellations & Refunds accepted 30 days before event',
+      answer: 'You may cancel for a full refund up to 30 days before your event.<br>Cancellations made within 30 days of the event may not be eligible for a full refund, depending on the timing and whether items have already been prepared or reserved.',
       open: false
     },
     {
-      question: `Late Return Fees`,
-      answer: `Items must be returned on time. Late returns may incur a $${DAILY_LATE_FEE} per day fee per item unless an extension is requested and approved in advance.`,
+      question: `Late returns will incur a fee of $${DAILY_LATE_FEE} per day`,
+      answer: 'If items are not returned by the agreed return date, a $50 fee will be charged for each late day unless alternate arrangements have been approved by Final Touch Co. in advance.',
       open: false
     }
   ];
@@ -79,12 +79,14 @@ export class CheckoutComponent implements OnInit {
       ]],
       phone: ['', [
         Validators.required,
-        Validators.pattern(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/)
+        Validators.pattern(/^[\d\s\-\(\)\.+]+$/)
       ]],
       notes: [''], // Optional field
-      verificationCode: [''], // For email verification
       agreedToTerms: [false, Validators.requiredTrue], // Must be checked
-      recaptchaToken: [''] // For bot prevention
+      recaptchaToken: [''], // For bot prevention
+      verificationCode: ['', [
+        Validators.pattern(/^[0-9]{6}$/)
+      ]]
     });
   }
 
@@ -198,8 +200,7 @@ export class CheckoutComponent implements OnInit {
       }
     }, 1000);
   }
-
-
+  
   async submitForm() {
     if (this.checkoutForm.invalid) return;
 
@@ -244,12 +245,12 @@ export class CheckoutComponent implements OnInit {
       await this.sendVerificationCode();
       return;
     }
+    
     // If email is verified, proceed with reservation submission
     await this.submitReservations(reservations);
   }
 
   async submitReservations(reservations: Reservation[]) {
-    
     let successfulSubmissions = 0;
     let failedSubmissions = 0;
 
@@ -324,8 +325,8 @@ export class CheckoutComponent implements OnInit {
       // Loop through each group (key = date range, value = CartItem[])
       reservationsMap.forEach((groupedItems, key) => {
 
-        // Calculate totals plus tax 
-        const totalPrice = groupedItems.reduce((sum, item) => sum + item.price, 0) + (groupedItems.reduce((sum, item) => sum + item.price, 0) * TAX_PERCENTAGE); // Assuming 6% tax
+        // Calculate totals
+        const totalPrice = groupedItems.reduce((sum, item) => sum + item.price, 0);
         const totalDeposit = groupedItems.reduce((sum, item) => sum + item.deposit, 0);
 
         // Create ReservedItem[] from groupedItems
@@ -352,7 +353,7 @@ export class CheckoutComponent implements OnInit {
           pickupNotes: "",
           items: reservedItems, // or map to ReservedItem[] if needed
           email: this.checkoutForm.value.email,
-          phoneNumber: this.checkoutForm.value.phone,
+          phoneNumber: this.stripPhoneFormatting(this.checkoutForm.value.phone),
           customerNotes: this.checkoutForm.value.notes || '',
           price: totalPrice,
           deposit: totalDeposit,
@@ -439,5 +440,33 @@ export class CheckoutComponent implements OnInit {
 
   calculateGroupTotal(items: CartItem[]): number {
       return items.reduce((total, item) => total + item.price, 0);
+  }
+
+  // Format phone number as user types
+  formatPhoneNumber(event: any) {
+    let value = event.target.value;
+    
+    // Remove all non-digit characters
+    const numbers = value.replace(/\D/g, '');
+    
+    // Format based on length
+    if (numbers.length <= 3) {
+      value = numbers;
+    } else if (numbers.length <= 6) {
+      value = `(${numbers.slice(0, 3)}) ${numbers.slice(3)}`;
+    } else {
+      value = `(${numbers.slice(0, 3)}) ${numbers.slice(3, 6)}-${numbers.slice(6, 10)}`;
     }
+    
+    // Update the form control with formatted value
+    this.checkoutForm.get('phone')?.setValue(value, { emitEvent: false });
+    
+    // Update the input field display
+    event.target.value = value;
+  }
+
+  // Helper function to strip phone formatting before submitting
+  private stripPhoneFormatting(phone: string): string {
+    return phone.replace(/\D/g, '');
+  }
 }

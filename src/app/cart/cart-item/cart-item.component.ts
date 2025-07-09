@@ -85,7 +85,7 @@ export class CartItemComponent implements OnInit {
       },
       error => {
         console.log(`Product not found for item with ID: ${this.item.productId}`);
-        // todo remove from cart
+        // remove from cart
         this.cartService.removeFromCart(this.item.productId);
       }
     );

@@ -9,10 +9,11 @@
     <div *ngIf="emailVerificationStep" class="email-verification-only">
       <div class="verification-message">
         <h3>Email Verification Required</h3>
-        <p>Please check your email for a verification code and enter it below to complete your reservation.</p>
+        <p>Please check your email for a verification code and enter it below to complete your reservation.<br><br>
+        <b>Tip: Check your spam folder</b> if you don’t see the verification email, and mark it as ‘Not Spam’ to help us reach you faster in the future!</p>
         <p><strong>Email:</strong> {{ email?.value }}</p>
       </div>
-      
+       
       <div class="form-field">
         <label>Verification Code</label>
         <div class="verification-code-container">
@@ -21,7 +22,7 @@
             formControlName="verificationCode"
             placeholder="Enter 6-digit code"
             maxlength="6"
-            pattern="[0-9]{6}"
+            pattern="[\d\s\-\(\)\.+]+"
             class="verification-input"
             autocomplete="one-time-code"/>
           <button 
@@ -50,7 +51,7 @@
     <div *ngIf="!emailVerificationStep" class="checkout-sides">
       <div class="checkout-form">
         <div class="form-field">
-          <label>Name</label>
+          <label>Name*</label>
           <input 
             type="text" 
             formControlName="name"
@@ -59,10 +60,13 @@
             minlength="2"
             maxlength="50"
             required>
+          <div *ngIf="name?.invalid && name?.touched" class="field-error">
+            Please enter a valid name (letters and spaces only)
+          </div>
         </div>
 
         <div class="form-field">
-          <label>Email</label>
+          <label>Email*</label>
           <input 
             type="email" 
             inputmode="email"
@@ -70,17 +74,25 @@
             autocomplete="email"
             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
             required/>
+          <div *ngIf="email?.invalid && email?.touched" class="field-error">
+            Please enter a valid email address
+          </div>
         </div>
 
         <div class="form-field">
-          <label>Phone</label>
+          <label>Phone*</label>
           <input 
             type="tel" 
             formControlName="phone"
-            pattern="[0-9]*"
+            pattern="[\d\s\-\(\)\.+]+"
             inputmode="tel"
             autocomplete="tel"
+            (input)="formatPhoneNumber($event)"
+            maxlength="14"
             required/>
+          <div *ngIf="phone?.invalid && phone?.touched" class="field-error">
+            Please enter a valid phone number
+          </div>
         </div>
 
         <div class="form-field">
