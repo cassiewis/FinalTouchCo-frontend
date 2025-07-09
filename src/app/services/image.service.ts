@@ -43,12 +43,12 @@ export class ImageService {
 
   // Cache image URLs in local storage with a specific cache key
   private cacheImageUrls(cacheKey: string, imageUrls: string[]): void {
-    localStorage.setItem(cacheKey, JSON.stringify(imageUrls));
+    sessionStorage.setItem(cacheKey, JSON.stringify(imageUrls));
   }
 
   // Retrieve cached image URLs from local storage with a specific cache key
   private getCachedImageUrls(cacheKey: string): string[] | null {
-    const cachedImageUrls = localStorage.getItem(cacheKey);
+    const cachedImageUrls = sessionStorage.getItem(cacheKey);
     return cachedImageUrls ? JSON.parse(cachedImageUrls) : null;
   }
 }

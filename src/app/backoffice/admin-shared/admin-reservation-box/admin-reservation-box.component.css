@@ -96,6 +96,12 @@ button:hover {
     min-height: 37px;
 }
 
+.invoice-container,
+.payment-container,
+.status-box-container {
+  position: relative;
+}
+
 .custom-dropdown {
     position: absolute;
     top: 0;

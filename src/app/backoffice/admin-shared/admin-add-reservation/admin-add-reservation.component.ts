@@ -227,7 +227,7 @@ export class AdminAddReservationComponent {
   
     // Set default statuses
     this.reservation.invoiceStatus = 'not sent';
-    this.reservation.paymentStatus = 'not received';
+    this.reservation.paymentStatus = 'not paid';
     this.reservation.depositStatus = 'not returned';
   
     // Logic to handle reservation submission, e.g., save data to backend or S3

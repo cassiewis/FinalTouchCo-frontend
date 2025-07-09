@@ -127,8 +127,8 @@ export class AdminDashboardComponent implements AfterViewInit {
         this.tasks.set("Send Invoice", reservation );
       }
   
-      // 3. Check if reservation date is 100 days or less from the first date, and paymentStatus == 'not received' (key = "Pay Invoice")
-      if (daysToFirstDate <= PAYMENT_DUE_DAYS && reservation.paymentStatus === 'not received') {
+      // 3. Check if reservation date is 100 days or less from the first date, and paymentStatus == 'not sent' (key = "Pay Invoice")
+      if (daysToFirstDate <= PAYMENT_DUE_DAYS && reservation.paymentStatus === 'not sent') {
         this.tasks.set("Payment Due", reservation );
       }
     });

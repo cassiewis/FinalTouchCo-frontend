@@ -37,6 +37,8 @@ export class AdminReservationBoxComponent {
   editableReservation!: Reservation; // Editable copy of reservation
   allProducts: Product[] = []; // Holds all products for adding to reservation
   unavaliableItems: Product[] = []; // Track unavailable products
+  showInvoiceDropdown = false;
+  showPaymentDropdown = false;
 
   // Expose the constant for template use
   readonly PAYMENT_DUE_DAYS = PAYMENT_DUE_DAYS;
@@ -255,11 +257,11 @@ export class AdminReservationBoxComponent {
     this.showStatusDropdown = false;
   }
 
-  onDocumentClick(event: Event) {
-    // Close the dropdown when clicking outside
-    if (this.showStatusDropdown) {
-      this.showStatusDropdown = false;
-    }
+  onDocumentClick(event: Event): void {
+    // Close all dropdowns when clicking outside
+    this.showStatusDropdown = false;
+    this.showInvoiceDropdown = false;
+    this.showPaymentDropdown = false;
   }
 
   updateReservationStatus(newStatus: string): void {
@@ -293,6 +295,58 @@ export class AdminReservationBoxComponent {
     const reservationDate = new Date(reservationDay);
     reservationDate.setDate(reservationDate.getDate() - days); // Adjust the reservation date
     return today > reservationDate;
+  }
+
+  toggleInvoiceDropdown(event: Event): void {
+    event.stopPropagation();
+    this.showInvoiceDropdown = !this.showInvoiceDropdown;
+    this.showStatusDropdown = false;
+    this.showPaymentDropdown = false;
+  }
+
+  togglePaymentDropdown(event: Event): void {
+    event.stopPropagation();
+    this.showPaymentDropdown = !this.showPaymentDropdown;
+    this.showStatusDropdown = false;
+    this.showInvoiceDropdown = false;
+  }
+
+  updatePaymentStatus(status: string): void {
+    if (this.reservation.paymentStatus === status) {
+      this.showPaymentDropdown = false; // Close the dropdown
+      return; // No change needed
+    }
+    this.editableReservation.paymentStatus = status;
+    this.adminReservationService.updateReservation(this.editableReservation)
+      .subscribe({
+        next: (response: Reservation) => {
+          console.log('Payment status updated successfully:', response);
+          this.reservation.paymentStatus = status; // Update the original reservation
+        },
+        error: (error: any) => {
+          console.error('Error updating payment status:', error);
+        }
+      });
+      this.showPaymentDropdown = false;
+  }
+
+  updateInvoiceStatus(status: string): void {
+    if (this.reservation.invoiceStatus === status) {
+      this.showInvoiceDropdown = false; // Close the dropdown
+      return; // No change needed
+    }
+    this.editableReservation.invoiceStatus = status;
+    this.adminReservationService.updateReservation(this.editableReservation)
+      .subscribe({
+        next: (response: Reservation) => {
+          console.log('Invoice status updated successfully:', response);
+          this.reservation.invoiceStatus = status; // Update the original reservation
+        },
+        error: (error: any) => {
+          console.error('Error updating invoice status:', error);
+        }
+      });
+      this.showInvoiceDropdown = false;
   }
 
 

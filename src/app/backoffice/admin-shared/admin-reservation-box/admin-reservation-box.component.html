@@ -1,6 +1,6 @@
 <body (click)="onDocumentClick($event)">
     <div class="reservation-box" 
-         [ngClass]="{'dropdown-open': showStatusDropdown}"
+         [ngClass]="{'dropdown-open': showStatusDropdown || showInvoiceDropdown || showPaymentDropdown}"
          (click)="this.toggleExpandedBox()">
         <div class="status-box-container subcontainer">
             <div class="status-box"
@@ -37,20 +37,42 @@
             <p class="email">{{ reservation.email }}</p><br>
         </div>
         <div class="invoice-container updates-container subcontainer">
-            <p class="updates-item"
-            [ngClass]="{
-                'late-highlighted': reservation.invoiceStatus == 'not sent' && isStatusLate(reservation.dates[0], SEND_INVOICE_DAYS)
-                }">
-                {{ reservation.invoiceStatus }}
-            </p>
+            <div class="updates-item"
+                [ngClass]="{
+                    'late-highlighted': reservation.invoiceStatus == 'not sent' && isStatusLate(reservation.dates[0], SEND_INVOICE_DAYS)
+                }"
+                (click)="toggleInvoiceDropdown($event)">
+                <p *ngIf="!showInvoiceDropdown">{{ reservation.invoiceStatus }}</p>
+                <div *ngIf="showInvoiceDropdown" 
+                     class="custom-dropdown"
+                     (click)="$event.stopPropagation()">
+                    <div class="dropdown-option" 
+                         *ngFor="let status of ['not sent', 'sent']"
+                         (click)="updateInvoiceStatus(status)"
+                         [class.selected]="status === reservation.invoiceStatus">
+                        {{ status }}
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="payment-container updates-container subcontainer">
-            <p class="updates-item"
-            [ngClass]="{
-                'late-highlighted': reservation.paymentStatus == 'not received' && isStatusLate(reservation.dates[0], PAYMENT_DUE_DAYS)
-                }">
-                {{ reservation.paymentStatus }}
-            </p>
+            <div class="updates-item"
+                [ngClass]="{
+                    'late-highlighted': reservation.paymentStatus == 'not paid' && isStatusLate(reservation.dates[0], PAYMENT_DUE_DAYS)
+                }"
+                (click)="togglePaymentDropdown($event)">
+                <p *ngIf="!showPaymentDropdown">{{ reservation.paymentStatus }}</p>
+                <div *ngIf="showPaymentDropdown" 
+                     class="custom-dropdown"
+                     (click)="$event.stopPropagation()">
+                    <div class="dropdown-option" 
+                         *ngFor="let status of ['not paid', 'paid']"
+                         (click)="updatePaymentStatus(status)"
+                         [class.selected]="status === reservation.paymentStatus">
+                        {{ status }}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
