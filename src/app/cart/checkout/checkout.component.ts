@@ -51,7 +51,7 @@ export class CheckoutComponent implements OnInit {
     },
     {
       question: `Late returns will incur a fee of $${DAILY_LATE_FEE} per day`,
-      answer: 'If items are not returned by the agreed return date, a $50 fee will be charged for each late day unless alternate arrangements have been approved by Final Touch Co. in advance.',
+      answer: 'If items are not returned by the agreed return date, a $50 fee will be charged for each late day unless alternate arrangements have been approved by Final Touch Decor Co. in advance.',
       open: false
     }
   ];

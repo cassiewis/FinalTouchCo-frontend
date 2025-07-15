@@ -44,7 +44,7 @@ footer {
 }
 
 .right-container {
-    width: 300px;
+    width: 400px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -84,7 +84,7 @@ footer {
 }
 
 .title {
-    font-size: 2.75rem;
+    font-size: 2.25rem;
     text-align: right;
     margin: 0;
     padding: 0;
@@ -93,7 +93,7 @@ footer {
 .subtitle {
     font-size: 1.25rem;
     text-align: right;
-    margin: -10px 25px 0 0;
+    margin: 0px 25px 0 0;
     padding: 0;
 }
 
@@ -114,6 +114,9 @@ button {
         flex-direction: row;
     }
     
+    .subtitle {
+        margin-bottom: 20px;
+    }
 
 }
 
@@ -124,7 +127,7 @@ button {
 
     }
     .logo {
-        width: 25px;
+        width: 30px;
     }
 
     .title {
@@ -144,4 +147,13 @@ button {
     .right-container {
         align-items: center;
     }
+}
+
+
+@media (max-width: 440px) {
+
+    .right-container {
+        flex-direction: column;
+    }
+
 }

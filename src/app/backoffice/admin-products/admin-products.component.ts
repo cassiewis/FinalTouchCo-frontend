@@ -35,7 +35,6 @@ export class AdminProductsComponent {
   }
 
   refreshProducts(): void {
-    console.log("refreshed");
     this.adminProductService.fetchAdminProducts().subscribe(
       (products: Product[]) => {
         console.log("Products refreshed:", products);
