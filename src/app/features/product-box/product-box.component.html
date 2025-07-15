@@ -2,8 +2,7 @@
 <a (click)="goToProduct($event)" class="product-item">
   <div class="image-placeholder">
       <div class="image-container">
-          <p *ngIf="product.custom" class="custom-text white-font secondary-font" alt="Custom Icon">CUSTOM</p>
-        <!-- <img src="/images/stock_photo.png" alt="{{ product.name }}" class="product-image" (load)="onImageLoad($event)"> -->
+          <p *ngIf="product.custom" class="custom-text secondary-font" alt="Custom Icon">CUSTOM</p>
         <img 
           [src]="product.imageUrl"
           [srcset]="product.imageUrl + ' 1x, ' + product.imageUrl + ' 2x'" 

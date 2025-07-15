@@ -47,8 +47,11 @@
       </div>
     </div>
 
+    <!-- Show loading sign when email has been verified so form doesn pop back up -->
+    <app-loading-icon *ngIf="loadingOnVerificationSuccess"></app-loading-icon>
+
     <!-- Show main form when not in email verification mode -->
-    <div *ngIf="!emailVerificationStep" class="checkout-sides">
+    <div *ngIf="!emailVerificationStep && !loadingOnVerificationSuccess" class="checkout-sides">
       <div class="checkout-form">
         <div class="form-field">
           <label>Name*</label>

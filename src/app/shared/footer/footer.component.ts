@@ -40,7 +40,7 @@ export class FooterComponent {
   }
 
   routeToInstagram() {
-    window.open('https://www.instagram.com/final.touch.co', '_blank');
+    window.open('https://www.instagram.com/finaltouchdecor.boise/', '_blank');
   }
 
   routeToFacebook() {

@@ -13,13 +13,14 @@ import { EventEmitter } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
 import { CartItem } from '../../services/cart-service.service';
+import { LoadingIconComponent } from '../../shared/loading-icon/loading-icon.component';
 
 declare var grecaptcha: any;
 
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, LoadingIconComponent],
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.css']
 })
@@ -35,6 +36,8 @@ export class CheckoutComponent implements OnInit {
   verificationCodeSent = false;
   emailVerified = false;
   resendCooldown = 0;
+
+  loadingOnVerificationSuccess = false;
 
   @Output("updateCart") updateCart: EventEmitter<any> = new EventEmitter(); // EventEmitter to notify CartComponent
   
@@ -177,6 +180,7 @@ export class CheckoutComponent implements OnInit {
         this.emailVerificationStep = false;
         this.successMessage = 'Email verified! Processing your reservation...';
         this.errorMessage = '';
+        this.loadingOnVerificationSuccess = true;
         
         // Automatically proceed with reservation submission
         await this.submitReservations(this.createReservations());

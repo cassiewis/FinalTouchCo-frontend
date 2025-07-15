@@ -9,7 +9,6 @@
 
 
     <div class="shop-container">
-
         <section class="products-list-banner">
             <div class="filter-container" [class.active]="showMobileFilter" #filterBox>
                 <div class="filter-header" (click)="toggleMobileFilter()">
@@ -188,6 +187,7 @@
         <section class="product-list-container">
 
             <div class="product-list">
+                <app-loading-icon *ngIf="loading"></app-loading-icon>
                 <app-product-list [products]="pagedProducts" [loading]="loading"></app-product-list>
             </div>
             <div class="pagination-controls">

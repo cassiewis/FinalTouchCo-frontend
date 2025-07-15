@@ -10,6 +10,7 @@ import { Options } from '@angular-slider/ngx-slider';
 import { MatSliderModule } from '@angular/material/slider';
 import { BannerService } from '../services/banner.service';
 import { ErrorBannerComponent } from '../shared/error-banner/error-banner.component';
+import { LoadingIconComponent } from '../shared/loading-icon/loading-icon.component';
 import { EVENT_TYPES, CATEGORIES, MATERIALS, COLORS } from '../shared/constants';
 @Component({
   selector: 'app-shop',
@@ -21,7 +22,8 @@ import { EVENT_TYPES, CATEGORIES, MATERIALS, COLORS } from '../shared/constants'
     FormsModule, 
     RouterModule, 
     ProductListComponent, 
-    ErrorBannerComponent
+    ErrorBannerComponent,
+    LoadingIconComponent
   ],
   templateUrl: './shop.component.html',
   styleUrls: ['./shop.component.scss']
