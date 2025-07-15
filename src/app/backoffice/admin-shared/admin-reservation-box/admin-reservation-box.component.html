@@ -107,7 +107,7 @@
                 <p class="product-name item-info">{{ item.name }}<br><p class="item-id">{{ item.productId }}</p></p>
                 <p class="product-price item-info">Price: {{ item.price  | currency }}</p>
                 <p class="product-quantity item-info">Quantity: {{ item.quantity || 1 }}</p>
-                <p class="subtotal item-info">Subtotal: {{ item.price * ( item.quantity ?? 1 ) | currency }}</p>
+                <p class="subtotal item-info">Subtotal: {{ item.price * item.quantity | currency }}</p>
             </div>
             <div class="total-price" 
                [ngClass]="{'even-row': reservation.items.length % 2 === 0, 'odd-row': reservation.items.length % 2 === 1}">
