@@ -23,8 +23,8 @@
 
 .hero-image {
     max-width: 450px;
-    width: 90%;
     aspect-ratio: 3/4;
+    max-height: 90%;
 }
 
 h1 {
@@ -37,7 +37,6 @@ h1 {
     display: flex;
     align-items: center;
     gap: 10px;
-
 }
 
 .location-text {

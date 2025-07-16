@@ -41,7 +41,6 @@ export class AdminReservationsService {
         }),
         tap(reservations => {
           // Update the cache if it exists, or initialize it if null
-          console.log('Fetched reservations from backend:', reservations);
           this.adminReservationsCache = reservations;
           this.saveCacheToSessionStorage(reservations); // Save to localStorage
         })
@@ -115,7 +114,7 @@ export class AdminReservationsService {
       const headers = new HttpHeaders({
         'Authorization': 'Bearer ' + this.getAdminToken() // Use a token or other method to authenticate as admin
       });
-    
+      console.log("Cassie AdminReservationsService: Updating reservation:", reservation);
       const url = `${this.apiUrl}/${reservation.reservationId}`;
       return this.http.put<ApiResponse<Reservation>>(url, reservation, { headers }).pipe(
         map(response => {

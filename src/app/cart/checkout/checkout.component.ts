@@ -209,6 +209,7 @@ export class CheckoutComponent implements OnInit {
     if (this.checkoutForm.invalid) return;
 
     this.loading = true;
+    this.loadingOnVerificationSuccess = false;
     this.successMessage = '';
     this.errorMessage = '';
     this.partialSuccessMessage = '';
@@ -288,6 +289,7 @@ export class CheckoutComponent implements OnInit {
                 if (successfulSubmissions + failedSubmissions === reservations.length) {
                   this.loading = false;
                   if (successfulSubmissions === 0) {
+                    this.loadingOnVerificationSuccess = false;
                     this.errorMessage = `There was an error processing your reservation.<br>Try again, if it still fails, please email your reservation details to ${EMAIL}. Sorry for the inconvenience.`;
                   } else {
                     this.partialSuccessMessage = `${successfulSubmissions} out of ${reservations.length} reservations were successfully submitted, but some failed. Please try again, and if it still fails, please email your reservation details to ${EMAIL}.`;
