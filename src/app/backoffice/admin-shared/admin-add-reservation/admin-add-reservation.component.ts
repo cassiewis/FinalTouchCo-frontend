@@ -189,7 +189,8 @@ export class AdminAddReservationComponent {
         name: product.name,
         price: product.price,
         deposit: product.deposit,
-        description: product.description
+        description: product.description,
+        imageUrl: product.imageUrl
       });
     }
   }

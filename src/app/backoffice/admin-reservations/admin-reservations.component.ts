@@ -65,9 +65,7 @@ export class AdminReservationsComponent {
       (reservations: Reservation[]) => {
         // Sort reservations with priority order (pending/active first, then fulfilled/canceled)
         this.reservations = this.sortReservations(reservations);
-        console.log('Reservations:', this.reservations); // Debugging
         this.filteredReservations = [...this.reservations]; // Initialize filtered list
-        console.log('filteredReservations:', this.filteredReservations); // Debugging
         this.loading = false;
       },
       (error) => {
@@ -100,7 +98,6 @@ export class AdminReservationsComponent {
       this.filteredReservations = this.sortReservations(filtered);
     }
 
-    console.log('Filtered Reservations:', this.filteredReservations); // Debugging
   }
 
   refreshReservations(): void {

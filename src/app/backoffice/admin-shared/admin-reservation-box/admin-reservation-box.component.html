@@ -103,11 +103,12 @@
             <div *ngFor="let item of reservation.items; let i = index" 
                  class="item-box"
                  [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 === 1}">
-                <img src="/images/item-image.png" alt="Item image" class="product-image">
+                 <img [src]="item.imageUrl" alt="Item image" class="product-image">
+                <!-- <img src="/images/item-image.png" alt="Item image" class="product-image"> -->
                 <p class="product-name item-info">{{ item.name }}<br><p class="item-id">{{ item.productId }}</p></p>
                 <p class="product-price item-info">Price: {{ item.price  | currency }}</p>
                 <p class="product-quantity item-info">Quantity: {{ item.quantity || 1 }}</p>
-                <p class="subtotal item-info">Subtotal: {{ item.price * item.quantity | currency }}</p>
+                <p class="subtotal item-info">Subtotal: {{ item.price * (item.quantity || 1) | currency }}</p>
             </div>
             <div class="total-price" 
                [ngClass]="{'even-row': reservation.items.length % 2 === 0, 'odd-row': reservation.items.length % 2 === 1}">
@@ -154,9 +155,9 @@
             <div class="dates-price-container">
                 <mat-form-field appearance="outline" class="full-width">
                     <mat-label>Dates:</mat-label>
-                    <mat-date-range-input [rangePicker]="picker">
-                    <input matStartDate [(ngModel)]="reservation.dates[0]" placeholder="Pickup date" name="startDate" required>
-                    <input matEndDate [(ngModel)]="reservation.dates[1]" placeholder="Dropoff date" name="endDate" required>
+                    <mat-date-range-input [formGroup]="datesForm" [rangePicker]="picker">
+                    <input matStartDate formControlName="start" placeholder="editableReservation.dates[0]" name="startDate" required>
+                    <input matEndDate formControlName="end" placeholder="editableReservation.dates[editableReservation.dates.length - 1]" name="endDate" required>
                     </mat-date-range-input>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-date-range-picker #picker></mat-date-range-picker>    
@@ -172,7 +173,7 @@
                 <div class="products-grid">
                     <!-- List All products that are currently reserved -->
                     <div *ngFor="let item of editableReservation.items" class="reserved-product-item">
-                        <img src="/images/item-image.png" alt="Item image" class="product-image">
+                        <img [src]="item.imageUrl" alt="Item image" class="product-image">
                         <p class="product-name">{{ item.name }}<br><span class="item-id">{{ item.productId }}</span></p>
                         <!-- Reserved products should always be editable -->
                         <div class="item-price-remove-container">

@@ -40,6 +40,9 @@ export class AdminReservationBoxComponent {
   showInvoiceDropdown = false;
   showPaymentDropdown = false;
 
+  newStartDate: Date | null = null;
+  newEndDate: Date | null = null;
+
   // Expose the constant for template use
   readonly PAYMENT_DUE_DAYS = PAYMENT_DUE_DAYS;
   readonly SEND_INVOICE_DAYS = SEND_INVOICE_DAYS;
@@ -77,8 +80,19 @@ export class AdminReservationBoxComponent {
     this.expandBox = false;
   }
 
-  openEditMode(){
-    this.editMode = true;
+  openEditMode() {
+    this.adminReservationService.getAdminReservation(this.reservation.reservationId).subscribe(
+      (cachedReservation) => {
+        if (cachedReservation) {
+          this.editableReservation = { ...cachedReservation };
+          this.editMode = true;
+          this.datesForm.setValue({
+            start: this.editableReservation.dates[0],
+            end: this.editableReservation.dates[this.editableReservation.dates.length - 1]
+          });
+        }
+      }
+    );
   }
 
   toggleAddProducts(): void {
@@ -130,7 +144,8 @@ export class AdminReservationBoxComponent {
         name: product.name,
         price: product.price,
         deposit: product.deposit,
-        description: product.description
+        description: product.description,
+        imageUrl: product.imageUrl
       });
 
       this.editableReservation.price = this.editableReservation.price + product.price;
@@ -153,23 +168,24 @@ export class AdminReservationBoxComponent {
 
 
   saveReservation(): void {
-    // Copy edited values back to the original reservation
-    this.reservation = { ...this.editableReservation };
-
     // Update dates if they were edited in the form
     const formDates = this.datesForm.value;
-    if (formDates.start && formDates.end) {      
+    if (formDates.start && formDates.end) {
+      console.log('Form Dates:', formDates);
       const startDate = new Date(formDates.start);
       const endDate = new Date(formDates.end);
-      const dates = [];
+      const dates: Date[] = [];
 
-      // Generate all dates between startDate and endDate
+      // Generate all dates between startDate and endDate as ISO strings
       for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
-        dates.push(new Date(d)); // Push a new Date instance to avoid reference issues
+        dates.push(new Date(d)); // Push ISO date string (YYYY-MM-DD)
       }
-
-      this.reservation.dates = dates; // Save the full range of dates
+      console.log('Generated Dates:', dates);
+      this.editableReservation.dates = dates; // Update editableReservation with new dates
     }
+
+    // Copy edited values back to the original reservation
+    this.reservation = { ...this.editableReservation };
 
     this.adminReservationService.updateReservation(this.reservation).subscribe(
       (response: Reservation) => { // Specify the response type

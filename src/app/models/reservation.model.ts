@@ -25,4 +25,5 @@ export interface ReservedItem {
     price: number;
     deposit: number;
     description: string;
+    imageUrl: string;
 }

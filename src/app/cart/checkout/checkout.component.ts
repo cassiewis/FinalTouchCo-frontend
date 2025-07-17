@@ -344,7 +344,8 @@ export class CheckoutComponent implements OnInit {
               price: product?.price ?? item.price,
               deposit: product?.deposit ?? item.deposit,
               description: product?.description ?? "no description avaliable",
-              quantity: item.quantity
+              quantity: item.quantity,
+              imageUrl: product?.imageUrl ?? item.imageUrl
             };
         });
 
@@ -365,7 +366,7 @@ export class CheckoutComponent implements OnInit {
           deposit: totalDeposit,
           reservedOn: new Date(),
           invoiceStatus: "not sent",
-          paymentStatus: "not received",
+          paymentStatus: "not paid",
           depositStatus: "not returned",
           myNotes: ""
         };

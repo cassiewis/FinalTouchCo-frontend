@@ -90,7 +90,6 @@ export class AdminDashboardComponent implements AfterViewInit {
     this.adminDetailsService.getAllBlockoutDates().subscribe(
       (blockouts: BlockoutDate[]) => {
         this.blockouts = blockouts;
-        console.log("Blockout Dates: ", this.blockouts);
       }
     );
   }

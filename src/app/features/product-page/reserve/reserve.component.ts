@@ -90,7 +90,6 @@ export class ReserveComponent implements OnChanges {
     this.detailsService.getAllBlockoutDates().subscribe(
       (data: Date[]) => {
         this.blockoutDates = data.map(date => new Date(date)); // Convert to Date objects
-        console.log('Fetched blockout dates:', this.blockoutDates);
       },
       (error) => {
         console.error('Error fetching blockout dates:', error);
