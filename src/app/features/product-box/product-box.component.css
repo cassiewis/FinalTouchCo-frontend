@@ -1,13 +1,19 @@
 
 .product-item {
+    display: block; /* Ensures the link behaves as a block element */
+    width: 100%; /* Takes full width of its container */
+    height: 100%; /* Takes full height of its container */
     padding: 10px;
     transition: transform 0.2s;
-    position: relative; /* Ensures the product-item container is positioned correctly */
-    border: 1px solid red;
+    position: relative;
+    box-sizing: border-box; /* Includes padding in width/height calculations */
+    text-decoration: none; /* Removes default link styling */
 }
 
 .item-info {
     padding: 10px 0;
+    width: 100%; /* Ensures info takes full width */
+    box-sizing: border-box; /* Includes padding in width calculations */
 }
 
 .product-item:hover {
@@ -16,24 +22,24 @@
 }
 
 .image-placeholder {
-    position: relative; /* Establishes a positioning context for the custom-icon */
-    width: 100%; /* Ensures the placeholder takes up the full width */
+    position: relative;
+    width: 100%;
+    margin-bottom: 8px; /* Add some space between image and info */
 }
 
 .image-container {
-    position: relative; /* Ensures the custom-icon is positioned relative to this container */
-    width: 100%; /* Ensures the container matches the placeholder width */
-    height: auto; /* Maintains aspect ratio */
+    position: relative;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
 }
 
 .product-image {
     display: block;
     width: 100%;
     height: auto;
-    object-fit: contain; /* or cover, depending on preference */
-    transition: opacity 0.25s ease-in-out;
-    aspect-ratio: 4 / 5;
-    
+    object-fit: cover; /* or cover, depending on preference */
+    transition: opacity 0.25s ease-in-out;    
     /* Improve rendering sharpness */
     image-rendering: crisp-edges; /* or try 'pixelated' */
 }
@@ -60,11 +66,11 @@
     position: absolute;
     top: 0px; 
     left: 0px;
-    padding: 5px;
+    padding: 8px;
     margin: 0px;
     z-index: 2; 
     display: block;
     font-size: 0.75rem;
-    background-color: rgb(168, 192, 224);
+    background-color: rgb(186, 205, 229);
     color: black;
 }
