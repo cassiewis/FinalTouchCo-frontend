@@ -75,7 +75,6 @@
             inputmode="email"
             formControlName="email"
             autocomplete="email"
-            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
             required/>
           <div *ngIf="email?.invalid && email?.touched" class="field-error">
             Please enter a valid email address
