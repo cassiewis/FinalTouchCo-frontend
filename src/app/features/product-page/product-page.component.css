@@ -10,7 +10,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between; 
-  width: clamp(600px, 70%, 95%);
+  width: clamp(700px, 70%, 95%);
   align-items: flex-start;
   margin: 5% 0;
 }
@@ -180,7 +180,6 @@
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 
-
 .border-line {
   margin: 0 5%;
   color: #f1f1f1;
@@ -203,11 +202,9 @@
   overflow-y: hidden; /* Prevent vertical scrolling */
   -webkit-overflow-scrolling: touch; /* Smooth scrolling for touch devices */
   scrollbar-width: thin; /* Thin scrollbar for Firefox */
-  /* overflow: hidden; */
   display: flex;
   justify-content: center;
   width: 100%;
-  /* align-items: center; */
 }
 
 .similar-scroll-container {
@@ -231,6 +228,21 @@
 .similar-scroll-wrapper::-webkit-scrollbar-thumb {
   background-color: #ccc; /* Color of the scrollbar thumb */
   border-radius: 4px; /* Rounded scrollbar thumb */
+}
+
+.tablet-only {
+    display: none;
+  }
+
+@media (max-width: 990px){
+
+  .tablet-only {
+    display: block;
+  }
+
+  .desktop-mobile-only {
+    display: none;
+  }
 }
 
 @media (max-width: 850px){
@@ -272,6 +284,13 @@
     width: 45%; /* Adjust product box width for smaller screens */
   }
 
+  .tablet-only {
+    display: none;
+  }
+
+  .desktop-mobile-only {
+    display: block;
+  }
   
 }
 
