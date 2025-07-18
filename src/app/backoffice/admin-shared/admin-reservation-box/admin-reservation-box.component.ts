@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormGroup, FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { AdminReservationsService } from '../../admin-services/admin-reservations.service';
-import { PAYMENT_DUE_DAYS, SEND_INVOICE_DAYS } from '../../../shared/constants';
+import { PAYMENT_DUE_DAYS, SEND_INVOICE_DAYS, TAX_PERCENTAGE } from '../../../shared/constants';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -42,6 +42,8 @@ export class AdminReservationBoxComponent {
 
   newStartDate: Date | null = null;
   newEndDate: Date | null = null;
+
+  taxPercentage: number = TAX_PERCENTAGE; // Expose tax percentage for template use
 
   // Expose the constant for template use
   readonly PAYMENT_DUE_DAYS = PAYMENT_DUE_DAYS;

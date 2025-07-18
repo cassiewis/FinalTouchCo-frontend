@@ -197,17 +197,10 @@ button:hover {
     border-radius: 4px;
 }
 
-/* .total-price {
-    display: grid;
-    grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr;
-    height: 50px;
-    padding: 5px 10px;
-    margin: 5px 0;
-    border-radius: 4px;
-    align-items: center;
-    font-size: 1rem;
-    font-weight: bold;
-} */
+.tax-text {
+    padding-right: 10px;
+    color: gray;
+}
 
 .total-price{
     display: flex;

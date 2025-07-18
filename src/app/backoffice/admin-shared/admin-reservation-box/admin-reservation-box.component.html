@@ -113,7 +113,10 @@
             <div class="total-price" 
                [ngClass]="{'even-row': reservation.items.length % 2 === 0, 'odd-row': reservation.items.length % 2 === 1}">
                <button class="edit-button" (click)="openEditMode()">edit</button>
-               <span class="total-price-text">Total Price: {{ reservation.price | currency }}</span>
+               <div class="tax-total-container">
+                <span class="tax-text">(+tax {{ reservation.price*taxPercentage | currency }})</span>
+                <span class="total-price-text">Total Price: {{ reservation.price + (reservation.price*taxPercentage) | currency }}</span>
+               </div>
             </div>
         </div>
     </div>

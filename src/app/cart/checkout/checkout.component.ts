@@ -76,9 +76,8 @@ export class CheckoutComponent implements OnInit {
         Validators.maxLength(50)
       ]],
       email: ['', [
-        Validators.required,
+        Validators.required, 
         Validators.email,
-        // Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/)
       ]],
       phone: ['', [
         Validators.required,
