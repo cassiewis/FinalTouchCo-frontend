@@ -99,6 +99,10 @@ export class CartComponent implements OnInit {
     return `${start.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })} – ${end.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}`;
   }
 
+  calculateTotal(): number {
+    return this.cartItems.reduce((total, item) => total + item.price, 0);
+  }
+
   calculateGroupTotal(items: CartItem[]): number {
     return items.reduce((total, item) => total + item.price, 0);
   }
@@ -130,8 +134,8 @@ export class CartComponent implements OnInit {
     }
   }
 
-  isBelowMinimum(items: CartItem[]): boolean {
-    return this.calculateGroupTotal(items) < MINIMUM_ORDER;
+  isBelowMinimum(): boolean {
+    return this.calculateTotal() < MINIMUM_ORDER;
   }
 
 }

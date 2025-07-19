@@ -46,11 +46,11 @@ export class DetailsService {
       },
       {
         id: '3',
-        author: 'Abby',
+        author: 'Sammie',
         rating: 5,
-        content: 'Cassie was absolutely amazing! She did a beautiful job on our mirror for our wedding, it looked exactly how I imagined and we got so many compliments on it. She was always so responsive and willing to work with me on scheduling for pick up and drop off. I would highly highly recommend her for any of your wedding needs!!',
-        event: "Wedding",
-        date: '6/16/25'
+        content: 'Cassie created a beautiful fabric sign that I was honored to have hanging during my Engagement Party! We got so many wonderful photos in front of it and I hope to use it again for my wedding!',
+        event: "Engagement Party",
+        date: '7/18/25'
       }
     ];
     return reviews;

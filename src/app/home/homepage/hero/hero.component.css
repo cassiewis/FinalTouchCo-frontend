@@ -80,6 +80,10 @@ h1 {
     appearance: none;
 }
 
+.about-link {
+    cursor: pointer;
+}
+
 
 /* Responsive Design for smaller screens */
 @media (max-width: 915px) {

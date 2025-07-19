@@ -15,4 +15,16 @@ export class HeroComponent {
   routeToShop(event?: MouseEvent) {
     navigateWithScroll(this.router, event, `/shop`);
   }
+
+  routeToSection(path: string, fragment: string) {
+    this.router.navigate([path], { fragment: fragment }).then(() => {
+      // Use setTimeout to ensure navigation completes before trying to scroll
+      setTimeout(() => {
+        const element = document.getElementById(fragment);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 0); // delay the execution to ensure navigation finishes first
+    });
+  }
 }

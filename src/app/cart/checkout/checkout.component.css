@@ -354,7 +354,6 @@ button:disabled {
 @media (max-width: 425px) {
 
 
-  @media (max-width: 425px) {
   .checkout-form, .terms-of-service, .error-message, .email-verification-only {
     max-width: 100vw;
     min-width: 0;
@@ -382,7 +381,5 @@ button:disabled {
     width: 95%;
     align-self: center;
   }
-}
-
 
 }

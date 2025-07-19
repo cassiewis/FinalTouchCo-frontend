@@ -24,13 +24,13 @@ export class FaqsComponent {
     },
     {
       question: 'Can I make changes to my reservation?',
-      answer: `Absolutely! If you need to adjust your rental items or details, just send us an email at ${EMAIL}. We’ll do our best to accommodate any updates you need to make.`,
+      answer: `Absolutely! If you need to adjust your rental items or details, email us at ${EMAIL}. We’ll do our best to accommodate any updates you need to make.`,
       open: false
     }
     ,
     {
       question: 'Do you offer delivery or pickup services?',
-      answer: `Yes! We offer delivery and pickup options on a case-by-case basis, depending on availability and distance. Additional fees apply. If you're interested, just leave a note at checkout or reach out to us directly — we'll follow up with a custom quote.`,
+      answer: `Yes! We offer delivery and pickup options on a case-by-case basis, depending upon availability and distance. Additional fees apply. If you're interested, just leave a note at checkout or reach out to us directly — we'll follow up with a custom quote.`,
       open: false
     }
   ];

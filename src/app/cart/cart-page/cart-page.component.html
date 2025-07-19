@@ -13,13 +13,12 @@
   <div class="cart-full" *ngIf="cartItems.length > 0">
     <div class="cart-body">
       <div class="left-cart">
-
+        <div *ngIf="isBelowMinimum()" class="error-minimum">
+            Almost there—${{ MINIMUM_ORDER }} minimum per reservation
+          </div>
         <div class="cart-reservation" *ngFor="let groupKey of getGroupedKeys()">
           <h3>
             Reservation: {{ formatDateRangeFromItems(groupedItems.get(groupKey)!) }}
-          <div *ngIf="isBelowMinimum(groupedItems.get(groupKey)!)" class="error-minimum">
-            Almost there—${{ MINIMUM_ORDER }} minimum per reservation
-          </div>
         </h3>
           <div class="cart-item" *ngFor="let item of groupedItems.get(groupKey)">
             <app-cart-item [item]="item" (updateCart)="updateCart()"></app-cart-item>
