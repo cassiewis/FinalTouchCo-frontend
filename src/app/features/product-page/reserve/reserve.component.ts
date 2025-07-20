@@ -16,6 +16,9 @@ import { ReservedDatesService } from '../../../services/reserved-dates.service';
 import { ConfirmNewReservationDialogComponent } from '../../../shared/confirm-new-reservation-dialog/confirm-new-reservation-dialog.component';
 import { DetailsService } from '../../../services/details.service';
 import { BUFFER_DAYS, RESERVATION_LENGTH } from '../../../shared/constants';
+import { MatTooltip } from '@angular/material/tooltip';
+import { ViewChild } from '@angular/core';
+
 
 @Component({
   selector: 'app-reserve',
@@ -38,6 +41,7 @@ import { BUFFER_DAYS, RESERVATION_LENGTH } from '../../../shared/constants';
 })
 export class ReserveComponent implements OnChanges {
   @Input() product!: Product;
+  @ViewChild('tooltip') tooltip!: MatTooltip;
   // product!: Product;
   minDate: Date;
   maxDate: Date;
@@ -293,6 +297,9 @@ export class ReserveComponent implements OnChanges {
   }
 
   get tooltipMessage(): string {
+    if (!this.range.value.start || !this.range.value.end) {
+      return 'Please select a pickup and return date.';
+    }
     if (!this.areAllDatesAvailable()) {
       return 'Some of the dates you selected are unavailable.';
     }
@@ -301,5 +308,6 @@ export class ReserveComponent implements OnChanges {
     }
     return '';
   }
+
   
 }

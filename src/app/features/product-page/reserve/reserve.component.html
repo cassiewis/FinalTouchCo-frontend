@@ -51,6 +51,7 @@
       (click)="onCartClick()"
       [disabled]="!isDateRangeValid()"
       type="button"
+      (touchstart)="this.tooltip.show();"
     >
       ADD TO CART
     </button>
