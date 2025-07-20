@@ -476,8 +476,12 @@ export class CheckoutComponent implements OnInit {
     return phone.replace(/\D/g, '');
   }
 
-  handleVerificationEnter(event: KeyboardEvent) {
-    event.preventDefault(); // prevent full form submission
+  handleVerificationEnter(event: Event): void {
+    const keyboardEvent = event as KeyboardEvent;
+
+    // Optional: Prevent default behavior
+    keyboardEvent.preventDefault();
+
     if (
       this.verificationCode?.valid &&
       this.verificationCode?.value?.length === 6 &&
