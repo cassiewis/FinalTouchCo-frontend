@@ -38,11 +38,11 @@ export class DetailsService {
       },
       {
         id: '2',
-        author: 'Jazmin',
+        author: 'Rebeca',
         rating: 5,
-        content: 'It was the best experience as they accommodated my needs.',
-        event: "Quinceanera",
-        date: '4/16/25'
+        content: 'Cassie is incredibly talented and such a joy to work with! I had the pleasure of renting from her in December and again this July, and both times were a breeze. She makes the whole process so easy, and her rentals are absolutely adorable!❤️',
+        event: "Wedding",
+        date: '7/19/25'
       },
       {
         id: '3',
