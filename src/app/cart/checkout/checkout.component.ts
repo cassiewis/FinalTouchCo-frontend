@@ -475,4 +475,16 @@ export class CheckoutComponent implements OnInit {
   private stripPhoneFormatting(phone: string): string {
     return phone.replace(/\D/g, '');
   }
+
+  handleVerificationEnter(event: KeyboardEvent) {
+    event.preventDefault(); // prevent full form submission
+    if (
+      this.verificationCode?.valid &&
+      this.verificationCode?.value?.length === 6 &&
+      !this.loading
+    ) {
+      this.verifyEmailCode();
+    }
+  }
+
 }

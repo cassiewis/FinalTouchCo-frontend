@@ -25,7 +25,8 @@
               maxlength="6"
               pattern="[\d\s\-\(\)\.+]+"
               class="verification-input"
-              autocomplete="one-time-code"/>
+              autocomplete="one-time-code"
+              (keydown.enter)="handleVerificationEnter($event)"/>
             <button 
               type="button" 
               class="verify-btn"
