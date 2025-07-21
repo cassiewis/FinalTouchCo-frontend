@@ -38,6 +38,26 @@ export class ShopComponent implements AfterViewInit, OnInit {
   maxPrice: number = 100;
 
   loading: boolean = true;
+  
+  // Map of similar/related items for enhanced search
+  private similarItemsMap: { [key: string]: string[] } = {
+    'candle': ['votive', 'votives', 'tea light', 'pillar candle', 'taper candle', 'candelabra', 'candlestick'],
+    'votive': ['candle', 'tea light', 'pillar candle', 'taper candle'],
+    'votives': ['candle', 'tea light', 'pillar candle', 'taper candle'],
+    'light': ['candle', 'votive', 'lamp', 'lantern', 'string lights', 'fairy lights'],
+    'lighting': ['candle', 'votive', 'lamp', 'lantern', 'string lights', 'fairy lights'],
+    'flower': ['floral', 'bouquet', 'arrangement', 'centerpiece', 'petals'],
+    'floral': ['flower', 'bouquet', 'arrangement', 'centerpiece', 'petals'],
+    'table': ['tablecloth', 'runner', 'centerpiece', 'place setting', 'charger'],
+    'chair': ['seating', 'stool', 'bench', 'cushion'],
+    'seating': ['chair', 'stool', 'bench', 'cushion'],
+    'glass': ['glassware', 'crystal', 'stemware', 'goblet', 'tumbler'],
+    'glassware': ['glass', 'crystal', 'stemware', 'goblet', 'tumbler'],
+    'plate': ['dish', 'dinnerware', 'charger', 'platter', 'serving'],
+    'dish': ['plate', 'dinnerware', 'bowl', 'platter', 'serving'],
+    'linen': ['tablecloth', 'napkin', 'runner', 'overlay', 'fabric'],
+    'fabric': ['linen', 'tablecloth', 'napkin', 'runner', 'overlay']
+  };
   private isInitialLoad: boolean = true; // Track if this is the first load
 
   showMobileFilter: boolean = false;
@@ -263,7 +283,7 @@ export class ShopComponent implements AfterViewInit, OnInit {
         (this.customSelection === 'Custom' && product.custom === true) ||
         (this.customSelection === 'Ready-made' && product.custom !== true);  
       
-      const matchesSearch = !search || product.name.toLowerCase().includes(search);
+      const matchesSearch = !search || this.productMatchesSearch(product, search);
       
       const matchesPrice =
         (this.minPrice === null || product.price >= this.minPrice) &&
@@ -297,6 +317,65 @@ export class ShopComponent implements AfterViewInit, OnInit {
 
     this.updateURLFilters();
     this.applyAllFilters();
+  }
+
+  private productMatchesSearch(product: Product, search: string): boolean {
+    // Search in product name
+    const nameMatch = product.name.toLowerCase().includes(search);
+    
+    // Search in product tags
+    const tagMatch = product.tags && product.tags.some(tag => 
+      tag.toLowerCase().includes(search)
+    );
+    
+    // Search using similar items - check if search term has related terms
+    const similarTerms = this.getSimilarTerms(search);
+    const similarMatch = product.name.toLowerCase().split(' ').some(word => 
+      similarTerms.includes(word)
+    ) || (product.tags && product.tags.some(tag => 
+      similarTerms.some(term => tag.toLowerCase().includes(term))
+    ));
+    
+    // Also check if any of the product's words/tags match similar terms for the search
+    const reverseMatch = this.checkReverseMatch(search, product);
+    
+    return nameMatch || tagMatch || similarMatch || reverseMatch;
+  }
+  
+  private getSimilarTerms(searchTerm: string): string[] {
+    const terms = [searchTerm]; // Include original term
+    
+    // Add direct similar terms
+    if (this.similarItemsMap[searchTerm]) {
+      terms.push(...this.similarItemsMap[searchTerm]);
+    }
+    
+    // Check for partial matches in keys (e.g., "candles" matches "candle")
+    Object.keys(this.similarItemsMap).forEach(key => {
+      if (searchTerm.includes(key) || key.includes(searchTerm)) {
+        terms.push(key);
+        terms.push(...this.similarItemsMap[key]);
+      }
+    });
+    
+    return [...new Set(terms)]; // Remove duplicates
+  }
+  
+  private checkReverseMatch(searchTerm: string, product: Product): boolean {
+    // Check if any product words have similar terms that match the search
+    const productWords = [
+      ...product.name.toLowerCase().split(' '),
+      ...(product.tags ? product.tags.map(tag => tag.toLowerCase()) : [])
+    ];
+    
+    return productWords.some(word => {
+      if (this.similarItemsMap[word]) {
+        return this.similarItemsMap[word].some(similarTerm => 
+          similarTerm.includes(searchTerm) || searchTerm.includes(similarTerm)
+        );
+      }
+      return false;
+    });
   }
 
   removeFilter(filter: string): void {
