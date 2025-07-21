@@ -10,7 +10,7 @@ import { ReservationSuccessGuard } from './guards/reservation-success.guard';
 import { ConstructionGuard } from './guards/construction.guard';
 import { FaqsComponent } from './home/homepage/faqs/faqs.component';
 import { UnderConstructionComponent } from './under-construction/under-construction.component';
-
+import { PrivacyPolicyComponent } from './legal/privacy-policy/privacy-policy.component';
 export const routes: Routes = [
     { 
         path: '', 
@@ -32,6 +32,7 @@ export const routes: Routes = [
     { path: 'product/:productId', component: ProductPageComponent, canActivate: [ConstructionGuard] },
     { path: 'login', component: LoginComponent }, // Admin routes stay accessible
     { path: 'admin', loadChildren: () =>import('./backoffice/backoffice.module').then(m => m.BackofficeModule)}, // Admin routes stay accessible
+    { path: 'privacy-policy', component: PrivacyPolicyComponent, canActivate: [ConstructionGuard] },
     { path: '**', redirectTo: '/home' }, // Back to your original behavior
 ];
 
