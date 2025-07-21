@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class ConstructionService {
   // 🔧 MAIN TOGGLE: Set to false to disable construction page completely
-  private constructionMode = true; 
+  private constructionMode = false; 
   
   /*
    * 🚀 HOW TO USE:

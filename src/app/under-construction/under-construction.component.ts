@@ -121,7 +121,7 @@ import { ConstructionService } from '../services/construction.service';
   `]
 })
 export class UnderConstructionComponent implements OnInit {
-  progress = 85; // Adjust this percentage as you make progress
+  progress = 95; // Adjust this percentage as you make progress
   
   constructor(
     private router: Router,
