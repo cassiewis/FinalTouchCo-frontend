@@ -47,6 +47,13 @@ body {
     line-height: 1.5;
 }
 
+.handmade-tagline {
+    font-size: 3rem;
+    padding: 0;
+    margin: 0;
+    text-align: right;
+}
+
 .footer {
     margin: 0;
     padding: 0;
@@ -116,6 +123,10 @@ body {
 
     .custom-image {
         max-width: 400px;
+    }
+
+    .handmade-tagline {
+        font-size: 2.5rem;
     }
 
 }
