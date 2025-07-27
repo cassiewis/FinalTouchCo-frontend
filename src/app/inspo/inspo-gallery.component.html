@@ -1,0 +1,22 @@
+<head>
+    <Title>Inspiration Gallery - Final Touch Decor</Title>
+    <meta name="description" content="Browse our gallery of stunning wedding and event inspiration photos. See how our luxury decor rentals transform venues into magical spaces for your special day." />
+</head>
+
+<body class="white-background topDiv">
+    <app-error-banner></app-error-banner>
+    
+    <section class="open-section">
+        <div class="header-container tan-background">
+            <div class="header-image-container">
+                <img class="title" src="images/inspo-title.png" alt="Inspiration Title">
+            </div>
+            <p class="side-text right-text" (click)="navigateToTestimonials()">See Customer Testimonials</p>
+        </div>
+        <div class="inspo-grid-container">
+            <div *ngFor="let photo of inspoPhotos" class="inspo-photo">
+                <img [src]="photo" alt="Inspiration Photo">
+            </div>
+        </div>
+    </section>
+</body>

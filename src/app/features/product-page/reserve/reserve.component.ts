@@ -42,7 +42,6 @@ import { ViewChild } from '@angular/core';
 export class ReserveComponent implements OnChanges {
   @Input() product!: Product;
   @ViewChild('tooltip') tooltip!: MatTooltip;
-  // product!: Product;
   minDate: Date;
   maxDate: Date;
   reservedDates: Date[] = [];
@@ -173,11 +172,6 @@ export class ReserveComponent implements OnChanges {
     return this.areAllDatesAvailable() && this.isWithinDurationLimit();
   }
 
-  // get showUnavailableTooltip(): boolean {
-  //   const start = this.range.get('start')?.value;
-  //   const end = this.range.get('end')?.value;
-  //   return !!start && !!end && !this.isDateRangeValid();
-  // }
 
   async onCartClick() {
     if (this.range.invalid) {
