@@ -7,6 +7,8 @@ import { HeaderComponent } from "./shared/header/header.component";
 import { FooterComponent } from './shared/footer/footer.component';
 import { CookieBannerComponent } from './legal/cookie-banner/cookie-banner.component';
 
+declare let gtag: Function;
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -39,6 +41,17 @@ export class AppComponent {
     // Check if the current route is your back office route
     const returnValue = this.router.url.startsWith('/backoffice'); // Adjust the condition based on your route
     return returnValue;
+  }
+
+
+  ngOnInit(): void {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        gtag('config', 'G-98SE5XYCB5', {
+          page_path: event.urlAfterRedirects,
+        });
+      }
+    });
   }
 
 
