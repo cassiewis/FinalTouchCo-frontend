@@ -45,6 +45,7 @@ export class AdminDashboardComponent implements AfterViewInit {
   public activeProducts: Product[] = [];
   public tasks: Map<string, Reservation> = new Map();
   public blockouts: BlockoutDate[] = [];
+  public showSidebar = true; // Control sidebar visibility
 
   constructor(
     private adminReservationService: AdminReservationsService, 
@@ -57,6 +58,9 @@ export class AdminDashboardComponent implements AfterViewInit {
   }
 
   ngOnInit() {
+
+    this.updateSidebarVisibility();
+    window.addEventListener('resize', this.updateSidebarVisibility.bind(this));
     
     this.adminReservationService.getAdminReservations().subscribe(
       (reservations: Reservation[]) => {
@@ -257,6 +261,15 @@ getUpcomingReservationsByMonth(): { [key: string]: number } {
     const day = dateObj.getDate();
   
     return `${month}/${day}`;
+  }
+
+  public toggleSidebar(): void {
+    this.showSidebar = !this.showSidebar;
+  }
+
+  updateSidebarVisibility() {
+    const isMobile = window.innerWidth <= 1000;
+    this.showSidebar = !isMobile;
   }
 
 }

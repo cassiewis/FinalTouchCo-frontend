@@ -33,6 +33,7 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent }, // Admin routes stay accessible
     { path: 'admin', loadChildren: () =>import('./backoffice/backoffice.module').then(m => m.BackofficeModule)}, // Admin routes stay accessible
     { path: 'privacy-policy', component: PrivacyPolicyComponent, canActivate: [ConstructionGuard] },
+    { path: 'services', loadComponent: () => import('./features/our-services/our-services.component').then((m) => m.OurServicesComponent), canActivate: [ConstructionGuard] },
     { path: '**', redirectTo: '/home' }, // Back to your original behavior
 ];
 

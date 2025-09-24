@@ -100,6 +100,16 @@
           </div>
 
           <div class="form-field">
+            <label>Interested in delivery or setup?<br>Choose an option to receive a quote</label>
+            <select formControlName="selectedOption" required>
+              <option value="No Thanks, I'll pickup & return">No Thanks, I'll pickup & return</option>  <!-- This will be selected by default -->
+              <option value="Delivery & Pickup">Final Touch Decor will deliver and pickup from your desired location</option>
+              <option value="Setup & Teardown">Final Touch Decor will set up and tear down your event</option>
+            </select>
+          </div>
+          <a  href="/services" class="service-link">Read more about services</a>
+
+          <div class="form-field">
             <label>Notes</label>
             <textarea formControlName="notes"></textarea>
           </div>

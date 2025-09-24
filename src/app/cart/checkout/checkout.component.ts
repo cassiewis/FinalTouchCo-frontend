@@ -1,8 +1,7 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
 import { ReservationService } from '../../services/reservation.service';
 import { CartService } from '../../services/cart-service.service';
 import { Reservation, ReservedItem } from '../../models/reservation.model';
@@ -43,13 +42,13 @@ export class CheckoutComponent implements OnInit {
   
   terms = [
     {
-      question: 'Rental amount is due 30 days before event date',
-      answer: 'You will receive an invoice by email, and payment must be completed no later than 30 days prior to your event. If your reservation is made less than 30 days in advance, full payment is due within 3 days of confirmation.',
+      question: 'Payment is due 30 days before pickup',
+      answer: 'You will receive an invoice by email, and payment must be completed no later than 30 days prior to your pickup date. Cancelations will be eligible until this date, then refunds will be subject to our cancellation policy.',
       open: false
     },
     {
-      question: 'Cancellations & Refunds accepted 30 days before event',
-      answer: 'You may cancel for a full refund up to 30 days before your event.<br>Cancellations made within 30 days of the event may not be eligible for a full refund, depending on the timing and whether items have already been prepared or reserved.',
+      question: 'Cancellations & Refunds accepted 30 days before pickup',
+      answer: 'You may cancel for a full refund up to 30 days before your pickup day.<br>Cancellations made within 30 days of pickup may not be eligible for a full refund, depending on the timing and whether items have already been prepared or reserved.',
       open: false
     },
     {
@@ -88,7 +87,8 @@ export class CheckoutComponent implements OnInit {
       recaptchaToken: [''], // For bot prevention
       verificationCode: ['', [
         Validators.pattern(/^[0-9]{6}$/)
-      ]]
+      ]],
+      selectedOption: ["No Thanks, I'll pickup & return", [Validators.required]]
     });
   }
 
@@ -134,6 +134,11 @@ export class CheckoutComponent implements OnInit {
 
   get verificationCode() {
     return this.checkoutForm.get('verificationCode');
+  }
+
+  // Add this getter method
+  get selectedOption() {
+    return this.checkoutForm.get('selectedOption');
   }
   
   // send the verification code through google api to verify email

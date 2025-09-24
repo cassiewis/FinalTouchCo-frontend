@@ -7,12 +7,12 @@
 
   <div class="cart-title-container">
     <!-- <img class="corner-title" src="/favicon.ico"> -->
-    <a href="/shop" class="back-to-shop">Continue Shopping</a>
-    <img src="/images/shopping-cart.png" alt="Shopping Cart" class="title">
+    <a href="/shop" class="back-to-shop">Back to Browse</a>
+    <img src="/images/shopping-cart.png" alt="Inquiry List" class="title">
   </div>
 
   <div class="cart-empty" *ngIf="cartItems.length === 0">
-    <p>There are no items in your cart... yet!</p>
+    <p>There are no items in your inquiry list... yet!</p>
   </div>
 
   <div class="cart-full" *ngIf="cartItems.length > 0">
@@ -32,7 +32,7 @@
       </div>
       <div class="right-cart">
         <div class="checkout-breakdown light-pink-background">
-          <p class="order-summary price-header">Order Summary</p>
+          <p class="order-summary price-header">Summary</p>
 
             <div class="cart-reservation-total" *ngFor="let groupKey of getGroupedKeys(); let i = index">
               <div class="reservation-group">

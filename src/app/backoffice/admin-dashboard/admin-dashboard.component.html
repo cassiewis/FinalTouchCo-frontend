@@ -1,6 +1,6 @@
 <body>
     <div class="container">
-        <div class="sidebar blue-background">
+        <div *ngIf="showSidebar" class="sidebar blue-background">
             <div class="title-container sidebar-container">
                 <img class="favicon" src="favicon.ico">
                 <h2 class="title">Final Touch</h2>
@@ -17,7 +17,9 @@
                 <a routerLink="/" class="links">FRONT OFFICE</a>
             </div>
         </div>
-
+        <div class="sidebar-toggle" (click)="toggleSidebar()">
+            <span class="toggle-button blue-background" [ngClass]="{'active': showSidebar}">{{ showSidebar ? '<' : '>' }}</span>
+        </div>
         <!-- Scrollable content area for routed views -->
         <div class="content">
             <div *ngIf="!isChildRouteActive()">

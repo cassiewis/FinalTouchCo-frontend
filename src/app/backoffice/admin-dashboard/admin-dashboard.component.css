@@ -18,6 +18,24 @@ body, html {
     padding: 0px 30px 30px 30px;
     width: 150px;
     flex-shrink: 0;
+    margin: 0;
+}
+
+.sidebar-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+.toggle-button {
+  cursor: pointer;
+  padding: 18px 8px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin: 0;
 }
 
 .links-container {

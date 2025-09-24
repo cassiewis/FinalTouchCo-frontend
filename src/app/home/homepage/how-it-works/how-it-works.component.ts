@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { navigateWithScroll } from '../../../shared/constants';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-how-it-works',
@@ -9,4 +11,9 @@ import { Component } from '@angular/core';
 })
 export class HowItWorksComponent {
 
+  constructor(private router: Router) {}
+
+  goToServices(event: MouseEvent){
+      navigateWithScroll(this.router, event, '/services');
+    }
 }
