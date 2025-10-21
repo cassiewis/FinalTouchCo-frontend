@@ -355,6 +355,10 @@ export class CheckoutComponent implements OnInit {
 
         const resName = this.checkoutForm.value.name.replace(/\s+/g, '') + "-" + Math.random().toString(36).substring(2, 10);
 
+        const selectedService = this.checkoutForm.value.selectedOption;
+        const customerNotes = this.checkoutForm.value.notes || '';
+        const combinedNotes = `Service Request: ${selectedService}${customerNotes ? '\n\nCustomer Notes: ' + customerNotes : ''}`;
+
         // Build the reservation object
         const reservation: Reservation = {
           status: 'pending',
@@ -365,7 +369,7 @@ export class CheckoutComponent implements OnInit {
           items: reservedItems, // or map to ReservedItem[] if needed
           email: this.checkoutForm.value.email,
           phoneNumber: this.stripPhoneFormatting(this.checkoutForm.value.phone),
-          customerNotes: this.checkoutForm.value.notes || '',
+          customerNotes: combinedNotes,
           price: totalPrice,
           deposit: totalDeposit,
           reservedOn: new Date(),
