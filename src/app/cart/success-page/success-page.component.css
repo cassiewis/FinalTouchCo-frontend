@@ -128,11 +128,6 @@ body {
     font-size: 1.25rem;
   }
 
-
-}
-
-@media (max-width: 600px){
-
 .next-steps-container {
     margin: 20px;
 }
@@ -154,4 +149,10 @@ body {
     width: 90%;
 }
 
+@media (max-width: 500px) {
+
+}
+  .whats-next-image-container {
+      background: none;
+  }
 }

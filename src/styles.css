@@ -325,6 +325,9 @@ button, button * {
   .page-title {
     font-size: 1.5rem;
   }
+   .tan-background {
+      background-color: white;
+    }
 }
 
 /* Global utility class for product descriptions with line breaks */

@@ -48,7 +48,7 @@ body {
   z-index: 2;
   word-wrap: break-word;
   text-align: center;
-  background-color: #faf3eb;
+  /* background-color: #faf3eb; */
 }
 
 .left-text {
@@ -67,7 +67,7 @@ body {
   border-radius: 999px;
   display: inline-block;
   white-space: nowrap;
-  background: #faf3eb;
+  /* background: #faf3eb; */
   z-index: 2;
 }
 

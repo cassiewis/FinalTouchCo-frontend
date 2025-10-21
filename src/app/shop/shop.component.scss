@@ -340,6 +340,13 @@ ngx-slider {
       }
   }
 
+  @media (max-width: 500px) {
+
+    .shop-image-container {
+      background: none;
+    }
+  }
+
   @media (max-width: 400px) {
 
     .shop-image-container {
