@@ -14,6 +14,7 @@ import { Subscription } from 'rxjs';
 export class HeaderComponent {
   cartCount: number = 0;
   private cartCountSubscription!: Subscription; // Use non-null assertion
+  isMobileMenuOpen = false;
 
   constructor(private cartService: CartService) {}
 
@@ -27,5 +28,13 @@ export class HeaderComponent {
   ngOnDestroy(): void {
     // Unsubscribe to prevent memory leaks
     this.cartCountSubscription.unsubscribe();
+  }
+
+  toggleMobileMenu() {
+      this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
+
+  closeMobileMenu() {
+      this.isMobileMenuOpen = false;
   }
 }

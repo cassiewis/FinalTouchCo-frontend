@@ -2,15 +2,20 @@
     <a href="/home" class="logo-container">
         <img src="/logo.png" alt="Final touch" class="logo"/>
     </a>
-    <nav class="nav-links">
-        <a href="/home" class="links">Home</a>
-        <a href="/shop" class="links">Browse</a>
-        <a href="/inspo" class="links">Inspo</a>
-        <a href="/services" class="links">Services</a>
-        <!-- <a href="/faqs" class="links">FAQs</a> -->
+    <button class="hamburger-menu tan-background" (click)="toggleMobileMenu()" [class.active]="isMobileMenuOpen">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <!-- Add [class.mobile-open]="isMobileMenuOpen" here -->
+    <nav class="nav-links" [class.mobile-open]="isMobileMenuOpen">
+        <a href="/home" class="links" (click)="closeMobileMenu()">Home</a>
+        <a href="/shop" class="links" (click)="closeMobileMenu()">Browse</a>
+        <a href="/inspo" class="links" (click)="closeMobileMenu()">Inspo</a>
+        <a href="/services" class="links" (click)="closeMobileMenu()">Services</a>
 
         <div class="cart-link-container">
-            <a href="/cart"><i class="fa fa-heart links cart-icon" aria-hidden="true"></i></a>
+            <a href="/cart" (click)="closeMobileMenu()"><i class="fa fa-heart links cart-icon" aria-hidden="true"></i></a>
             <span class="cart-notification" *ngIf="cartCount > 0">{{ cartCount }}</span>
         </div>
    </nav>

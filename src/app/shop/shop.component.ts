@@ -62,7 +62,7 @@ export class ShopComponent implements AfterViewInit, OnInit {
 
   showMobileFilter: boolean = false;
   isSmallScreen: boolean = false;
-  productsPerPage: number = 16;
+  productsPerPage: number = 30;
   currentPage: number = 0;
   
   typeCategory = CATEGORIES;

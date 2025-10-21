@@ -45,6 +45,7 @@ body {
 .custom-text {
     font-size: 1.1rem;
     line-height: 1.5;
+    max-width: 420px;
 }
 
 .handmade-tagline {

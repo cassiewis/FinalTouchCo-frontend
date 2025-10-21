@@ -3,8 +3,8 @@
 <section class="tan-background hero-container">
 
     <picture class="image-side">
-        <source srcset="/images/hero.webp" type="image/webp">
-        <img class="hero-image" src="/images/hero.png">
+        <!-- <source srcset="/images/hero.webp" type="image/webp"> -->
+        <img class="hero-image" src="/images/MirrorHero.png" fetchpriority="high" loading="eager">
     </picture>
 
     <div class="text-side">
@@ -12,21 +12,24 @@
             <img class="flower-image" src="/images/flower.png">
             <p class="location-text secondary-font green-font">SERVING BOISE AND THE TREASURE VALLEY</p>
         </div>
-        <h1 class="title">Elevate Your Event with<br>Beautiful, Earth-Friendly<br>Decor Rentals</h1>
-        <button (click)="routeToShop($event)" class="button-theme green-background">Browse Our Collection</button>
+        <h1>Elevate your Event with<br>Custom Signage Rentals</h1>
+        <button (click)="routeToShop()" class="button-theme tan-background">Browse our Collection</button>
         <br><br>
     </div>
 </section>
+<section class="images-container tan-background">
+    <img class="three-image" src="/images/hero-flower-box.png" alt="Arch Decor">
+    <img class="three-image" src="/images/hero-seating-chart.png" alt="Table Setting Decor">
+    <img class="three-image" src="/images/hero-table-numbers.png" alt="Custom Signage">
+</section>
 <section class="summary-container red-background">
     <img class="summary-flower" src="/images/daisy.png">
-    <p class="summary-title cursive-font">Elegant event decor, without the waste
+    <p class="summary-title cursive-font">Elegant event signage, without the waste
     <p class="summary-text">
-        At Final Touch Decor, we offer stylish, high-quality rental decor for weddings 
-        and events across Boise and the Treasure Valley. From modern arches to vintage 
-        accents, our collection is curated to elevate your day — without the cost or 
+        At Final Touch Decor, we offer stylish, high-quality signage rentals for weddings 
+        and events across the Treasure Valley. Our collection is curated to elevate your day — without the cost or 
         waste of buying new. Most of our pieces are thrifted or sustainably sourced, 
-        helping reduce waste while adding unique charm. We also specialize in custom 
-        signage to bring your vision to life.
+        helping reduce waste while adding unique charm.
     </p>
     <u (click)="routeToSection('/home', 'about')" class="button main-font about-link">ABOUT US</u>
     <!-- todo link to about section -->

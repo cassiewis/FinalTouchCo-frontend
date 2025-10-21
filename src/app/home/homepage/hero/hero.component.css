@@ -1,11 +1,13 @@
 .hero-container {
     display: flex; /* Ensure the component occupies space */
     gap: 60px;
-    height: 80vh;
+    min-height: 80vh;
+    align-items: center;
+    justify-content: center;
 }
 
 .text-side {
-    width: 55%;
+    width: 50%;
     height: 100%; 
     display: flex; 
     flex-direction: column;
@@ -14,21 +16,22 @@
 }
 
 .image-side {
-    width: 45%;
+    width: 50%;
     height: 100%; 
     display: flex; 
     justify-content: right;
-    align-items: center;
+    align-items: center; 
 }
 
 .hero-image {
     max-width: 450px;
-    aspect-ratio: 3/4;
-    max-height: 90%;
+    height: 90%;
+    aspect-ratio: 2/3;
+    object-fit: cover;
 }
 
 h1 {
-    font-size: 2rem;
+    font-size: 2.25rem;
     font-weight: normal;
     line-height: 1.25; /* Adjust the line height */
 }
@@ -40,12 +43,13 @@ h1 {
 }
 
 .location-text {
-    margin-left: -90px;
+    margin-left: -80px;
     font-size: 1rem;
 }
 
 .flower-image {
-    width: 180px;
+    width: 125px;
+    margin-left: -10px;
 }
 
 .summary-container {
@@ -59,6 +63,23 @@ h1 {
 .summary-flower {
     width: 50px;
     height: auto;
+}
+
+.images-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 30px 100px;
+    gap: 10px;
+    justify-items: center;
+    align-items: center;
+}
+
+.three-image {
+    width: 100%;
+    max-width: 400px;
+    height: 100%;
+    aspect-ratio: 2/3;
+    object-fit: cover;
 }
 
 .summary-title {
@@ -91,9 +112,6 @@ h1 {
     .hero-container {
         padding: 5rem 2rem;
         height: auto;
-    }
-
-    .hero-container {
         gap: 2rem;
     }
 
@@ -123,8 +141,34 @@ h1 {
 
 @media (max-width: 770px) {
 
+    .hero-container {
+        padding: 5%;
+        margin: 0;
+    }
+    
+    .image-side {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
     .hero-image {
-        width: 300px;
+        width: 100%;
+        max-height: 450px;
+        max-width: none;
+        aspect-ratio: none;
+    }
+
+    .images-container {
+        display: flex;
+        flex-direction: column;
+        padding: 7%;
+    }
+
+    .three-image {
+        max-width: none;
+        aspect-ratio: auto;
+        height: 600px;
     }
 
 }
@@ -159,10 +203,6 @@ h1 {
         padding: 20px;
     }
 
-    .hero-image {
-        width: 90%;
-        max-width: 450px;
-    }
 }
 
 
@@ -207,11 +247,12 @@ h1 {
         padding: 0 40px;
         z-index: 1;
         position: absolute;
-        font-size: 0.8rem;
+        /* font-size: 0.75rem; */
     }
 
     .text-side h1 {
         font-size: 1.5rem;
     }
+
     
 }

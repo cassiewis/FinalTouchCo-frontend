@@ -62,6 +62,45 @@
   font-display: swap;
 }
 
+/***********************************
+***        Cooper Hewitt        *** 
+************************************/
+@font-face {
+  font-family: 'cooper-hewitt';
+  src: url('/assets/fonts/CooperHewitt/CooperHewitt-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'cooper-hewitt';
+  src: url('/assets/fonts/CooperHewitt/CooperHewitt-Book.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'cooper-hewitt';
+  src: url('/assets/fonts/CooperHewitt/CooperHewitt-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'cooper-hewitt';
+  src: url('/assets/fonts/CooperHewitt/CooperHewitt-Semibold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'cooper-hewitt';
+  src: url('/assets/fonts/CooperHewitt/CooperHewitt-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 
 html, body {
   margin: 0;
@@ -69,7 +108,7 @@ html, body {
   overflow-x: hidden; /* Prevents horizontal scrolling caused by overflowing elements */
   font-size: 16px;
   font-weight: normal;
-  color: rgb(50, 50, 50);
+  color: rgb(0, 0, 0);
 }
 
 
@@ -95,6 +134,10 @@ button, button * {
 /*
  * Custom styles for the app 
  */
+
+.white-background {
+  background-color: #FFFFFF;
+}
  .tan-background {
   background-color: #faf3eb;
 }
@@ -143,12 +186,16 @@ button, button * {
   color: #efe6b9;
 }
 .main-font {
-  /* philosopher */
+  /* cooper-hewlitt */
   font-family: 'Philosopher', sans-serif;
 }
 .secondary-font {
   /* Chau Philomene One */
   font-family: 'Chau Philomene One', sans-serif;
+}
+.third-font {
+  /* cooper-hewlitt */
+  font-family: 'cooper-hewitt', sans-serif;
 }
 .cursive-font {
   /* Petemoss */
@@ -158,20 +205,26 @@ button, button * {
 
 
 .button-theme {
-  border: none;
+  border: 1px solid #bbbbbb;
   padding: 8px 10px;
   text-align: center;
   text-decoration: none;
   border-radius: 2px;
-  font-size: 14px;
+  font-size: 12px;
   margin: 4px 2px;
   cursor: pointer;
-  width: 110px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  background-color: none;
+  font-style: italic;
+  /* background-color: white; */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Add smooth transition */
+
 }
 
 .button-theme:hover {
-  opacity: 0.9;  
+  background-color: rgb(21, 21, 21);
+  color: white;
 }
 
 .form-field {
