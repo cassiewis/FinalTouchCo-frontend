@@ -97,8 +97,7 @@ h1 {
 }
 
 .button {
-    color: white;
-    appearance: none;
+    max-width: 400px;
 }
 
 .about-link {

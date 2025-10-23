@@ -214,7 +214,7 @@ button, button * {
   margin: 4px 2px;
   cursor: pointer;
   width: 100%;
-  max-width: 400px;
+  /* max-width: 400px; */
   background-color: none;
   font-style: italic;
   /* background-color: white; */

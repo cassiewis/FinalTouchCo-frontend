@@ -38,13 +38,25 @@
           
           <div class="tab-content product-description" *ngIf="isActiveTab('details')">{{ product.description }}</div>
           
-          <div class="tab-content" *ngIf="isActiveTab('shipping')">
-            All rentals must be picked up and returned by the renter in downtown Boise.
-            Delivery may be available upon request and is considered on a case-by-case basis, subject to availability.
-
-            <br><br>Late returns will incur a fee of ${{ DAILY_LATE_FEE }} per day, unless prior arrangements have been made with Final Touch Decor.
-
-            <br><br>The renter is liable for any damage or loss of items during the rental period. If an item is returned broken, 
+          <div class="tab-content" *ngIf="isActiveTab('shipping')">            
+            <strong>Standard Self-Service:</strong><br>
+            All rentals can be picked up and returned by the renter at our West Boise location at no additional charge.
+            
+            <br><br>
+                          
+            <strong>Full Setup & Teardown Service:</strong><br>
+            Let our experienced team handle the complete setup of your décor exactly as envisioned, and return after your event for efficient teardown and removal. Focus on enjoying your special day while we handle the details.
+            
+            <br><br>
+            
+            <em>Interested in delivery or setup services? Simply select your preferred option at checkout and we'll provide you with a personalized quote based on your location, timeline, and rental items.</em>
+            
+            <br><br>
+            
+            <strong>Important Notes:</strong><br>
+            Late returns will incur a fee of ${{ DAILY_LATE_FEE }} per day, unless prior arrangements have been made with Final Touch Decor.
+            
+            <br>The renter is liable for any damage or loss of items during the rental period. If an item is returned broken, 
             missing, or significantly damaged, a replacement fee up to ${{ product.deposit }} may be charged, based upon extent of damage.
           </div>
         </div>
@@ -62,13 +74,25 @@
           <div class="tab-content product-description" *ngIf="isActiveTab('details')">{{ product.description }}</div>
           
           <div class="tab-content" *ngIf="isActiveTab('shipping')">
-            All rentals must be picked up and returned by the renter in downtown Boise.
-            Delivery may be available upon request and is considered on a case-by-case basis, subject to availability.
-
-            <br><br>Late returns will incur a fee of ${{ DAILY_LATE_FEE }} per day, unless prior arrangements have been made with Final Touch Decor.
-
-            <br><br>The renter is liable for any damage or loss of items during the rental period. If an item is returned broken, 
-            missing, or significantly damaged, a replacement fee up to ${{ product.deposit }} may be charged, based on extent of damage.
+            <strong>Standard Self-Service:</strong><br>
+            All rentals can be picked up and returned by the renter at our West Boise location at no additional charge.
+            
+            <br><br>
+                          
+            <strong>Full Setup & Teardown Service:</strong><br>
+            Let our experienced team handle the complete setup of your décor exactly as envisioned, and return after your event for efficient teardown and removal. Focus on enjoying your special day while we handle the details.
+            
+            <br><br>
+            
+            <em>Interested in delivery or setup services? Simply select your preferred option at checkout and we'll provide you with a personalized quote based on your location, timeline, and rental items.</em>
+            
+            <br><br>
+            
+            <strong>Important Notes:</strong><br>
+            Late returns will incur a fee of ${{ DAILY_LATE_FEE }} per day, unless prior arrangements have been made with Final Touch Decor.
+            
+            <br>The renter is liable for any damage or loss of items during the rental period. If an item is returned broken, 
+            missing, or significantly damaged, a replacement fee up to ${{ product.deposit }} may be charged, based upon extent of damage.
           </div>
         </div>
     </div>

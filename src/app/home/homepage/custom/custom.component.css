@@ -17,6 +17,9 @@ body {
     font-size: 2rem;
 }
 
+.button {
+    max-width: 400px;
+}
 
 .custom-left-container,
 .custom-right-container {
