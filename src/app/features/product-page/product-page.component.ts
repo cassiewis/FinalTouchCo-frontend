@@ -9,6 +9,7 @@ import { of } from 'rxjs';
 import { ProductBoxComponent } from '../product-box/product-box.component';
 import { FormsModule } from '@angular/forms';
 import { navigateWithScroll, DAILY_LATE_FEE } from '../../shared/constants'; // Assuming you have a utility function for navigation with scroll
+import { Title, Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-product-page',
@@ -35,9 +36,19 @@ export class ProductPageComponent implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductService,
     private router: Router,
+    private titleService: Title,
+    private metaService: Meta
   ) {}
 
   ngOnInit(): void {
+    if (this.product) {
+      this.titleService.setTitle(`${this.product.name} - Final Touch Decor`);
+      this.metaService.updateTag({ 
+        name: 'description', 
+        content: this.product.description 
+      });
+    }
+
     console.log('Product page initialized');
     // Listen for changes in the productId paramMap (route parameters)
     this.route.paramMap.subscribe(paramMap => {
