@@ -51,7 +51,7 @@
       (click)="onCartClick()"
       [disabled]="!isDateRangeValid()"
       type="button"
-      (touchstart)="this.tooltip.show();"
+      (touchend)="onCartClick()"
     >
       ADD TO INQUIRY LIST
     </button>
