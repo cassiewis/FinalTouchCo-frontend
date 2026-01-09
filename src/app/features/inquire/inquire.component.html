@@ -34,15 +34,15 @@
             <!-- checkboxes -->
             <div class="checkbox-group">
                 <div class="checkbox-container">
-                    <input type="checkbox" id="self-pickup" name="delivery" value="self-pickup" ngModel>
+                    <input type="checkbox" id="self-pickup" name="delivery" value="Self Pickup & Dropoff" ngModel>
                     <label for="self-pickup">Self Pickup & Dropoff</label>
                 </div>
                 <div class="checkbox-container">
-                    <input type="checkbox" id="delivery-service" name="delivery" value="delivery-service" ngModel>
+                    <input type="checkbox" id="delivery-service" name="delivery" value="Delivery & Pickup Service" ngModel>
                     <label for="delivery-service">Delivery & Pickup Service</label>
                 </div>
                 <div class="checkbox-container">
-                    <input type="checkbox" id="setup-service" name="setup" value="setup-service" ngModel>
+                    <input type="checkbox" id="setup-service" name="delivery" value="Full Service Setup & Teardown" ngModel>
                     <label for="setup-service">Full Service Setup & Teardown</label>
                 </div>
             </div>
@@ -54,13 +54,13 @@
             <label for="hear-about-me">How did you hear about me?</label>
             <!-- dropdown -->
             <select id="hear-about-me" name="hear-about-me" ngModel>
-                <option value="social-media">Instagram</option>
-                <option value="friend-family">Venue or Coordinator</option>
-                <option value="search-engine">Google</option>
-                <option value="social-media">Facebook</option>
-                <option value="friend-family">Wedding Directory</option>
-                <option value="search-engine">Recommended by a Friend</option>
-                <option value="other">Other</option>
+                <option value="Instagram">Instagram</option>
+                <option value="Venue or Coordinator">Venue or Coordinator</option>
+                <option value="Google">Google</option>
+                <option value="Facebook">Facebook</option>
+                <option value="Wedding Directory">Wedding Directory</option>
+                <option value="Recommended by a Friend">Recommended by a Friend</option>
+                <option value="Other">Other</option>
             </select>
 
             <div class="validation-message" *ngIf="inquiryForm.invalid && inquiryForm.submitted">

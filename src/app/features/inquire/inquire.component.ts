@@ -64,7 +64,6 @@ export class InquireComponent implements OnInit {
         venue: formData.get('venue'),
         products: formData.get('products'),
         deliveryOptions: formData.getAll('delivery'),
-        setupService: formData.get('setup'),
         message: formData.get('message'),
         hearAboutUs: formData.get('hear-about-me'),
       };
