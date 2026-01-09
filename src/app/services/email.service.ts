@@ -27,4 +27,17 @@ export class EmailService {
       })
     );
   }
+
+  sendInquiry(inquiryData: any, recaptchaToken: string) {
+    console.log("Sending inquiry:", inquiryData);
+    return this.http.post<ApiResponse<any>>(this.apiUrl + '/send-inquiry', inquiryData, {headers: {'X-Recaptcha-Token': recaptchaToken}}).pipe(
+      map(response => {
+          if (response.success) return response.data;
+          else throw new Error(response.message || 'Failed to send inquiry');
+        }),
+      tap(result => {
+        console.log('Inquiry sent:', result);
+      })
+    );
+  }
 }

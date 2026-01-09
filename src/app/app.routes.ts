@@ -11,6 +11,7 @@ import { ConstructionGuard } from './guards/construction.guard';
 import { FaqsComponent } from './home/homepage/faqs/faqs.component';
 import { UnderConstructionComponent } from './under-construction/under-construction.component';
 import { PrivacyPolicyComponent } from './legal/privacy-policy/privacy-policy.component';
+import { InquireComponent } from './features/inquire/inquire.component';
 export const routes: Routes = [
     { 
         path: '', 
@@ -25,7 +26,7 @@ export const routes: Routes = [
     { path: 'shop', component: ShopComponent, canActivate: [ConstructionGuard] },
     { path: 'inspo', loadComponent: () => import('./inspo/inspo-gallery').then((m) => m.InspoGalleryComponent), canActivate: [ConstructionGuard] },
     { path: 'testimonials', loadComponent: () => import('./testimonials/testimonials.component').then((m) => m.TestimonialsComponent), canActivate: [ConstructionGuard] },
-    { path: 'cart', loadComponent: () => import('./cart/cart-page/cart-page.component').then((m) => m.CartComponent), canActivate: [ConstructionGuard] },
+    { path: 'contact', component: InquireComponent, canActivate: [ConstructionGuard] },
     { path: 'reservation-success', component: SuccessPageComponent, canActivate: [ReservationSuccessGuard, ConstructionGuard]},
     { path: 'faqs', component: FaqsComponent, canActivate: [ConstructionGuard] },
     { path: 'notFound', component: NotFoundComponent },

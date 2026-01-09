@@ -1,0 +1,83 @@
+<body>
+    <div class="inquiry-body">
+        <div class="header-container">
+        <h2 class="inquiry-header">LET'S CHAT</h2>
+        <p class="inquiry-intro">
+            This is just a starting point to check availability and chat through your ideas — there's no commitment at this stage. 
+            <br><br>I'll personally reach out within 3 business days to confirm availability, answer questions, and help you choose the perfect signage for your day.
+        </p>
+        </div>
+        
+        <form (ngSubmit)="onSubmit(inquiryForm)" #inquiryForm="ngForm" class="inquiry-form">
+            <input type="hidden" name="recaptchaToken" ngModel /> <!-- Used for bot prevention -->
+
+            <label for="name">Your Full Name</label>
+            <input type="text" id="name" name="name" #name="ngModel" ngModel required>
+    
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" #email="ngModel" ngModel required>
+
+            <label for="event-type">Type of Event</label>
+            <input type="text" id="event-type" name="event-type" #eventType="ngModel" ngModel required>
+
+            <label for="event-date">Your Event Date</label>
+            <input type="date" id="event-date" name="event-date" #eventDate="ngModel" ngModel required>
+
+            <label for="venue">Your Venue</label>
+            <input type="text" id="venue" name="venue" #venue="ngModel" ngModel required>
+    
+            <label for="product">Items You're Interested In</label>
+            <input type="text" id="products" name="products" #products="ngModel" ngModel required>
+            
+            <label for="delivery">How would you like to recieve your rental items?</label>
+            <p class="form-note">You may select more than one to recieve quotes</p>
+            <!-- checkboxes -->
+            <div class="checkbox-group">
+                <div class="checkbox-container">
+                    <input type="checkbox" id="self-pickup" name="delivery" value="self-pickup" ngModel>
+                    <label for="self-pickup">Self Pickup & Dropoff</label>
+                </div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="delivery-service" name="delivery" value="delivery-service" ngModel>
+                    <label for="delivery-service">Delivery & Pickup Service</label>
+                </div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="setup-service" name="setup" value="setup-service" ngModel>
+                    <label for="setup-service">Full Service Setup & Teardown</label>
+                </div>
+            </div>
+    
+            <label for="message">Message</label>
+            <p class="form-note">Include any additional details or questions you have</p>
+            <textarea id="message" name="message" ngModel rows="6"></textarea>
+
+            <label for="hear-about-me">How did you hear about me?</label>
+            <!-- dropdown -->
+            <select id="hear-about-me" name="hear-about-me" ngModel>
+                <option value="social-media">Instagram</option>
+                <option value="friend-family">Venue or Coordinator</option>
+                <option value="search-engine">Google</option>
+                <option value="social-media">Facebook</option>
+                <option value="friend-family">Wedding Directory</option>
+                <option value="search-engine">Recommended by a Friend</option>
+                <option value="other">Other</option>
+            </select>
+
+            <div class="validation-message" *ngIf="inquiryForm.invalid && inquiryForm.submitted">
+                Please fill out all required fields before submitting.
+            </div>
+
+            <div class="success-message" *ngIf="successMessage">
+                {{ successMessage }}
+            </div>
+
+            <div class="error-message" *ngIf="errorMessage">
+                {{ errorMessage }}
+            </div>
+
+            <button type="submit" class="button button-theme" [disabled]="isSubmitting">
+                {{ isSubmitting ? 'Sending...' : 'Send' }}
+            </button>
+        </form>
+    </div>
+</body>
