@@ -9,7 +9,7 @@
     transition: 0.3s ease;
     opacity: 1;
     position: relative;
-    background: white;
+    /* background: #FFFDF7; */
   }
   
   .addon-box.unavailable {

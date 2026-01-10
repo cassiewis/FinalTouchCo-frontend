@@ -53,6 +53,6 @@ export class FooterComponent {
   }
 
   routeToReview() {
-    window.open('https://docs.google.com/forms/d/e/1FAIpQLSevs_gtQs1Tuic-veWSx9PAbzuqhz8jW02wfzgc-EfTb2RmdA/viewform?usp=header', '_blank');
+    window.open('https://g.page/r/CdyhYYrCuGizEAI/review', '_blank');
   }
 }

@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product.model';
-import { ReserveComponent } from './reserve/reserve.component';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ProductBoxComponent } from '../product-box/product-box.component';
@@ -16,7 +15,7 @@ import { Title, Meta } from '@angular/platform-browser';
   templateUrl: './product-page.component.html',
   styleUrls: ['./product-page.component.css'],
   standalone: true,
-  imports: [FormsModule, ReserveComponent, CommonModule, ProductBoxComponent],
+  imports: [FormsModule, CommonModule, ProductBoxComponent],
 })
 export class ProductPageComponent implements OnInit {
   product!: Product; // Assert that Product will always be defined
@@ -98,6 +97,17 @@ export class ProductPageComponent implements OnInit {
 
   goToShop(event: MouseEvent): void {
     navigateWithScroll(this.router, event, `/shop`);
+  }
+
+  goToInquire(): void {
+    // Navigate to the inquire page with product information as query parameters
+    this.router.navigate(['/contact'], {
+      queryParams: {
+        product: this.product.name,
+        productId: this.product.productId,
+        price: this.product.price
+      }
+    });
   }
 
   setActiveTab(tabId: string) {

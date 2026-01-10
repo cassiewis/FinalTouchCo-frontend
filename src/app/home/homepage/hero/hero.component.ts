@@ -16,6 +16,10 @@ export class HeroComponent {
     navigateWithScroll(this.router, event, `/shop`);
   }
 
+  routeToContact(event?: MouseEvent) {
+    navigateWithScroll(this.router, event, `/contact`);
+  }
+
   routeToSection(path: string, fragment: string) {
     this.router.navigate([path], { fragment: fragment }).then(() => {
       // Use setTimeout to ensure navigation completes before trying to scroll

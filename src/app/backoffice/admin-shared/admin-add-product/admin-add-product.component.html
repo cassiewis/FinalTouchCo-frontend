@@ -45,6 +45,11 @@
                         <textarea matInput class="input-box" placeholder="Enter Description" [(ngModel)]="product.description" name="description" required></textarea>
                     </mat-form-field>
 
+                    <mat-form-field appearance="outline" class="input-item">
+                        <mat-label>Custom Description</mat-label>
+                        <textarea matInput class="input-box" placeholder="Enter Custom Description" [(ngModel)]="product.customDescription" name="customDescription" required></textarea>
+                    </mat-form-field>
+
                     <!-- Tags Selection with Checkboxes -->
                     <div class="tags-section">
                         <h4>Tags Selection</h4>

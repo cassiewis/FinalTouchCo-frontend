@@ -2,7 +2,7 @@
     <a href="/home" class="logo-container">
         <img src="/logo.png" alt="Final touch" class="logo"/>
     </a>
-    <button class="hamburger-menu tan-background" (click)="toggleMobileMenu()" [class.active]="isMobileMenuOpen">
+    <button class="hamburger-menu white-background" (click)="toggleMobileMenu()" [class.active]="isMobileMenuOpen">
         <span></span>
         <span></span>
         <span></span>
@@ -12,11 +12,8 @@
         <a href="/home" class="links" (click)="closeMobileMenu()">Home</a>
         <a href="/shop" class="links" (click)="closeMobileMenu()">Browse</a>
         <a href="/inspo" class="links" (click)="closeMobileMenu()">Inspo</a>
-        <a href="/services" class="links" (click)="closeMobileMenu()">Services</a>
-
-        <div class="cart-link-container">
-            <a href="/cart" (click)="closeMobileMenu()"><i class="fa fa-heart links cart-icon" aria-hidden="true"></i></a>
-            <span class="cart-notification" *ngIf="cartCount > 0">{{ cartCount }}</span>
-        </div>
+        <a href="/about" class="links" (click)="closeMobileMenu()">About</a>
+        <!-- <a href="/services" class="links" (click)="closeMobileMenu()">Services</a> -->
+        <a href="/contact" class="links" (click)="closeMobileMenu()">Contact</a>
    </nav>
 </header>

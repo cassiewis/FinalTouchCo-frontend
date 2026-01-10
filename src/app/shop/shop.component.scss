@@ -45,20 +45,11 @@ body, .shop-image-container, .shop-image {
     min-height: 500px;
 }
 
-.shop-image-container {
-    height: 450px;
-    width: 100%;
-    color: white;
-    padding: 15px 0;
-    background: linear-gradient(to bottom, #faf3eb 0%, #faf3eb 50%, white 50%, white 100%);
-    overflow: hidden;
-  }
-
   .shop-image {
     flex-direction: column;
-    width: 90%;
-    height: 100%;
-    object-fit: cover;
+    max-height: 100px;
+    max-width: 90%;
+    margin: 4% 0;
   }
 
   .filter-container {
@@ -71,7 +62,7 @@ body, .shop-image-container, .shop-image {
 
   .filter-flyout {
     width: 225px;
-    background: #f8f7f2;
+    // background: #f8f7f2;
     z-index: 1000;
     border: 1px solid lightgray;
     left: -1px;
@@ -299,9 +290,6 @@ ngx-slider {
 
   @media (max-width: 630px) {
 
-    .shop-image-container {
-      height: 300px;
-    }
 
     .shop-container {
       flex-direction: column;
@@ -319,7 +307,7 @@ ngx-slider {
       align-self: flex-end;
       position: absolute;
       z-index: 10;
-      background-color: white;
+      // background-color: white;
       top: 90px;
       border: 1px solid red;
     }
@@ -332,7 +320,6 @@ ngx-slider {
       width: 100%;
     }
 
-
     .filter-flyout {
         position: static;
         box-shadow: none;
@@ -340,17 +327,4 @@ ngx-slider {
       }
   }
 
-  @media (max-width: 500px) {
-
-    .shop-image-container {
-      background: none;
-    }
-  }
-
-  @media (max-width: 400px) {
-
-    .shop-image-container {
-      height: 225px;
-    }
-  }
   

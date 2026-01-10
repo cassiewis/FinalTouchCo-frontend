@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { CartService } from '../../services/cart-service.service';
 import { Subscription } from 'rxjs';
 
 
@@ -16,19 +15,8 @@ export class HeaderComponent {
   private cartCountSubscription!: Subscription; // Use non-null assertion
   isMobileMenuOpen = false;
 
-  constructor(private cartService: CartService) {}
+  constructor() {}
 
-  ngOnInit(): void {
-    // Subscribe to the cart count observable
-    this.cartCountSubscription = this.cartService.cartCount$.subscribe(count => {
-      this.cartCount = count; // Update cartCount whenever it changes
-    });
-  }
-
-  ngOnDestroy(): void {
-    // Unsubscribe to prevent memory leaks
-    this.cartCountSubscription.unsubscribe();
-  }
 
   toggleMobileMenu() {
       this.isMobileMenuOpen = !this.isMobileMenuOpen;

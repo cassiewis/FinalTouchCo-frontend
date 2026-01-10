@@ -8,6 +8,7 @@ export interface Product {
     price: number;
     deposit: number;
     description: string;
+    customDescription: string;
     imageUrl: string;
     datesReserved: Date[];
     tags: string[];

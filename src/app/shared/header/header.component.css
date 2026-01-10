@@ -40,22 +40,6 @@ header {
     cursor: pointer;
 }
 
-.cart-link-container {
-    position: relative;
-}
-
-.cart-notification {
-    display: inline-block;
-    background-color: #dc7c81;
-    color: white;
-    border-radius: 12px;
-    padding: 2px 6px;
-    font-size: 0.75rem;
-    position: absolute;
-    top: -8px;
-    right: 10px;
-}
-
 .hamburger-menu {
     display: none;
     flex-direction: column;
@@ -109,7 +93,7 @@ header {
         top: 100%;
         left: 0;
         right: 0;
-        background-color: #faf3eb;
+        background-color: rgb(248, 248, 246);
         flex-direction: column;
         padding: 20px;
         margin: 0;
@@ -134,19 +118,12 @@ header {
         border-bottom: 1px solid #ddd;
     }
 
-    .cart-link-container {
-        text-align: center;
-        margin-top: 10px;
-    }
-
-    .cart-notification {
-        top: -5px;
-    }
 }
 
 @media (max-width: 500px) {
     header {
         padding: 10px 15px;
+        background-color: rgb(248, 248, 246);
     }
 
     .logo {
@@ -159,23 +136,17 @@ header {
         width: 100%;
         box-sizing: border-box;
         padding: 15px; 
-        background-color: white;
+        background-color:rgb(248, 248, 246);
     }
 
     .links {
         margin: 8px 0;
         padding: 8px;
     }
-
-    .cart-notification {
-        top: -10px;
-        right: 0px;
-    }
+}
 
 @media (max-width: 360px) {
-
     .logo {
         height: 62px;
     }
-}
 }

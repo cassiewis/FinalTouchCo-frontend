@@ -1,9 +1,13 @@
 <body class="container white-background">
 
-  <div class="tan-background body" *ngIf="!loading">
+  <div class="white-background body" *ngIf="!loading">
     <div class="product-body">
       <div class="product-image-box">
         <img [src]="product.imageUrl" alt="product-image" class="product-image" (load)="loading=false">
+        <div class="inquire-container">
+          <!-- <button class="inquire-btn button-theme" (click)="goToInquire()">Inquire About This Product</button> -->
+           <p (click)="goToInquire()"><u>Contact me</u> to inquire about this product</p>
+        </div>
       </div>
       <div class="product-description-container">
         <p class="path"><a (click)="goToShop($event)">INVENTORY</a> / {{ product.name }}</p>
@@ -11,85 +15,40 @@
         <p class="product-price">${{ product.price }}</p>
         
         <div class="quantity-container">
-          <label *ngIf="product.quantity > 0" for="quantity">Qty: {{ product.quantity }}</label>
-          <!-- <select id="quantity" [(ngModel)]="quantity" class="quantity-dropdown" disabled>
-            <option *ngFor="let qty of quantities" [value]="qty">{{ product.count }}</option>
-          </select> -->
+          <label *ngIf="product.quantity > 0" for="quantity">Quantity in Inventory: {{ product.quantity }}</label>
         </div>
 
-        <div class="reserve-container">
-          <p *ngIf="product.custom">⭐ This item is customizable</p>
-          <app-reserve [product]="product"></app-reserve>
-        </div>
         <div class="product-description-details desktop-mobile-only">
           <div class="tabs">
             <button 
               [class.active]="isActiveTab('details')" 
               (click)="setActiveTab('details')">Product Details</button>
             <button 
-              [class.active]="isActiveTab('shipping')" 
-              (click)="setActiveTab('shipping')">Pickup & Return</button>
+              *ngIf="product.custom"
+              [class.active]="isActiveTab('custom')" 
+              (click)="setActiveTab('custom')">Custom Description</button>
           </div>
           
           <div class="tab-content product-description" *ngIf="isActiveTab('details')">{{ product.description }}</div>
           
-          <div class="tab-content" *ngIf="isActiveTab('shipping')">            
-            <strong>Standard Self-Service:</strong><br>
-            All rentals can be picked up and returned by the renter at our West Boise location at no additional charge.
-            
-            <br><br>
-                          
-            <strong>Full Setup & Teardown Service:</strong><br>
-            Let our experienced team handle the complete setup of your décor exactly as envisioned, and return after your event for efficient teardown and removal. Focus on enjoying your special day while we handle the details.
-            
-            <br><br>
-            
-            <em>Interested in delivery or setup services? Simply select your preferred option at checkout and we'll provide you with a personalized quote based on your location, timeline, and rental items.</em>
-            
-            <br><br>
-            
-            <strong>Important Notes:</strong><br>
-            Late returns will incur a fee of ${{ DAILY_LATE_FEE }} per day, unless prior arrangements have been made with Final Touch Decor.
-            
-            <br>The renter is liable for any damage or loss of items during the rental period. If an item is returned broken, 
-            missing, or significantly damaged, a replacement fee up to ${{ product.deposit }} may be charged, based upon extent of damage.
+          <div class="tab-content" *ngIf="isActiveTab('custom') && product.custom">
+            {{ product.customDescription }}
           </div>
         </div>
       </div>
+      
       <div class="product-description-details tablet-only">
           <div class="tabs">
             <button 
               [class.active]="isActiveTab('details')" 
               (click)="setActiveTab('details')">Product Details</button>
             <button 
-              [class.active]="isActiveTab('shipping')" 
-              (click)="setActiveTab('shipping')">Pickup & Return</button>
+              *ngIf="product.custom"
+              [class.active]="isActiveTab('custom')" 
+              (click)="setActiveTab('custom')">Custom Description</button>
           </div>
           
-          <div class="tab-content product-description" *ngIf="isActiveTab('details')">{{ product.description }}</div>
-          
-          <div class="tab-content" *ngIf="isActiveTab('shipping')">
-            <strong>Standard Self-Service:</strong><br>
-            All rentals can be picked up and returned by the renter at our West Boise location at no additional charge.
-            
-            <br><br>
-                          
-            <strong>Full Setup & Teardown Service:</strong><br>
-            Let our experienced team handle the complete setup of your décor exactly as envisioned, and return after your event for efficient teardown and removal. Focus on enjoying your special day while we handle the details.
-            
-            <br><br>
-            
-            <em>Interested in delivery or setup services? Simply select your preferred option at checkout and we'll provide you with a personalized quote based on your location, timeline, and rental items.</em>
-            
-            <br><br>
-            
-            <strong>Important Notes:</strong><br>
-            Late returns will incur a fee of ${{ DAILY_LATE_FEE }} per day, unless prior arrangements have been made with Final Touch Decor.
-            
-            <br>The renter is liable for any damage or loss of items during the rental period. If an item is returned broken, 
-            missing, or significantly damaged, a replacement fee up to ${{ product.deposit }} may be charged, based upon extent of damage.
-          </div>
-        </div>
+      </div>
     </div>
   </div>
 

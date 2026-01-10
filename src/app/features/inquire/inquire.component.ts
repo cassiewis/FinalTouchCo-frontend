@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 import { EmailService } from '../../services/email.service';
 import { RECAPTCHA_SITE_KEY } from '../../shared/constants';
 
@@ -18,10 +19,12 @@ export class InquireComponent implements OnInit {
   isSubmitting = false;
   successMessage = '';
   errorMessage = '';
+  prefilledProduct = '';
 
   constructor(
     private emailService: EmailService,
-    private http: HttpClient
+    private http: HttpClient,
+    private route: ActivatedRoute
   ) {}
 
   async ngOnInit() {
@@ -34,6 +37,18 @@ export class InquireComponent implements OnInit {
       script.defer = true;
       document.head.appendChild(script);
     }
+
+    // Check for query parameters and prefill product information
+    this.route.queryParams.subscribe(params => {
+      if (params['product']) {
+        const productName = params['product'];
+        const price = params['price'];
+        
+        this.prefilledProduct = price 
+          ? `${productName} ($${price})`
+          : productName;
+      }
+    });
   }
 
   async onSubmit(form: any) {

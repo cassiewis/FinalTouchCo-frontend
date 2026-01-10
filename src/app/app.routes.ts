@@ -5,13 +5,14 @@ import { ShopComponent } from './shop/shop.component';
 import { ProductPageComponent } from './features/product-page/product-page.component';
 import { NotFoundComponent } from './features/not-found/not-found.component';
 import { LoginComponent } from './backoffice/login/login.component';
-import { SuccessPageComponent } from './cart/success-page/success-page.component';
+import { SuccessPageComponent } from './features/success-page/success-page.component';
 import { ReservationSuccessGuard } from './guards/reservation-success.guard';
 import { ConstructionGuard } from './guards/construction.guard';
 import { FaqsComponent } from './home/homepage/faqs/faqs.component';
 import { UnderConstructionComponent } from './under-construction/under-construction.component';
 import { PrivacyPolicyComponent } from './legal/privacy-policy/privacy-policy.component';
 import { InquireComponent } from './features/inquire/inquire.component';
+import { AboutComponent } from './home/homepage/about/about.component';
 export const routes: Routes = [
     { 
         path: '', 
@@ -29,6 +30,7 @@ export const routes: Routes = [
     { path: 'contact', component: InquireComponent, canActivate: [ConstructionGuard] },
     { path: 'reservation-success', component: SuccessPageComponent, canActivate: [ReservationSuccessGuard, ConstructionGuard]},
     { path: 'faqs', component: FaqsComponent, canActivate: [ConstructionGuard] },
+    { path: 'about', component: AboutComponent, canActivate: [ConstructionGuard] },
     { path: 'notFound', component: NotFoundComponent },
     { path: 'product/:productId', component: ProductPageComponent, canActivate: [ConstructionGuard] },
     { path: 'login', component: LoginComponent }, // Admin routes stay accessible

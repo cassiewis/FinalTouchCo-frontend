@@ -1,4 +1,4 @@
-<body>
+<body class="white-background">
     <div class="inquiry-body">
         <div class="header-container">
         <h2 class="inquiry-header">LET'S CHAT</h2>
@@ -27,7 +27,7 @@
             <input type="text" id="venue" name="venue" #venue="ngModel" ngModel required>
     
             <label for="product">Items You're Interested In</label>
-            <input type="text" id="products" name="products" #products="ngModel" ngModel required>
+            <input type="text" id="products" name="products" #products="ngModel" [ngModel]="prefilledProduct" required>
             
             <label for="delivery">How would you like to recieve your rental items?</label>
             <p class="form-note">You may select more than one to recieve quotes</p>

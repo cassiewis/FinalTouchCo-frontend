@@ -101,6 +101,9 @@
   font-display: swap;
 }
 
+/***********************************
+***           Main CSS           *** 
+************************************/
 
 html, body {
   margin: 0;
@@ -109,8 +112,8 @@ html, body {
   font-size: 16px;
   font-weight: normal;
   color: rgb(0, 0, 0);
+  background-color: rgb(248, 248, 246);
 }
-
 
 body {
     font-family: "Philosopher", sans-serif;
@@ -136,11 +139,11 @@ button, button * {
  */
 
 .white-background {
-  background-color: #FFFFFF;
+  background-color: rgb(248, 248, 246);
 }
- .tan-background {
-  background-color: #faf3eb;
-}
+ /* .tan-background {
+  background-color: rgb(248, 248, 246);
+} */
 .red-background {
   background-color: #c49386;
 }
@@ -156,7 +159,6 @@ button, button * {
 .yellow-background {
   background-color: #efe6b9;
 }
-
 .blue-background {
   background-color: #C6CED6;
 }

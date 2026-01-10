@@ -2,11 +2,7 @@
 
     <app-error-banner></app-error-banner>
 
-    <picture class="shop-image-container">
-        <source srcset="/images/shop.webp" type="image/webp">
-        <img class="shop-image" src="/images/shop.png" alt="Shop Banner">
-    </picture>
-
+    <img class="shop-image" src="/images/inventory.png" alt="Shop Banner">
 
     <div class="shop-container">
         <section class="products-list-banner">
@@ -22,7 +18,7 @@
                     </div>
                 </div>
 
-                <div class="filter-flyout" *ngIf="showMobileFilter" (click)="$event.stopPropagation()">
+                <div class="filter-flyout white-background" *ngIf="showMobileFilter" (click)="$event.stopPropagation()">
                     <div class="filter-section category-section">
                         <p class="filter-title" (click)="toggleSection('type')">
                             Category

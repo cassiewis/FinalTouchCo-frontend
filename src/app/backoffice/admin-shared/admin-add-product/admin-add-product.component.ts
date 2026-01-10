@@ -42,6 +42,7 @@ export class AdminAddProductComponent {
     price: 0,
     deposit: 0,
     description: '', 
+    customDescription: '',
     imageUrl: '',
     datesReserved: [],
     tags: [],

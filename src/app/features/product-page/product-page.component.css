@@ -113,14 +113,14 @@
 }
 
 .product-description-container p {
-  margin: 10px 0;
+  margin: 15px 0;
 }
 
 .product-description-details {
   font-weight: normal;
   font-size: 1rem;
   line-height: 1.75;
-  margin: 30px 0;
+  margin: 60px 0;
 }
 
 .tabs button {
@@ -307,6 +307,10 @@
 
   .similar-product-box {
     width: 90%; /* Make product boxes larger for very small screens */
+  }
+
+  body {
+    background-color: rgb(248, 248, 246);
   }
 
 }
