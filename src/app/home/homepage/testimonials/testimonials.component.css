@@ -54,7 +54,7 @@ body {
   overflow: hidden; /* Ensures content stays within the box */
   padding: 15px;
   /* border: 1px solid rgb(181, 181, 181); */
-  background-color: rgb(248, 244, 238);
+  background-color: #f8f4ee;
 }
 
 .review-text {

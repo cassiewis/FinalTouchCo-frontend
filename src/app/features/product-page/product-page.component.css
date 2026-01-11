@@ -10,7 +10,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between; 
-  width: clamp(700px, 70%, 95%);
+  width: clamp(725px, 70%, 95%);
   align-items: flex-start;
   margin: 5% 0;
 }
@@ -234,21 +234,9 @@
     display: none;
   }
 
-@media (max-width: 990px){
-
-  .tablet-only {
-    display: block;
-  }
-
-  .desktop-mobile-only {
-    display: none;
-  }
-}
-
 @media (max-width: 850px){
   .similar-scroll-wrapper {
     justify-content: flex-start;
-    /* align-items: center; */
   }
 }
 

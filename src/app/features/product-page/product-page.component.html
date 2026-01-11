@@ -37,33 +37,9 @@
         </div>
       </div>
       
-      <div class="product-description-details tablet-only">
-          <div class="tabs">
-            <button 
-              [class.active]="isActiveTab('details')" 
-              (click)="setActiveTab('details')">Product Details</button>
-            <button 
-              *ngIf="product.custom"
-              [class.active]="isActiveTab('custom')" 
-              (click)="setActiveTab('custom')">Custom Description</button>
-          </div>
-          
-      </div>
+      
     </div>
   </div>
-
-  <!-- <div *ngIf="product.addons && product.addons.length > 0" class="addons-body">
-    <h3 class="section-heading">Optional Add-Ons</h3>
-    <div class="addons-grid">
-      <app-addon-box
-        *ngFor="let addon of addons"
-        [addon]="addon"
-        [isSelected]="selectedAddons.includes(addon.itemId)"
-        [isAvailable]="isAddonAvailable(addon)"
-        (toggle)="onToggleAddon(addon)"
-      ></app-addon-box>
-    </div>
-  </div> -->
   
   <!-- <hr *ngIf="!loading" class="border-line"> border line -->
 
