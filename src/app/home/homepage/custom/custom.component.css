@@ -1,5 +1,4 @@
 body {
-    /* background: linear-gradient(to right, white 75%, #f1e3e0 25%); */
 }
 
 .container {
@@ -102,7 +101,7 @@ body {
 @media (max-width: 600px) {
 
     body {
-        background: #FFFDF7;
+        /* background: #FFFDF7; */
     }
 
     .container {

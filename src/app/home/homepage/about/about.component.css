@@ -85,9 +85,6 @@ body {
 
 @media (max-width: 615px) {
 
-    body {
-        background: #FFFDF7;
-    }
 
     .container {
         display: flex;
